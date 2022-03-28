@@ -1,8 +1,10 @@
 <template>
-  <div class="about">
-    
-  </div>
+  
 </template>
+
+<script>
+
+</script>
 
 <style>
 @media (min-width: 1024px) {
@@ -12,6 +14,4 @@
     align-items: center;
   }
 }
-
-
 </style>
