@@ -1,61 +1,87 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-3" style="padding-left: 0px;">
             <nav>
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height: 100vh;">
-                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                        <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-                        <span class="fs-4">Administrador</span>
+                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
+                        <span class="fs-4" style="text-align:center;">Administrador</span>
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li>
-                            <a href="#" class="nav-link link-dark">
+                        <li class="nav-item">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'adminroot' }"
+                            :to="{ name: 'adminroot' }">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Dashboard
-                            </a>
+                            </router-link>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link link-dark active" aria-current="page">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Gerir Coordenadores
-                            </a>
+                            </router-link>
                         </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link link-dark" aria-current="page">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#home"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Gerir Cursos
-                            </a>
+                            </router-link>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#table"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Gerir alunos
-                            </a>
+                            </router-link>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#grid"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Gerir Confirmações UC
-                            </a>
+                            </router-link>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Gerir Periodos
-                            </a>
+                            </router-link>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Atualizar Base de Dados
-                            </a>
+                            </router-link>
                         </li>
-                        <li>
-                            <a href="#" class="nav-link link-dark">
-                                <svg class="bi me-2" width="16" height="16"><use xlink:href="#people-circle"/></svg>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" to="adminroot">
+                                <BootstrapIcon
+                                icon="app-indicator"
+                                size="2x"
+                                flip-v />
                                 Logs
-                            </a>
+                            </router-link>
                         </li>
                     </ul>
                     <hr>
@@ -81,7 +107,19 @@
 </template>
 
 <script>
-
+export default {
+  name: "AdminRoot",
+  component: {},
+  methods: {
+    
+  },
+  data() {
+    return {
+        
+    };
+  },
+  mounted() {},
+};
 </script>
 
 <style>
