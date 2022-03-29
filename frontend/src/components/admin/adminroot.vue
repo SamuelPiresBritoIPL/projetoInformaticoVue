@@ -9,10 +9,10 @@
                     </a>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item">
+                        <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'adminroot' }"
-                            :to="{ name: 'adminroot' }">
+                            :class="{ active: $route.name === 'dashboard' }"
+                            :to="{ name: 'dashboard' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -20,8 +20,10 @@
                                 Dashboard
                             </router-link>
                         </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerircoordenadores' }"
+                            :to="{ name: 'gerircoordenadores' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -30,7 +32,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerircursos' }"
+                            :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -39,7 +43,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'geriralunos' }"
+                            :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -48,7 +54,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerirconfirmacoes' }"
+                            :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -57,7 +65,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerirperiodos' }"
+                            :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -66,7 +76,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'atualizardados' }"
+                            :to="{ name: 'atualizardados' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -75,7 +87,9 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" to="adminroot">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'logs' }"
+                            :to="{ name: 'logs' }">
                                 <BootstrapIcon
                                 icon="app-indicator"
                                 size="2x"
@@ -85,14 +99,11 @@
                         </li>
                     </ul>
                     <hr>
-                    <div class="dropdown">
-                        <a href="#" class="d-flex align-items-center link-dark text-decoration-none dropdown-toggle" id="dropdownUser2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong>Nome/Numero</strong>
+                    <div>
+                        <a class="d-flex align-items-center link-dark text-decoration-none">
+                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <strong>Logout</strong>
                         </a>
-                        <ul class="dropdown-menu text-small shadow" aria-labelledby="dropdownUser2">
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
-                        </ul>
                     </div>
                 </div>
             </nav>
@@ -123,6 +134,51 @@ export default {
 </script>
 
 <style>
+body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html {
+  height: -webkit-fill-available;
+}
+
+main {
+  display: flex;
+  flex-wrap: nowrap;
+  height: 100vh;
+  height: -webkit-fill-available;
+  max-height: 100vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.nav-link {
+  border-radius: 0;
+}
+
+.btn-toggle-nav a {
+  display: inline-flex;
+  padding: .1875rem .5rem;
+  margin-top: .125rem;
+  margin-left: 1.25rem;
+  text-decoration: none;
+}
+.btn-toggle-nav a:hover,
+.btn-toggle-nav a:focus {
+  background-color: #d2f4ea;
+}
+
+.scrollarea {
+  overflow-y: auto;
+}
+
+.fw-semibold { font-weight: 600; }
+.lh-tight { line-height: 1.25; }
+
+.sidebar-navigation:hover{
+    background-color: aliceblue;
+}
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;

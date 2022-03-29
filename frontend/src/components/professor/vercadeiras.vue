@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Alunos</h2>
+    <h2>Ver Cadeiras</h2>
   </div>    
 </template>
 
 <script>
 export default {
-  name: "GerirAlunos",
+  name: "VerCadeiras",
   component: {},
   methods: {
     

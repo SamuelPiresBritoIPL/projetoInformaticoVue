@@ -1,12 +1,12 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Alunos</h2>
+    <h2>Gerir Confirmações das UC's</h2>
   </div>    
 </template>
 
 <script>
 export default {
-  name: "GerirAlunos",
+  name: "GerirConfirmacoes",
   component: {},
   methods: {
     
