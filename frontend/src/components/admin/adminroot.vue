@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3" style="padding-left: 0px;">
+        <div class="col-md-2" style="padding-left: 0px;">
             <nav>
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height: 100vh;">
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
@@ -13,10 +13,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'dashboard' }"
                             :to="{ name: 'dashboard' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="display"
+                                size="1x" />
                                 Dashboard
                             </router-link>
                         </li>
@@ -24,10 +23,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerircoordenadores' }"
                             :to="{ name: 'gerircoordenadores' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="person-lines-fill"
+                                size="1x" />
                                 Gerir Coordenadores
                             </router-link>
                         </li>
@@ -35,21 +33,19 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerircursos' }"
                             :to="{ name: 'gerircursos' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
-                                Gerir Cursos
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="mortarboard"
+                                size="1x" />
+                                Gerir Curso
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'geriralunos' }"
                             :to="{ name: 'geriralunos' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="people"
+                                size="1x" />
                                 Gerir alunos
                             </router-link>
                         </li>
@@ -57,10 +53,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerirconfirmacoes' }"
                             :to="{ name: 'gerirconfirmacoes' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="clipboard2-check"
+                                size="1x" />
                                 Gerir Confirmações UC
                             </router-link>
                         </li>
@@ -68,10 +63,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerirperiodos' }"
                             :to="{ name: 'gerirperiodos' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="calendar-event"
+                                size="1x" />
                                 Gerir Periodos
                             </router-link>
                         </li>
@@ -79,10 +73,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'atualizardados' }"
                             :to="{ name: 'atualizardados' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="arrow-clockwise"
+                                size="1x" />
                                 Atualizar Base de Dados
                             </router-link>
                         </li>
@@ -90,10 +83,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'logs' }"
                             :to="{ name: 'logs' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="list-columns-reverse"
+                                size="1x" />
                                 Logs
                             </router-link>
                         </li>
@@ -108,7 +100,7 @@
                 </div>
             </nav>
         </div>  
-        <div class="col-md-8">
+        <div class="col-md-9" style="margin-left: 35px;">
             <main>
                 <router-view></router-view>
             </main>
@@ -176,7 +168,12 @@ main {
 .fw-semibold { font-weight: 600; }
 .lh-tight { line-height: 1.25; }
 
+/* .nav-link.active{
+    background-color: aqua !important;
+} */
+
 .sidebar-navigation:hover{
+    
     background-color: aliceblue;
 }
 @media (min-width: 1024px) {

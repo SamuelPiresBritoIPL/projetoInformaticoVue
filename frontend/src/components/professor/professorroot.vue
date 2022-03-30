@@ -13,10 +13,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'dashboardprofessor' }"
                             :to="{ name: 'dashboardprofessor' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="display"
+                                size="1x" />
                                 Dashboard
                             </router-link>
                         </li>
@@ -24,11 +23,10 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'vercadeiras' }"
                             :to="{ name: 'vercadeiras' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
-                                Ver UC's
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="mortarboard"
+                                size="1x" />
+                                Unidades Curriculares
                             </router-link>
                         </li>
                     </ul>

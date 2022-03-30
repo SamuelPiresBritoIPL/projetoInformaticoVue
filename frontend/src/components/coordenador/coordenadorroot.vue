@@ -13,10 +13,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'dashboardC' }"
                             :to="{ name: 'dashboardC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="display"
+                                size="1x" />
                                 Dashboard
                             </router-link>
                         </li>
@@ -24,10 +23,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerircoordenadoresC' }"
                             :to="{ name: 'gerircoordenadoresC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="person-lines-fill"
+                                size="1x" />
                                 Gerir Coordenadores
                             </router-link>
                         </li>
@@ -35,10 +33,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerircursosC' }"
                             :to="{ name: 'gerircursosC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="mortarboard"
+                                size="1x" />
                                 Gerir Cursos
                             </router-link>
                         </li>
@@ -46,10 +43,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'geriralunosC' }"
                             :to="{ name: 'geriralunosC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="people"
+                                size="1x" />
                                 Gerir alunos
                             </router-link>
                         </li>
@@ -57,10 +53,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerirconfirmacoesC' }"
                             :to="{ name: 'gerirconfirmacoesC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="clipboard2-check"
+                                size="1x" />
                                 Gerir Confirmações UC
                             </router-link>
                         </li>
@@ -68,10 +63,9 @@
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerirperiodosC' }"
                             :to="{ name: 'gerirperiodosC' }">
-                                <BootstrapIcon
-                                icon="app-indicator"
-                                size="2x"
-                                flip-v />
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="calendar-event"
+                                size="1x" />
                                 Gerir Periodos
                             </router-link>
                         </li>
