@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import axios from "axios";
 
 import App from './App.vue'
 import router from './router'
@@ -7,6 +8,16 @@ import router from './router'
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons';
+
+import Toaster from "@meforma/vue-toaster";
+
+let toastOptions = {
+    position: "top",
+    timeout: 3000,
+    pauseOnHover: true,
+    queue: true,
+    dismissible: true,
+  };
 
 /* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -24,9 +35,15 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(bootstrap)
-app.component('font', FontAwesomeIcon)
-app.component('BootstrapIcon', BootstrapIcon);
+app.component('BootstrapIcon', BootstrapIcon)
+app.use(Toaster, toastOptions)
 
+axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
+/* axios.defaults.headers.common["Authorization"] = `Bearer ${
+    sessionStorage.token ? sessionStorage.token : sessionStorage.admintoken
+}`; */
+app.config.globalProperties.$axios = axios;
 
 
 app.mount('#app')

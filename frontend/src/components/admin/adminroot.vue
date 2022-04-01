@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" style="padding-left: 0px;">
+        <div class="col-md-3" style="padding-left: 0px;">
             <nav>
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height: 100vh;">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-container" style="width: 280px; min-height: 100vh;">
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Administrador</span>
                     </a>
@@ -100,7 +100,7 @@
                 </div>
             </nav>
         </div>  
-        <div class="col-md-9" style="margin-left: 35px;">
+        <div class="col-md-8">
             <main>
                 <router-view></router-view>
             </main>
@@ -126,23 +126,15 @@ export default {
 </script>
 
 <style>
-body {
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
-}
 
-html {
-  height: -webkit-fill-available;
-}
-
-main {
-  display: flex;
-  flex-wrap: nowrap;
-  height: 100vh;
-  height: -webkit-fill-available;
-  max-height: 100vh;
-  overflow-x: auto;
-  overflow-y: hidden;
+.sidebar-container {
+  position: fixed;
+  text-align: left;
+  width: 220px;
+  height: 100%;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .nav-link {

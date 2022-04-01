@@ -33,13 +33,13 @@
 export default {
   name: "Dashboard",
   component: {},
-  methods: {
-    
-  },
   data() {
     return {
         
     };
+  },
+  methods: {
+    
   },
   mounted() {},
 };
