@@ -78,7 +78,6 @@
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
                 <option value="null">Selecione uma opção</option>
                 <option value="0">Coordenador</option>
-                <option value="1">Subcoordenador</option>
               </select>
             </div>
             <small></small>
