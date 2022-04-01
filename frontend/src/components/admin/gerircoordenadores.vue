@@ -74,14 +74,16 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
-                <option value="null">Selecione uma opção</option>
-                <option value="0">Coordenador</option>
+              <label for="exampleFormControlInput1" class="form-label">Coordenador:</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCoordinator">
+                <option value="null">Selecione um coordenador</option>
+                <option v-for="coordenador in coordinatoresByCourse" :key="coordenador" v-bind:value="coordenador.id">
+                {{ coordenador.utilizador.login }}
+                </option>
               </select>
             </div>
             <small></small>
-            <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
+            <button class="btn btn-primary" @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)">Remover</button>
           </div>
         </div>
       </div>
@@ -101,10 +103,12 @@ export default {
   data() {
     return {
         coursesWithCoordinatores: [],
+        coordinatoresByCourse: [],
         selectedCourseRemove: null,
         selectedCourse: null,
         roleId: null,
-        login: null
+        login: null,
+        selectedCoordinator: null
     };
   },
   methods: {
@@ -127,6 +131,7 @@ export default {
         .then((response) => {
           this.$toast.success("Role concedido a " + login + "!",);
           this.getCoursesCoordinators()
+          this.login = null
         })
         .catch((error) => {
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
@@ -136,12 +141,24 @@ export default {
       this.$axios.get("curso/coordenadores/" + courseId)
         .then((response) => {
           console.log(response.data);
-          this.coursesWithCoordinatores = response.data;
+          this.coordinatoresByCourse = response.data.coordenadores;
         })
         .catch((error) => {
           console.log(error.response);
         });
-    }
+    },
+    revokeCoordinatorRole(coordinatorId, courseId){
+      this.$axios.delete("removecoordenador/" + coordinatorId)
+        .then((response) => {
+          this.$toast.success("Role retirado com sucesso!");
+          this.selectedCoordinator = null
+          this.getCoursesCoordinators()
+          this.getCoordinatorsByCourse(courseId)
+        })
+        .catch((error) => {
+          this.$toast.error("Não foi possível retirar o role a este utilizador!");
+        });
+    },
   },
   mounted() {
     this.getCoursesCoordinators()

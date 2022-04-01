@@ -12,6 +12,7 @@ import CoordenadorRoot from '../components/coordenador/coordenadorroot.vue'
 import ProfessorRoot from '../components/professor/professorroot.vue'
 import DashboardProfessor from '../components/professor/dashboardprofessor.vue'
 import VerCadeiras from '../components/professor/vercadeiras.vue'
+import GerirCadeira from '../components/admin/gerircadeira.vue'
 
 
 const router = createRouter({
@@ -66,6 +67,12 @@ const router = createRouter({
           name: "gerirperiodos",
           component: GerirPeriodos,
           meta: { title: "Gerir Cursos" },
+        },
+        {
+          path: "gerircadeira",
+          name: "gerircadeira",
+          component: GerirCadeira,
+          meta: { title: "Gerir Cadeira" },
         },
         {
           path: "logs",

@@ -4,7 +4,9 @@ import axios from "axios";
 export const useCounterStore = defineStore({
   id: 'counter',
   state: () => ({
-    courses: []
+    courses: [],
+    courseWithUCs: [],
+    cadeiraToManage: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -19,6 +21,15 @@ export const useCounterStore = defineStore({
         console.log(error.response)
         throw error
       }
+    },
+    async getCourseWithUCs(courseId){
+      try {
+        let response = await axios.get("curso/cadeiras/" + courseId)
+        this.courseWithUCs = response.data;
+      } catch {
+        console.log(error.response);
+        throw error
+      }        
     }
   }
 })
