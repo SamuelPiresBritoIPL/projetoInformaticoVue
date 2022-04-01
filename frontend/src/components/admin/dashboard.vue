@@ -6,7 +6,7 @@
         Periodos de Inscrição e de Confirmação de UC´s de cada Curso
       </div>
       <div class="card-body">
-        <table class="table">
+        <table class="table" style="text-align:left;">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -16,11 +16,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+            <tr v-for="course in coursesWithAberturas" :key="course">
+              <td>{{ course.id }}</td>
+              <td>{{ "["+course.codigo+"] "+course.nome }}</td>
+              <td></td>
+              <td>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -35,13 +36,24 @@ export default {
   component: {},
   data() {
     return {
-        
+        coursesWithAberturas: []
     };
   },
   methods: {
-    
+    getCoursesAberturas(){
+      this.$axios.get("curso/aberturas")
+        .then((response) => {
+          console.log(response.data);
+          this.coursesWithAberturas = response.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
   },
-  mounted() {},
+  mounted() {
+    this.getCoursesAberturas()
+  },
 };
 </script>
 

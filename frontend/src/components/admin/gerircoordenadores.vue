@@ -29,32 +29,62 @@
       </div>
     </div>
     <br>
-    <div class="card border-light mb-3" style="max-width: 32rem;">
-      <div class="card-header">Adicionar Coordenadores</div>
-      <div class="card-body">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Curso:</label>
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
-            <option value="null">Selecione um curso.</option>
-            <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-            {{ "["+course.codigo+"] "+course.nome }}
-            </option>
-          </select>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="card border-light mb-3" style="max-width: 32rem;">
+          <div class="card-header">Adicionar Coordenadores</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Curso:</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                <option value="null">Selecione um curso.</option>
+                <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                {{ "["+course.codigo+"] "+course.nome }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
+                <option value="null">Selecione uma opção</option>
+                <option value="0">Coordenador</option>
+                <option value="1">Subcoordenador</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Login</label>
+              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="name" v-model="login">
+            </div>
+            <small></small>
+            <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
-          <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
-            <option value="null">Selecione uma opção</option>
-            <option value="0">Coordenador</option>
-            <option value="1">Subcoordenador</option>
-          </select>
+      </div>
+      <div class="col-sm-6">
+        <div class="card border-light mb-3" style="max-width: 32rem;">
+          <div class="card-header">Remover Coordenadores</div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Curso:</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourseRemove" v-on:change="getCoordinatorsByCourse(selectedCourseRemove)">
+                <option value="null">Selecione um curso.</option>
+                <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                {{ "["+course.codigo+"] "+course.nome }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
+                <option value="null">Selecione uma opção</option>
+                <option value="0">Coordenador</option>
+                <option value="1">Subcoordenador</option>
+              </select>
+            </div>
+            <small></small>
+            <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Login</label>
-          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="name" v-model="login">
-        </div>
-        <small></small>
-        <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
       </div>
     </div>
   </div>    
@@ -72,6 +102,7 @@ export default {
   data() {
     return {
         coursesWithCoordinatores: [],
+        selectedCourseRemove: null,
         selectedCourse: null,
         roleId: null,
         login: null
@@ -100,6 +131,16 @@ export default {
         })
         .catch((error) => {
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
+        });
+    },
+    getCoordinatorsByCourse(courseId){
+      this.$axios.get("curso/coordenadores/" + courseId)
+        .then((response) => {
+          console.log(response.data);
+          this.coursesWithCoordinatores = response.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
         });
     }
   },
