@@ -56,7 +56,7 @@ export default {
   methods: {
     selectCadeiraToManage(cadeira){
       this.counterStore.cadeiraToManage = cadeira
-      this.$router.push("/admin/gerircadeira");
+      this.$router.push("/admin/gerircadeira/" + cadeira.id);
     }
   },
   mounted() {

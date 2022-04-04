@@ -6,7 +6,8 @@ export const useCounterStore = defineStore({
   state: () => ({
     courses: [],
     courseWithUCs: [],
-    cadeiraToManage: []
+    cadeiraToManage: [],
+    aberturasByCourse: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -30,6 +31,15 @@ export const useCounterStore = defineStore({
         console.log(error.response);
         throw error
       }        
+    },
+    async getAberturasByCourse(courseId){
+      try {
+        let response = await axios.get("curso/aberturas/" + courseId + "/1/2")
+        this.aberturasByCourse = response.data;
+      } catch {
+        console.log(error.response);
+        throw error
+      }
     }
   }
 })

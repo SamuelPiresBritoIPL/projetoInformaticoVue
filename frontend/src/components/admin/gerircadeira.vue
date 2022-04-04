@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Cadeira</h2>
+    <h2>Gerir Cadeira {{ this.$route.params.cadeiraId}}</h2>
     <div class="card text-center">
       <div class="card-body">
         <div style="margin-bottom:20px;">

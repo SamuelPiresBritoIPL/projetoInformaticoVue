@@ -69,7 +69,7 @@ const router = createRouter({
           meta: { title: "Gerir Cursos" },
         },
         {
-          path: "gerircadeira",
+          path: "gerircadeira/:cadeiraId",
           name: "gerircadeira",
           component: GerirCadeira,
           meta: { title: "Gerir Cadeira" },
