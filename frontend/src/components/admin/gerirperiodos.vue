@@ -91,10 +91,10 @@
               </div>
               <button v-if="editarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
                 @click="updateAbertura(selectedYear, dataAbertura, dataEncerrar)"
-                >Confimar Edição</button>
+                >Confifmar Edição</button>
               <button v-if="iniciarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
                 @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 0, dataAbertura, dataEncerrar)"
-                >Confimar Iniciação</button>
+                >Confirmar Iniciação</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
             </form>
           </div>
@@ -145,7 +145,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Ano do curso</label>
                 <div class="col-sm-10">
-                  <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
                     <option v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
                     {{ year != 0 ? year : "Todos" }}
@@ -156,17 +156,19 @@
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura</label>
                 <div class="col-sm-10">
-                  <input type="datetime-local" class="form-control">
+                  <input type="datetime-local" class="form-control" v-model="dataAbertura">
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar</label>
                 <div class="col-sm-10">
-                  <input type="datetime-local" class="form-control">
+                  <input type="datetime-local" class="form-control" v-model="dataEncerrar">
                 </div>
               </div>
-              <button v-if="editarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;">Confimar Edição</button>
-              <button v-if="iniciarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;">Confimar Iniciação</button>
+              <button v-if="editarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
+              @click="updateAbertura(selectedYear, dataAbertura, dataEncerrar)">Confirmar Edição</button>
+              <button v-if="iniciarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
+              @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 1, dataAbertura, dataEncerrar)">Confirmar Iniciação</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
             </form>
           </div>
@@ -243,6 +245,7 @@ export default {
         .then((response) => {
           this.$toast.success("Periodo de abertura criado com sucesso!",);
           this.counterStore.getAberturasByCourse(courseId)
+          this.cancelarEdicaoIniciacao();
         })
         .catch((error) => {
           this.$toast.error("Não foi possível criar a abertura!");
@@ -257,6 +260,7 @@ export default {
         .then((response) => {
           this.$toast.success("Periodo de abertura editado com sucesso!",);
           this.counterStore.getAberturasByCourse(this.counterStore.aberturasByCourse.id)
+          this.cancelarEdicaoIniciacao();
         })
         .catch((error) => {
           this.$toast.error("Não foi possível editar a abertura!");

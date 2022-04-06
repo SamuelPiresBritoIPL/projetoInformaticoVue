@@ -39,6 +39,7 @@ export const useCounterStore = defineStore({
       try {
         let response = await axios.get("curso/cadeiras/" + courseId)
         this.courseWithUCs = response.data;
+        console.log(this.courseWithUCs);
       } catch {
         console.log(error.response);
         throw error
