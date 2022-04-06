@@ -26,9 +26,9 @@
           <tbody>
             <tr class="tableRow" v-for="cadeira in this.counterStore.courseWithUCs.cadeiras" :key="cadeira" @click="selectCadeiraToManage(cadeira)">
               <td>{{ "["+cadeira.codigo+"] "+cadeira.nome }}</td>
-              <td>{{ cadeira.semestre }}</td>
+              <td>{{ cadeira.nrInscritos }}/{{ cadeira.nrInscricoes }}</td>
               <td>
-                <a  v-for="turno in cadeira.turnos" :key="turno"><u>{{ turno.numero != 0 ? turno.tipo+turno.numero :  turno.tipo }}</u>&nbsp;&nbsp;</a>
+                <a  v-for="turno in cadeira.turnos" :key="turno" class="hoverturno" style="text-decoration:none">{{ turno.numero != 0 ? turno.tipo+turno.numero :  turno.tipo }}&nbsp;&nbsp;</a>
               </td>
             </tr>
           </tbody>
@@ -68,6 +68,11 @@ export default {
 <style>
 .tableRow:hover{
   background-color: aliceblue;
+}
+
+.hoverturno:hover{
+  cursor: pointer;
+  font-weight: 500;
 }
 @media (min-width: 1024px) {
   .about {
