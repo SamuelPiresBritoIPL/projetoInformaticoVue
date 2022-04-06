@@ -21,12 +21,16 @@
               <td>{{ "["+course.codigo+"] "+course.nome }}</td>
               <td>
                 <div>
-                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 0 ? "Início: "+abertura.dataAbertura+"\n"+"Fim: "+ abertura.dataEncerar : ''}}</p>
+                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 0 ? "Ano: "+abertura.ano : ''}}<br>
+                  {{ abertura.tipoAbertura == 0 ? "Início: "+abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}<br> 
+                  {{ abertura.tipoAbertura == 0 ? "Fim: "+ abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
                 </div>
               </td>
               <td>
                 <div>
-                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 1 ? "Início: "+abertura.dataAbertura+"\n"+"Fim: "+ abertura.dataEncerar : ''}}</p>
+                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 1 ? "Ano: "+abertura.ano : ''}}<br>
+                  {{ abertura.tipoAbertura == 1 ? "Início: "+abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}<br> 
+                  {{ abertura.tipoAbertura == 1 ? "Fim: "+abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
                 </div>
               </td>
             </tr>
@@ -34,6 +38,8 @@
         </table>
       </div>
     </div>
+    <br>
+    <br>
   </div>    
 </template>
 

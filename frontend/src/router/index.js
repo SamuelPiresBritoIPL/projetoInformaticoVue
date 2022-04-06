@@ -13,6 +13,7 @@ import ProfessorRoot from '../components/professor/professorroot.vue'
 import DashboardProfessor from '../components/professor/dashboardprofessor.vue'
 import VerCadeiras from '../components/professor/vercadeiras.vue'
 import GerirCadeira from '../components/admin/gerircadeira.vue'
+import AlunoRoot from '../components/aluno/alunoroot.vue'
 
 
 const router = createRouter({
@@ -149,6 +150,11 @@ const router = createRouter({
           meta: { title: "Cadeiras" },
         },
       ],
+    },
+    {
+      path: '/',
+      name: 'alunoroot',
+      component: AlunoRoot,
     }
   ]
 })
