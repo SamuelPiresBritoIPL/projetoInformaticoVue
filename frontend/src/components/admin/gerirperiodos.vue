@@ -31,9 +31,9 @@
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                 <label class="col-sm-10 col-form-label">Todos</label>
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
-                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaConfirmacaoTodos.dataAbertura }}</label>
+                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaConfirmacaoTodos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
-                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaConfirmacaoTodos.dataEncerar }}</label>
+                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaConfirmacaoTodos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                 <div>
                   <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="openEditarConfirmacao(this.counterStore.aberturaConfirmacaoTodos)">Editar</button>
                   <button type="button" class="btn btn-danger" @click="deleteAbertura(this.counterStore.aberturaConfirmacaoTodos.id)">Encerrar</button> 
@@ -45,9 +45,9 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                     <label class="col-sm-10 col-form-label">{{ anoAbertura.ano }}</label>
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura }}</label>
+                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataEncerar }}</label>
+                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <div>
                       <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="openEditarConfirmacao(anoAbertura)">Editar</button>
                       <button type="button" class="btn btn-danger" @click="deleteAbertura(anoAbertura.id)">Encerrar</button> 
@@ -109,9 +109,9 @@
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                 <label class="col-sm-10 col-form-label">Todos</label>
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
-                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaInscricaoTodos.dataAbertura }}</label>
+                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaInscricaoTodos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
-                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaInscricaoTodos.dataEncerar }}</label>
+                <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaInscricaoTodos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                 <div>
                   <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="openEditarInscricao(this.counterStore.aberturaInscricaoTodos)">Editar</button>
                   <button type="button" class="btn btn-danger" @click="deleteAbertura(this.counterStore.aberturaInscricaoTodos.id)">Encerrar</button> 
@@ -123,9 +123,9 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                     <label class="col-sm-10 col-form-label">{{ anoAbertura.ano }}</label>
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura }}</label>
+                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura.replace(':00.000000Z', '').replace('T', '') }}</label>
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataEncerar }}</label>
+                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <div>
                       <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="openEditarInscricao(anoAbertura)">Editar</button>
                       <button type="button" class="btn btn-danger" @click="deleteAbertura(anoAbertura.id)">Encerrar</button> 

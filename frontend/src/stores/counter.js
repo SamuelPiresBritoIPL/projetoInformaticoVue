@@ -9,6 +9,7 @@ export const useCounterStore = defineStore({
     cadeiraToManage: [],
     aberturasByCourse: [],
     yearsCourse: [],
+    pedidosByCourse: [],
     aberturaConfirmacaoTodos: [],
     aberturaConfirmacao123: [],
     aberturaConfirmacao1: [],
@@ -38,6 +39,15 @@ export const useCounterStore = defineStore({
       try {
         let response = await axios.get("curso/cadeiras/" + courseId)
         this.courseWithUCs = response.data;
+      } catch {
+        console.log(error.response);
+        throw error
+      }        
+    },
+    async getPedidosByCourse(courseId){
+      try {
+        let response = await axios.get("curso/pedidos/" + courseId + "1/2")
+        this.pedidosByCourse = response.data;
       } catch {
         console.log(error.response);
         throw error

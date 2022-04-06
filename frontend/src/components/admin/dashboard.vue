@@ -19,8 +19,15 @@
             <tr v-for="course in coursesWithAberturas" :key="course">
               <td>{{ course.id }}</td>
               <td>{{ "["+course.codigo+"] "+course.nome }}</td>
-              <td></td>
               <td>
+                <div>
+                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 0 ? "Início: "+abertura.dataAbertura+"\n"+"Fim: "+ abertura.dataEncerar : ''}}</p>
+                </div>
+              </td>
+              <td>
+                <div>
+                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 1 ? "Início: "+abertura.dataAbertura+"\n"+"Fim: "+ abertura.dataEncerar : ''}}</p>
+                </div>
               </td>
             </tr>
           </tbody>
@@ -41,7 +48,7 @@ export default {
   },
   methods: {
     getCoursesAberturas(){
-      this.$axios.get("curso/aberturas")
+      this.$axios.get("curso/aberturas/1/2")
         .then((response) => {
           console.log(response.data);
           this.coursesWithAberturas = response.data;

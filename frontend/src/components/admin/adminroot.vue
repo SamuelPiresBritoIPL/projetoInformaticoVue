@@ -51,22 +51,22 @@
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'gerirconfirmacoes' }"
-                            :to="{ name: 'gerirconfirmacoes' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="clipboard2-check"
-                                size="1x" />
-                                Gerir Confirmações UC
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerirperiodos' }"
                             :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="calendar-event"
                                 size="1x" />
                                 Gerir Periodos
+                            </router-link>
+                        </li>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerirconfirmacoes' }"
+                            :to="{ name: 'gerirconfirmacoes' }">
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="clipboard2-check"
+                                size="1x" />
+                                Gerir Confirmações UC
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
