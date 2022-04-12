@@ -4,6 +4,7 @@ import axios from "axios";
 export const useCounterStore = defineStore({
   id: 'counter',
   state: () => ({
+    anosletivos: [],
     courses: [],
     courseWithUCs: [],
     cadeiraToManage: [],
@@ -25,6 +26,16 @@ export const useCounterStore = defineStore({
     doubleCount: (state) => state.counter * 2
   },
   actions: {
+    async getAnosLetivos() {
+      try {
+        let response = await axios.get("anoletivo")
+        this.anosletivos = response.data
+        return response.data;
+      } catch (error) {
+        console.log(error.response)
+        throw error
+      }
+    },
     async getCourses() {
       try {
         let response = await axios.get("curso")
