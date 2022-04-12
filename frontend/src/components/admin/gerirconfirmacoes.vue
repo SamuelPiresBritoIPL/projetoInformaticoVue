@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir Confirmações das UC's</h2>
-    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="selectCourse(selectedCourse)">
       <option value="null">Selecione um curso.</option>
       <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
       {{ "["+course.codigo+"] "+course.nome }}
@@ -14,20 +14,16 @@
             <span class="fs-5 fw-semibold">Lista de pedidos</span>
           </a>
           <div class="list-group list-group-flush border-bottom scrollarea">
-            <a v-for="pedido in this.counterStore.pedidosByCourse" :key="pedido.id" class="list-group-item list-group-item-action py-3 lh-tight" @click="openPedido(pedido)">
+            <a type="button" v-for="pedido in this.counterStore.pedidosByCourse" :key="pedido.id" class="list-group-item list-group-item-action py-3 lh-tight" :class="{ active: selectedPedido.id == pedido.id }" @click="openPedido(pedido)">
               <div class="d-flex w-100 align-items-center justify-content-between">
                 <strong class="mb-1">{{ pedido.utilizador.login }}</strong>
-                <small>{{ pedido.utilizador.nome }}</small>
+                <small class="active" :class="{ 'text-muted': selectedPedido.id != pedido.id}">{{ pedido.data.replace('.000000Z', '').replace('T', ' ') }}</small>
               </div>
               <div class="col-10 mb-1 small">{{ pedido.utilizador.nome }}</div>
             </a>
-            <a href="#" class="list-group-item list-group-item-action py-3 lh-tight">
-              <div class="d-flex w-100 align-items-center justify-content-between">
-                <strong class="mb-1">Número</strong>
-                <small class="text-muted">Data</small>
-              </div>
-              <div class="col-10 mb-1 small">Nome</div>
-            </a>
+          </div>
+          <div v-if="this.counterStore.pedidosByCourse.length == 0">
+            <p style="margin-left: 16px; margin-top: 15px;">Não existem pedidos pendentes.</p>
           </div>
         </div>
       </div>
@@ -35,30 +31,29 @@
           <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom" style="margin-top:5px;">
             <span class="fs-5 fw-semibold">Detalhes do pedido</span>
           </a>
-          <div style="margin-left: 16px;">
+          <div v-if="pedidoForm == true" style="margin-left: 16px;">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Login:</label>
-            <label class="col-sm-10 col-form-label">Todos</label>
+            <label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.login }}</label>
             <label for="inputEmail3" class="col-sm-2 col-form-label">Nome:</label>
-            <label class="col-sm-10 col-form-label">Todos</label>
+            <label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.nome }}</label>
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Data:</label>
+            <label class="col-sm-10 col-form-label">{{ selectedPedido.data.replace('.000000Z', '').replace('T', ' ') }}</label>
             <label for="inputEmail3" class="col-sm-4 col-form-label" style="margin-top: 10px; margin-bottom: 10px;">Cadeiras requeridas:</label>
             <div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" style="margin-left: 30px;">
+              <input class="form-check-input" style="margin-right: 10px" type="checkbox" value="">
               <label class="form-check-label">
                 {{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}
               </label>
-              <input class="form-check-input" style="margin-left: 15px" type="checkbox" value="">
-            </div>
-            <div style="margin-left: 30px;">
-              <label class="form-check-label">
-                [codigo] nome cadeira
-              </label>
-              <input class="form-check-input" style="margin-left: 15px" type="checkbox" value="">
             </div>
             <label class="col-sm-2 col-form-label" style="margin-top: 15px;">Descrição:</label>
-            <p>Texto descricao</p>
+            <p style="margin-left: 30px;">{{ selectedPedido.descricao }}</p>
             <div style="text-align: center;">
               <button type="button" class="btn btn-primary" style="margin-right: 5px;">Aprovar</button>
               <button type="button" class="btn btn-danger">Rejeitar</button> 
             </div> 
+          </div>
+          <div v-else>
+            <p style="margin-left: 16px; margin-top: 15px;">Selecione um pedido.</p>
           </div>
       </div>
     </div>
@@ -82,6 +77,13 @@ export default {
     };
   },
   methods: {
+    selectCourse(selectedCourse){
+      this.pedidoForm = false
+      if(this.selectedPedido.length != 0){
+        this.selectedPedido = []
+      }
+      this.counterStore.getPedidosByCourse(selectedCourse)
+    },
     openPedido(pedido){
       this.pedidoForm = true
       this.selectedPedido = pedido

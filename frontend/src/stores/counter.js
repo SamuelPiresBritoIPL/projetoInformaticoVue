@@ -46,8 +46,11 @@ export const useCounterStore = defineStore({
       }        
     },
     async getPedidosByCourse(courseId){
+      if(this.pedidosByCourse.length != 0){
+        this.pedidosByCourse = []
+      }
       try {
-        let response = await axios.get("curso/pedidos/" + courseId + "1/2")
+        let response = await axios.get("curso/pedidos/" + courseId + "/1/2")
         this.pedidosByCourse = response.data;
       } catch {
         console.log(error.response);

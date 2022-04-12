@@ -83,7 +83,7 @@
               </select>
             </div>
             <small></small>
-            <button class="btn btn-primary" @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)">Remover</button>
+            <button class="btn btn-danger" @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)">Remover</button>
           </div>
         </div>
       </div>
@@ -148,7 +148,7 @@ export default {
         });
     },
     revokeCoordinatorRole(coordinatorId, courseId){
-      this.$axios.delete("removecoordenador/" + coordinatorId)
+      this.$axios.delete("coordenador/" + coordinatorId)
         .then((response) => {
           this.$toast.success("Role retirado com sucesso!");
           this.selectedCoordinator = null

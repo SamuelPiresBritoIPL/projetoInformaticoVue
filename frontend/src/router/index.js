@@ -14,6 +14,9 @@ import DashboardProfessor from '../components/professor/dashboardprofessor.vue'
 import VerCadeiras from '../components/professor/vercadeiras.vue'
 import GerirCadeira from '../components/admin/gerircadeira.vue'
 import AlunoRoot from '../components/aluno/alunoroot.vue'
+import ConfirmacaoUCs from '../components/aluno/confirmacaoucs.vue'
+import InscricaoTurnos from '../components/aluno/inscricaoturnos.vue'
+import PaginaInicial from '../components/aluno/paginainicial.vue'
 
 
 const router = createRouter({
@@ -155,6 +158,29 @@ const router = createRouter({
       path: '/',
       name: 'alunoroot',
       component: AlunoRoot,
+      redirect: {
+        name: "paginainicial",
+      },
+      children: [
+        {
+          path: " ",
+          name: "paginainicial",
+          component: PaginaInicial,
+          meta: { title: "Página Inicial" },
+        },
+        {
+          path: "confirmacaoucs",
+          name: "confirmacaoucs",
+          component: ConfirmacaoUCs,
+          meta: { title: "Confirmação de UCs" },
+        },
+        {
+          path: "inscricaoturnos",
+          name: "inscricaoturnos",
+          component: InscricaoTurnos,
+          meta: { title: "Inscrição nos Turnos" },
+        },
+      ],
     }
   ]
 })
