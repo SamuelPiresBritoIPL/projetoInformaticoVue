@@ -52,7 +52,7 @@
               </select>
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Login</label>
+              <label for="exampleFormControlInput1" class="form-label">Login/Email:</label>
               <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="name" v-model="login">
             </div>
             <small></small>
