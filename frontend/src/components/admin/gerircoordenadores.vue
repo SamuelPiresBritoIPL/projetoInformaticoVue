@@ -148,7 +148,7 @@ export default {
         });
     },
     revokeCoordinatorRole(coordinatorId, courseId){
-      this.$axios.delete("removecoordenador/" + coordinatorId)
+      this.$axios.delete("coordenador/" + coordinatorId)
         .then((response) => {
           this.$toast.success("Role retirado com sucesso!");
           this.selectedCoordinator = null

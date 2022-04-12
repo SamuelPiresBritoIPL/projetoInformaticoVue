@@ -104,7 +104,7 @@
                 </select>
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateAnoletivoAtivo(anoletivoativo, semestreativo)">
-                  <span v-if="loading3" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading4" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
