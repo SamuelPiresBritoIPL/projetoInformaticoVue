@@ -49,7 +49,7 @@
                   <option value="2">2</option>
                 </select>
               </div>
-              <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes)">
+              <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes, 2)">
                   <span v-if="loading2" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
@@ -74,7 +74,7 @@
                   <option value="2">2</option>
                 </select>
               </div>
-              <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, semestreaprovacoes, 'webservice/inscricaoaprovados')">
+              <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, semestreaprovacoes, 3, 'webservice/inscricaoaprovados')">
                   <span v-if="loading3" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
@@ -165,8 +165,12 @@ export default {
           this.blocked = false
         });
     },
-    updateInscricaoInformation(anoletivo, semestre, url="webservice/inscricao"){
-      this.loading3 = true
+    updateInscricaoInformation(anoletivo, semestre, numero, url="webservice/inscricao"){
+      if (numero == 2) {
+        this.loading2 = true
+      } else {
+        this.loading3 = true
+      }
       this.blocked = true
       this.$axios.post(url, {
             "anoletivo": anoletivo,
@@ -182,6 +186,7 @@ export default {
           this.$toast.error(error);
         })
         .finally(() => {
+          this.loading2 = false
           this.loading3 = false
           this.blocked = false
         });
