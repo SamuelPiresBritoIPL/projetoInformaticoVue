@@ -40,7 +40,7 @@
             <label class="col-sm-10 col-form-label">{{ selectedPedido.data.replace('.000000Z', '').replace('T', ' ') }}</label>
             <label for="inputEmail3" class="col-sm-4 col-form-label" style="margin-top: 10px; margin-bottom: 10px;">Cadeiras requeridas:</label>
             <div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" style="margin-left: 30px;">
-              <input class="form-check-input" style="margin-right: 10px" type="checkbox" value="">
+              <input class="form-check-input" style="margin-right: 10px" type="checkbox" :value="cadeira.id" v-model="approvedCadeiras">
               <label class="form-check-label">
                 {{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}
               </label>
@@ -48,8 +48,8 @@
             <label class="col-sm-2 col-form-label" style="margin-top: 15px;">Descrição:</label>
             <p style="margin-left: 30px;">{{ selectedPedido.descricao }}</p>
             <div style="text-align: center;">
-              <button type="button" class="btn btn-primary" style="margin-right: 5px;">Aprovar</button>
-              <button type="button" class="btn btn-danger">Rejeitar</button> 
+              <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="handleRequest(selectedPedido, 0)">Aprovar Selecionadas</button>
+              <button type="button" class="btn btn-danger" @click="handleRequest(selectedPedido, 1)">Rejeitar Pedido</button> 
             </div> 
           </div>
           <div v-else>
@@ -73,7 +73,10 @@ export default {
     return {
         selectedCourse: null,
         pedidoForm: false,
-        selectedPedido: []
+        selectedPedido: [],
+        allRequestCaderias: [],
+        approvedCadeiras: [],
+        rejectedCadeiras: []
     };
   },
   methods: {
@@ -87,6 +90,41 @@ export default {
     openPedido(pedido){
       this.pedidoForm = true
       this.selectedPedido = pedido
+    },
+    handleRequest(pedido, type){
+      for (let index = 0; index < pedido.cadeiras.length; index++) {
+        this.allRequestCaderias.push(pedido.cadeiras[index].id)
+      }
+      if (this.approvedCadeiras.length != 0) {
+        this.rejectedCadeiras = this.allRequestCaderias.filter(x => !this.approvedCadeiras.includes(x))
+      } else {
+        this.rejectedCadeiras = this.allRequestCaderias
+      }
+      this.$axios.put("curso/pedidos/" + pedido.id, {
+            "pedidosucsAprovadasIds": this.approvedCadeiras,
+            "pedidosucsReprovadasIds": this.rejectedCadeiras
+          })
+        .then((response) => {
+          if (type == 0) {
+            this.$toast.success("Pedido aprovado com sucesso!");
+          } else {
+            this.$toast.success("Pedido rejeitado com sucesso!");
+          }
+          this.pedidoForm = false
+          this.counterStore.getPedidosByCourse(this.selectedCourse)
+        })
+        .catch((error) => {
+          if (type == 0) {
+            this.$toast.error("Não foi possível aprovadar o pedido!");
+          } else {
+            this.$toast.error("Não foi possível rejeitar o pedido!");
+          }
+        })
+        .finally(() => {
+          this.allRequestCaderias = []
+          this.approvedCadeiras = []
+          this.rejectedCadeiras = [] 
+        });
     }
   },
   mounted() {
