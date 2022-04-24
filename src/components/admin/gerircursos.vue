@@ -28,7 +28,9 @@
               <td>{{ "["+cadeira.codigo+"] "+cadeira.nome }}</td>
               <td>{{ cadeira.nrInscritos }}/{{ cadeira.nrInscricoes }}</td>
               <td>
-                <a v-for="turno in cadeira.turnos" :key="turno" class="hoverturno" style="text-decoration:none">{{ turno.numero != 0 ? turno.tipo+turno.numero :  turno.tipo }}&nbsp;&nbsp;</a>
+                <p v-for="turno in cadeira.turnos" :key="turno"> 
+                  <a v-for="turnotipo in turno" :key="turnotipo" class="hoverturno" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}&nbsp;&nbsp;</a>
+                </p>
               </td>
             </tr>
           </tbody>
