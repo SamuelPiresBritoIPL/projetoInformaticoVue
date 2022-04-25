@@ -62,7 +62,7 @@ export default {
   },
   methods: {
     getCadeirasToConfirm(){
-      this.$axios.get("cadeiras/5185")
+      this.$axios.get("cadeiras/utilizador/5185")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
         })

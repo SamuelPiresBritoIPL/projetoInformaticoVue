@@ -7,7 +7,7 @@ export const useCounterStore = defineStore({
     anosletivos: [],
     courses: [],
     courseWithUCs: [],
-    cadeiraToManage: [],
+    turnoToManage: null,
     aberturasByCourse: [],
     yearsCourse: [],
     pedidosByCourse: [],

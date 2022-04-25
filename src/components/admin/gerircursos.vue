@@ -29,7 +29,7 @@
               <td>{{ cadeira.nrInscritos }}/{{ cadeira.nrInscricoes }}</td>
               <td>
                 <p v-for="turno in cadeira.turnos" :key="turno"> 
-                  <a v-for="turnotipo in turno" :key="turnotipo" class="hoverturno" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}&nbsp;&nbsp;</a>
+                  <a v-for="turnotipo in turno" :key="turnotipo" class="hoverturno" @click.stop="selectTurnoToManage(cadeira,turnotipo)" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}&nbsp;&nbsp;</a>
                 </p>
               </td>
             </tr>
@@ -57,8 +57,12 @@ export default {
   },
   methods: {
     selectCadeiraToManage(cadeira){
-      this.counterStore.cadeiraToManage = cadeira
+      this.counterStore.turnoToManage = null
       this.$router.push("/admin/gerircadeira/" + cadeira.id);
+    },
+    selectTurnoToManage(cadeira,turno){
+      this.counterStore.turnoToManage = turno.id
+      this.$router.push("/admin/gerircadeira/" + cadeira.id)
     }
   },
   mounted() {

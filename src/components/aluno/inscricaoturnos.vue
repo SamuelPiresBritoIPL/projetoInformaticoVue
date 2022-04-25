@@ -17,11 +17,14 @@
                   <div v-for="cadeira in cadeirasWithTurnos" :key="cadeira.cadeira.id">
                     <label class="col-sm-4 col-form-label">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
                     <label class="col-sm-8 col-form-label">
-                      <span v-for="turno in cadeira.cadeira.turnos" :key="turno.id" style="margin-right: 20px;">
-                        <input class="form-check-input" type="radio" :name="flexRadioDefault+turno.tipo+cadeira.cadeira.nome" :value="turno.id" v-model="turnosToSelect" style="margin-right: 3px">
-                        <label class="form-check-label">
-                          {{ turno.numero == 0 ? turno.tipo : turno.tipo+turno.numero+" " }}
-                        </label>
+                      <span v-for="turno in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
+                        <span v-for="turnotipo in turno" :key="turnotipo.id">
+                          <input class="form-check-input" type="radio" :name="flexRadioDefault+turnotipo.tipo+cadeira.cadeira.nome" :value="turnotipo.id" v-model="turnosToSelect" style="margin-right: 3px">
+                          <label class="form-check-label">
+                            {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero+" " }}
+                          </label>
+                        </span>
+                        <br>
                       </span>
                     </label>  
                   </div>
@@ -47,7 +50,7 @@ export default {
   },
   methods: {
     getCadeirasWithTurnos(){
-      this.$axios.get("cadeiras/5181")
+      this.$axios.get("cadeiras/utilizador/5181")
         .then((response) => {
           this.cadeirasWithTurnos = response.data;
         })
