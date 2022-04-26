@@ -1,13 +1,14 @@
 <template>
   <div class="container-fluid">
-    <h2 v-if="this.cadeira != null">Gerir Cadeira {{ this.cadeira.nome}}</h2>
-    <div class="card text-center">
+    <h2 v-if="this.cadeira != null">Gerir UC {{ this.cadeira.nome}}</h2>
+    <h5 v-if="this.cadeira != null">{{ this.cadeira.curso.nome}}</h5>
+    <div class="card">
       <div class="card-body">
-        <div v-if="this.cadeira != null" style="margin-bottom:20px;">
+        <div v-if="this.cadeira != null" style="margin-bottom:20px;" class="text-center">
             <span style="margin-right: 35px; font-size: 20px;" class="" v-bind:class="{ 'turnoactive': activeTurno[0]}" @click="getStats()">Todos</span>
             <span style="margin-right: 35px; font-size: 20px;" class="" v-for="(turno,index) in this.cadeira.turnos" :key="turno" @click="getStatsTurno(turno.id)" v-bind:class="{ 'turnoactive': activeTurno[(index+1)]}">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</span>
           </div>
-        <div class="row">
+        <div class="row text-center">
             <div class="col">
                 <div class="card bg-light mb-3" style="max-width: 18rem;">
                     <div class="card-header card-title"><h6>Total de Inscritos</h6></div>
@@ -47,12 +48,42 @@
                 </div>
             </div>
         </div>
-        <div class="card">
+        <div v-if="this.cadeira != null" class="card">
           <div class="card-body">
-            <h5 class="card-title">Atualizar dados</h5>
-            <p class="card-text">cenas</p>
-            <div class="card-body ">
+            <h5 class="card-title">titulo</h5>
 
+            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="número/email" v-model="numeroadicionar">
+              <div class="input-group-append">
+                <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
+              </div>
+            </div>
+            
+            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
+                  <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
+                </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
+              </div>
+            </div>
+            <div class="card" v-if="this.turno != null">
+              <div class="card-body">
+                <label for="exampleFormControlInput3" class="form-label">Alterar número de vagas</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
+                </div>
+                <input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0">
+                <label for="checkboxvisivel">Turno visivel</label>
+                <br>
+                <input type="checkbox" id="checkboxrepetentes" v-model="turno.repetentes" true-value="1" false-value="0">
+                <label for="checkboxrepetentes">Turno aceita repetentes</label>
+                <br>
+                <button class="btn btn-primary text-right" @click="changeTurnoData()">Guardar Alterações</button>
+              </div>
             </div>
           </div>
         </div>
@@ -63,7 +94,7 @@
               <th scope="col">Nome do Aluno</th>
               <th scope="col">Email</th>
               <th scope="col">Repetente </th>
-              <th scope="col">Inscrito</th>
+              <th scope="col">{{this.counterStore.turnoToManage == null ? "Inscrito Turno" : "Remover"}}</th>
             </tr>
           </thead>
           <tbody>
@@ -72,7 +103,12 @@
               <td>{{ aluno.nome }}</td>
               <td></td>
               <td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim"}}</td>
-              <td>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
+              <td v-if="this.turno != null"> 
+                <button class="btn btn-xs btn-danger" @click="deleteDefaultCategory(defaultCategories[index].id)">
+                  <BootstrapIcon style="" icon="trash" size="1x" />
+                </button>
+              </td>
+              <td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
             </tr>
           </tbody>
         </table>
@@ -100,7 +136,12 @@ export default {
         totalnaoinscritos:0,
         nrvagasturno:0,
         cadeira:null,
-        activeTurno:[]
+        activeTurno:[],
+        numeroadicionar: null,
+        turnoescolhido: null,
+        turnovisivel:0,
+        turno: null,
+        turnorepetentes:0
     };
   },
   methods: {
@@ -117,7 +158,7 @@ export default {
               this.activeTurno[index] = false
           });
           this.activeTurno[0] = true;
-          console.log(this.dadosInscritos)
+          this.counterStore.turnoToManage = null
         })
         .catch((error) => {
           console.log(error.response);
@@ -132,6 +173,7 @@ export default {
           this.totalnaorepetentes = response.data.totalnaorepetentes
           this.totalnaoinscritos = response.data.totalnaoinscritos
           this.dadosInscritos = response.data.alunos
+          this.turno = response.data.turno
           this.cadeira.turnos.forEach((value, index) => {
             if(value.id == turnoid){
               this.nrvagasturno = value.vagastotal
@@ -141,11 +183,10 @@ export default {
             }
           });
           this.activeTurno[0] = false;
-          console.log(this.dadosInscritos)
-          console.log(this.dadosInscritos);
+          this.counterStore.turnoToManage = turnoid
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
         });
     },
     getCadeiraInfo(){
@@ -162,6 +203,61 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        });
+    },
+    addStudentToUC(){
+      this.$axios.post("cadeiras/addaluno/"+this.cadeira.id, {
+            "login": this.numeroadicionar
+          })
+        .then((response) => {
+          this.$toast.success(response.data);
+          if(this.counterStore.turnoToManage == null){
+            this.getStats()
+          }else{
+            this.getStatsTurno()
+          }
+          this.numeroadicionar = null
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    addStudentToTurno(numeroadicionarTurno,turnoescolhido){
+      this.$axios.post("cadeiras/addalunoturno/"+turnoescolhido, {
+            "login": numeroadicionarTurno
+          })
+        .then((response) => {
+          this.$toast.success(response.data);
+          if(this.counterStore.turnoToManage == null){
+            this.getStats()
+          }else{
+            this.getStatsTurno()
+          }
+          this.numeroadicionarTurno = null
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    changeTurnoData(){
+      var objToSend = {
+        "visivel": this.turno.visivel,
+        "repetentes": this.turno.repetentes
+      };
+      if(this.turno.vagastotal != null){
+        objToSend = {
+          "visivel": this.turno.visivel,
+          "repetentes": this.turno.repetentes,
+          "vagastotal": this.turno.vagastotal
+        };
+      }
+      console.log(objToSend);
+      this.$axios.put("turno/"+this.turno.id, objToSend)
+        .then((response) => {
+          this.$toast.success(response.data);
+        })
+        .catch((error) => {
+          this.$toast.error(error);
         });
     }
   },
