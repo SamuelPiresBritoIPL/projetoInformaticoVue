@@ -3,6 +3,28 @@
     <h2>Atualizar Base de Dados</h2>
     <p>Todas as ações poderam demorar algum tempo (não dar refresh a página).</p>
     <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Atualizar os endpoints</h5>
+            <p class="card-text">Os endpoints tem de acabar com "?" porque depois vao ser automaticamente colocados com o ano letivo e o semestre</p>
+            <div class="card-body ">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Url cursos/turnos</label>
+                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url cursos (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/turnos.php? )" v-model="urlcursos">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Url inscrições</label>
+                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php? )" v-model="urlinscricoes">
+              </div>
+              <button class="btn btn-primary" @click="updateUrls()">
+                  <span aria-hidden="true"></span> Atualizar url's
+              </button>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
@@ -57,7 +79,6 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <br>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Atualizar ucs feitas pelos alunos</h5>
@@ -141,7 +162,9 @@ export default {
         semestreaprovacoes: 1,
         anoletivoativo: null,
         semestreativo: 1,
-        anosletivos: []
+        anosletivos: [],
+        urlcursos: "",
+        urlinscricoes: ""
     };
   },
    methods: {
@@ -211,9 +234,16 @@ export default {
           this.blocked = false
         });
     },
+    updateUrls(){
+
+    },
+    getUrls(){
+
+    },
   },
   mounted() {
     this.counterStore.getAnosLetivos()
+    this.getUrls()
   },
 };
 </script>

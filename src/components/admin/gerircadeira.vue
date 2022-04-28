@@ -105,7 +105,7 @@
               <td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim"}}</td>
               <td v-if="this.turno != null"> 
                 <button class="btn btn-xs btn-danger" @click="deleteDefaultCategory(defaultCategories[index].id)">
-                  <BootstrapIcon style="" icon="trash" size="1x" />
+                  <BootstrapIcon style="" icon="dash-circle" size="1x" />
                 </button>
               </td>
               <td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
@@ -159,6 +159,7 @@ export default {
           });
           this.activeTurno[0] = true;
           this.counterStore.turnoToManage = null
+          this.turno = null
         })
         .catch((error) => {
           console.log(error.response);
