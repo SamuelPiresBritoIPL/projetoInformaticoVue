@@ -28,7 +28,7 @@
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Atualizar cursos/professores</h5>
+            <h5 class="card-title">Atualizar turnos/cursos/professores</h5>
             <p class="card-text">Selecione o ano letivo e o semestre para ir buscar os novos dados dos cursos e professores.</p>
             <div class="card-body ">
               <div class="mb-3">
@@ -57,19 +57,22 @@
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Atualizar inscrições alunos/alunos</h5>
-            <p class="card-text">Selecione o ano letivo e o semestre para ir buscar os novos dados dos alunos e das suas respetivas inscrições nas ucs.</p>
+            <h5 class="card-title">Atualizar inscrições alunos</h5>
+            <p class="card-text">Selecione o ano letivo e o curso para ir buscar os novos dados dos alunos e das suas respetivas inscrições nas ucs.</p>
             <div class="card-body ">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
                 <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202122)" v-model="anoletivoinscricoes">
               </div>
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Semestre</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreinscricoes">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                <label for="exampleFormControlInput1" class="form-label">Curso</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                  <option value="0">Todos</option>
+                  <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                  {{ "["+course.codigo+"] "+course.nome }}
+                  </option>
                 </select>
+
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes, 2)">
                   <span v-if="loading2" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
@@ -164,7 +167,8 @@ export default {
         semestreativo: 1,
         anosletivos: [],
         urlcursos: "",
-        urlinscricoes: ""
+        urlinscricoes: "",
+        selectedCourse: 0
     };
   },
    methods: {
@@ -197,7 +201,8 @@ export default {
       this.blocked = true
       this.$axios.post(url, {
             "anoletivo": anoletivo,
-            "semestre": semestre
+            "semestre": semestre,
+            "idcurso": this.selectedCourse
           })
         .then((response) => {
           console.log(response)
@@ -261,6 +266,7 @@ export default {
   },
   mounted() {
     this.counterStore.getAnosLetivos()
+    this.counterStore.getCourses()
     this.getUrls()
   },
 };
