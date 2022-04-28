@@ -235,10 +235,28 @@ export default {
         });
     },
     updateUrls(){
-
+      this.$axios.put("webservice/url", {
+            "urlturnos": this.urlcursos,
+            "urlinscricoes": this.urlinscricoes
+          })
+        .then((response) => {
+          this.$toast.success("Dados atualizados");
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
     },
     getUrls(){
-
+      this.$axios.get("webservice/url")
+        .then((response) => {
+          console.log(response.data);
+          this.urlcursos = response.data.urlturnos;
+          this.urlinscricoes = response.data.urlinscricoes;
+          console.log(this.urlinscricoes)
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
     },
   },
   mounted() {

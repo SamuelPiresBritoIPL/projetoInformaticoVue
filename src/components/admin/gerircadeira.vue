@@ -98,13 +98,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="aluno in dadosInscritos" :key="aluno">
+            <tr v-for="(aluno,index) in dadosInscritos" :key="aluno">
               <td>{{ aluno.login }}</td>
               <td>{{ aluno.nome }}</td>
               <td></td>
               <td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim"}}</td>
               <td v-if="this.turno != null"> 
-                <button class="btn btn-xs btn-danger" @click="deleteDefaultCategory(defaultCategories[index].id)">
+                <button class="btn btn-xs btn-danger" @click="deleteInscricao(aluno.id,index)">
                   <BootstrapIcon style="" icon="dash-circle" size="1x" />
                 </button>
               </td>
@@ -259,6 +259,16 @@ export default {
         })
         .catch((error) => {
           this.$toast.error(error);
+        });
+    },
+    deleteInscricao(inscricaoid,indexTable){
+      this.$axios.delete("cadeiras/inscricao/" + inscricaoid)
+        .then((response) => {
+          this.$toast.success(response.data);
+          this.dadosInscritos.splice(indexTable,1)
+        })
+        .catch((error) => {
+          this.$toast.error(response.data);
         });
     }
   },
