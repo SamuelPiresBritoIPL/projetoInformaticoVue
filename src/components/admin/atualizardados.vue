@@ -3,10 +3,32 @@
     <h2>Atualizar Base de Dados</h2>
     <p>Todas as ações poderam demorar algum tempo (não dar refresh a página).</p>
     <div class="row">
+      <div class="col-sm-12">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Atualizar os endpoints</h5>
+            <p class="card-text">Os endpoints tem de acabar com "?" porque depois vao ser automaticamente colocados com o ano letivo e o semestre</p>
+            <div class="card-body ">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Url cursos/turnos</label>
+                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url cursos (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/turnos.php? )" v-model="urlcursos">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Url inscrições</label>
+                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php? )" v-model="urlinscricoes">
+              </div>
+              <button class="btn btn-primary" @click="updateUrls()">
+                  <span aria-hidden="true"></span> Atualizar url's
+              </button>
+            </div>
+          </div>
+        </div>
+        <br>
+      </div>
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Atualizar cursos/professores</h5>
+            <h5 class="card-title">Atualizar turnos/cursos/professores</h5>
             <p class="card-text">Selecione o ano letivo e o semestre para ir buscar os novos dados dos cursos e professores.</p>
             <div class="card-body ">
               <div class="mb-3">
@@ -35,19 +57,22 @@
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Atualizar inscrições alunos/alunos</h5>
-            <p class="card-text">Selecione o ano letivo e o semestre para ir buscar os novos dados dos alunos e das suas respetivas inscrições nas ucs.</p>
+            <h5 class="card-title">Atualizar inscrições alunos</h5>
+            <p class="card-text">Selecione o ano letivo e o curso para ir buscar os novos dados dos alunos e das suas respetivas inscrições nas ucs.</p>
             <div class="card-body ">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
                 <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202122)" v-model="anoletivoinscricoes">
               </div>
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Semestre</label>
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreinscricoes">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
+                <label for="exampleFormControlInput1" class="form-label">Curso</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                  <option value="0">Todos</option>
+                  <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                  {{ "["+course.codigo+"] "+course.nome }}
+                  </option>
                 </select>
+
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes, 2)">
                   <span v-if="loading2" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
@@ -57,7 +82,6 @@
         </div>
       </div>
       <div class="col-sm-6">
-        <br>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Atualizar ucs feitas pelos alunos</h5>
@@ -141,7 +165,10 @@ export default {
         semestreaprovacoes: 1,
         anoletivoativo: null,
         semestreativo: 1,
-        anosletivos: []
+        anosletivos: [],
+        urlcursos: "",
+        urlinscricoes: "",
+        selectedCourse: 0
     };
   },
    methods: {
@@ -174,7 +201,8 @@ export default {
       this.blocked = true
       this.$axios.post(url, {
             "anoletivo": anoletivo,
-            "semestre": semestre
+            "semestre": semestre,
+            "idcurso": this.selectedCourse
           })
         .then((response) => {
           console.log(response)
@@ -211,9 +239,35 @@ export default {
           this.blocked = false
         });
     },
+    updateUrls(){
+      this.$axios.put("webservice/url", {
+            "urlturnos": this.urlcursos,
+            "urlinscricoes": this.urlinscricoes
+          })
+        .then((response) => {
+          this.$toast.success("Dados atualizados");
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    getUrls(){
+      this.$axios.get("webservice/url")
+        .then((response) => {
+          console.log(response.data);
+          this.urlcursos = response.data.urlturnos;
+          this.urlinscricoes = response.data.urlinscricoes;
+          console.log(this.urlinscricoes)
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    },
   },
   mounted() {
     this.counterStore.getAnosLetivos()
+    this.counterStore.getCourses()
+    this.getUrls()
   },
 };
 </script>
