@@ -11,15 +11,15 @@
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">[9119] Licenciatura em Engenharia Informática</p>
                 <hr>
                 <div style="margin-top: 35px; text-align: left;">
-                  <label class="col-sm-4 col-form-label"><strong>Cadeira </strong>(código/nome)</label>   
-                  <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(selecione um de cada tipo caso exista (TP, PL, T, P, E, OT))</label>
+                  <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
+                  <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(selecione um turno para cada tipo)</label>
                   <br><br>
-                  <div v-for="cadeira in cadeirasWithTurnos" :key="cadeira.cadeira.id">
-                    <label class="col-sm-4 col-form-label">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
+                  <div v-for="(cadeira, cadeiraIndex) in cadeirasWithTurnos" :key="cadeira.cadeira.id">
+                    <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
                     <label class="col-sm-8 col-form-label">
-                      <span v-for="turno in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
-                        <span v-for="turnotipo in turno" :key="turnotipo.id">
-                          <input class="form-check-input" type="radio" :name="flexRadioDefault+turnotipo.tipo+cadeira.cadeira.nome" :value="turnotipo.id" v-model="turnosToSelect" style="margin-right: 3px">
+                      <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
+                        <span v-for="(turnotipo) in turno" :key="turnotipo.id">
+                          <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
                           <label class="form-check-label">
                             {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero+" " }}
                           </label>
@@ -28,9 +28,20 @@
                       </span>
                     </label>  
                   </div>
-                </div>  
+                </div> 
+                <div v-if="showTurnosRejeitados == true" style="color: red">
+                  <hr>
+                  <div>Turnos Rejeitados por falta de Vagas:
+                    <div v-for="turnoRejeitado in turnosRejeitados" :key="turnoRejeitado">
+                      <small>
+                        Turno - {{ turnoRejeitado.tipo }} (UC: {{ turnoRejeitado.cadeira }} / Curso: {{ turnoRejeitado.curso }})
+                      </small> 
+                    </div>
+                </div>
+                  <hr>
+                </div> 
                 <div style="margin-top: 20px; text-align: center;">
-                  <button type="button" class="btn btn-primary">Submeter</button>
+                  <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
                 </div>
               </div>
             </div>  
@@ -45,7 +56,11 @@ export default {
   component: {},
   data() {
     return {
-        cadeirasWithTurnos: []
+      cadeirasWithTurnos: [],
+      arrayVmodel: [],
+      allTurnosIds: [],
+      showTurnosRejeitados: false,
+      turnosRejeitados: []
     };
   },
   methods: {
@@ -53,9 +68,51 @@ export default {
       this.$axios.get("cadeiras/utilizador/5181")
         .then((response) => {
           this.cadeirasWithTurnos = response.data;
+          this.cadeirasWithTurnos.forEach((cadeira, index) => {
+            this.arrayVmodel.push([])
+          });
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
+        });
+    },
+    submitInscricao(){
+      this.turnosRejeitados = null
+      this.arrayVmodel.forEach((cadeira) => {
+        if (cadeira.TP != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.TP)
+        }
+        if (cadeira.PL != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.PL)
+        }
+        if (cadeira.T != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.T)  
+        }
+        if (cadeira.P != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.P)
+        }
+        if (cadeira.E != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.E)
+        }
+        if (cadeira.OT != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.OT)
+        }   
+      });
+      this.$axios.post("cadeiras/inscricao", {
+            "idUtilizador": 5181,
+            "turnosIds": this.allTurnosIds
+          })
+        .then((response) => {
+            this.$toast.success("Inscrição feita com sucesso");
+            if (response.data) {
+              this.showTurnosRejeitados = true
+              this.turnosRejeitados = response.data
+            }
+            this.allTurnosIds = []
+        })
+        .catch((error) => {
+          this.$toast.error("Não foi possível inscrever!");
+          this.allTurnosIds = []
         });
     }
   },
