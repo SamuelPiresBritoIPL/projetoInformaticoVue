@@ -54,6 +54,7 @@
           </div>
         </div>
       </div>
+      <br>
       <div class="col-sm-6">
         <div class="card">
           <div class="card-body">
@@ -82,6 +83,7 @@
         </div>
       </div>
       <div class="col-sm-6">
+        <br>
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Atualizar ucs feitas pelos alunos</h5>
@@ -100,6 +102,35 @@
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, semestreaprovacoes, 3, 'webservice/inscricaoaprovados')">
                   <span v-if="loading3" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <br>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Inscrever alunos nos turnos </h5>
+            <p class="card-text">Selecione o ano letivo e o semestre para inscrever nos turnos (Apenas turnos únicos. ex: Turnos teóricos).</p>
+            <div class="card-body ">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="anoletivoinscreverturnos">
+                  <option v-for="anoletivo in this.counterStore.anosletivos" :key="anoletivo.id" v-bind:value="anoletivo.id">
+                  {{anoletivo.anoletivo + (anoletivo.ativo == 1 ? " => Ativo (" + anoletivo.semestreativo + "º Semestre)" : "")}}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Semestre</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreinscreverturnos">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                </select>
+              </div>
+              <button :disabled='blocked' class="btn btn-primary" @click="updateInscricoes(anoletivoinscreverturnos, semestreinscreverturnos)">
+                  <span v-if="loading5" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -156,6 +187,7 @@ export default {
         loading2: false,
         loading3: false,
         loading4: false,
+        loading5: false,
         blocked: false,
         anoletivocurso: null,
         semestrecurso: 1,
@@ -165,6 +197,8 @@ export default {
         semestreaprovacoes: 1,
         anoletivoativo: null,
         semestreativo: 1,
+        anoletivoinscreverturnos: null,
+        semestreinscreverturnos: 1,
         anosletivos: [],
         urlcursos: "",
         urlinscricoes: "",
@@ -261,6 +295,24 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        });
+    },
+    updateInscricoes(anoletivo, semestre){
+      this.loading5 = true
+      this.blocked = true
+      this.$axios.post("webservice/inscriverturnos", {
+            "anoletivo": anoletivo,
+            "semestre": semestre
+          })
+        .then((response) => {
+          console.log(response)
+          this.$toast.success("Dados atualizados");
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        }).finally(() => {
+          this.loading5 = false
+          this.blocked = false
         });
     },
   },
