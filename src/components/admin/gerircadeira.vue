@@ -234,7 +234,7 @@ export default {
       this.$axios.get("cadeiras/"+this.$route.params.cadeiraId)
         .then((response) => {
           console.log(response.data);
-          this.cadeira = response.data
+          this.cadeira = response.data.cadeiras
           this.activeTurno.splice(0)
           this.activeTurno.push(false)
           this.cadeira.turnos.forEach((value, index) => {
