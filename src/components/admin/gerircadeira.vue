@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <h2 v-if="this.cadeira != null">Gerir UC {{ this.cadeira.nome}}</h2>
     <h5 v-if="this.cadeira != null">{{ this.cadeira.curso.nome}}</h5>
-    <div class="card">
+    <div v-if="hasValue" class="card">
       <div class="card-body">
         <div v-if="this.cadeira != null" style="margin-bottom:20px;" class="text-center">
             <span style="margin-right: 35px; font-size: 20px;" class="hoverclick" v-bind:class="{ 'turnoactive': activeTurno[0]}" @click="getStats()">Todos</span>
@@ -87,45 +87,6 @@
           </div>
         </div>
         <br>
-        <div v-if="this.cadeira != null" class="card">
-          <div class="card-body">
-            <h5 class="card-title">Editar número de turnos</h5>
-
-            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
-            <div class="input-group mb-3">
-              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="número/email" v-model="numeroadicionar">
-              <div class="input-group-append">
-                <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
-              </div>
-            </div>
-            
-            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
-            <div class="input-group mb-3">
-              <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
-                  <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
-                </select>
-              <div class="input-group-append">
-                <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
-              </div>
-            </div>
-            <div class="card" v-if="this.turno != null">
-              <div class="card-body">
-                <label for="exampleFormControlInput3" class="form-label">Alterar número de vagas</label>
-                <div class="input-group mb-3">
-                  <input type="number" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
-                </div>
-                <input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0">
-                <label for="checkboxvisivel">Turno visivel</label>
-                <br>
-                <input type="checkbox" id="checkboxrepetentes" v-model="turno.repetentes" true-value="1" false-value="0">
-                <label for="checkboxrepetentes">Turno aceita repetentes</label>
-                <br>
-                <button class="btn btn-primary text-right" @click="changeTurnoData()">Guardar Alterações</button>
-              </div>
-            </div>
-          </div>
-        </div>
         <table class="table" style="text-align:left;">
           <thead>
             <tr>
@@ -144,7 +105,7 @@
               <td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim"}}</td>
               <td v-if="this.turno != null"> 
                 <button class="btn btn-xs btn-danger" @click="deleteInscricao(aluno.id,index)">
-                  <BootstrapIcon style="" icon="dash-circle" size="1x" />
+                  <BootstrapIcon style="" icon="dash-circle"/>
                 </button>
               </td>
               <td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
@@ -169,6 +130,7 @@ export default {
   data() {
     return {
         dadosInscritos:[],
+        numeroadicionarTurno:null,
         totalinscritos:0,
         totalrepetentes:0,
         totalnaorepetentes:0,
@@ -183,11 +145,24 @@ export default {
         turnorepetentes:0
     };
   },
+  computed: {
+    hasValue(){
+      if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
+        this.getCadeiraInfo()
+        if(this.counterStore.turnoToManage == null){
+          this.getStats()
+        }else{
+          this.getStatsTurno()
+        }
+        return true
+      } 
+      return false
+    }
+  },
   methods: {
     getStats(){
-      this.$axios.get("cadeiras/stats/"+this.$route.params.cadeiraId)
+      this.$axios.get("cadeiras/stats/"+this.$route.params.cadeiraId + "/" + this.counterStore.selectedAnoletivo)
         .then((response) => {
-          console.log(response.data);
           this.totalinscritos = response.data.totalinscritos
           this.totalrepetentes = response.data.totalrepetentes
           this.totalnaorepetentes = response.data.totalnaorepetentes
@@ -207,7 +182,6 @@ export default {
     getStatsTurno(turnoid = this.counterStore.turnoToManage){
       this.$axios.get("turno/stats/"+turnoid)
         .then((response) => {
-          console.log(response.data);
           this.totalinscritos = response.data.totalinscritos
           this.totalrepetentes = response.data.totalrepetentes
           this.totalnaorepetentes = response.data.totalnaorepetentes
@@ -230,16 +204,14 @@ export default {
         });
     },
     getCadeiraInfo(){
-      this.$axios.get("cadeiras/"+this.$route.params.cadeiraId)
+      this.$axios.get("cadeiras/"+this.$route.params.cadeiraId+"/"+this.counterStore.selectedAnoletivo)
         .then((response) => {
-          console.log(response.data);
           this.cadeira = response.data.cadeiras
           this.activeTurno.splice(0)
           this.activeTurno.push(false)
           this.cadeira.turnos.forEach((value, index) => {
               this.activeTurno.push(false)
           });
-          console.log(this.activeTurno)
         })
         .catch((error) => {
           console.log(error.response);
@@ -291,7 +263,6 @@ export default {
           "vagastotal": this.turno.vagastotal
         };
       }
-      console.log(objToSend);
       this.$axios.put("turno/"+this.turno.id, objToSend)
         .then((response) => {
           this.$toast.success(response.data);
@@ -312,12 +283,7 @@ export default {
     }
   },
   mounted() {
-    this.getCadeiraInfo()
-    if(this.counterStore.turnoToManage == null){
-      this.getStats()
-    }else{
-      this.getStatsTurno()
-    }
+   
   },
 };
 </script>
