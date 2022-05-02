@@ -50,7 +50,47 @@
         </div>
         <div v-if="this.cadeira != null" class="card">
           <div class="card-body">
-            <h5 class="card-title">titulo</h5>
+            <h5 class="card-title">Editar</h5>
+
+            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="número/email" v-model="numeroadicionar">
+              <div class="input-group-append">
+                <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
+              </div>
+            </div>
+            
+            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
+            <div class="input-group mb-3">
+              <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
+                  <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
+                </select>
+              <div class="input-group-append">
+                <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
+              </div>
+            </div>
+            <div class="card" v-if="this.turno != null">
+              <div class="card-body">
+                <label for="exampleFormControlInput3" class="form-label">Alterar número de vagas</label>
+                <div class="input-group mb-3">
+                  <input type="number" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
+                </div>
+                <input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0">
+                <label for="checkboxvisivel">Turno visivel</label>
+                <br>
+                <input type="checkbox" id="checkboxrepetentes" v-model="turno.repetentes" true-value="1" false-value="0">
+                <label for="checkboxrepetentes">Turno aceita repetentes</label>
+                <br>
+                <button class="btn btn-primary text-right" @click="changeTurnoData()">Guardar Alterações</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div v-if="this.cadeira != null" class="card">
+          <div class="card-body">
+            <h5 class="card-title">Editar número de turnos</h5>
 
             <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
             <div class="input-group mb-3">
