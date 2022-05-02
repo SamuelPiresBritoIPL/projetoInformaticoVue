@@ -8,14 +8,25 @@
                         <span class="fs-4" style="text-align:center;">Administrador</span>
                     </a>
                     <hr>
+                    <label >Ano letivo:</label>
+                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo">
+                        <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
+                        {{ anoletivo.anoletivo }}
+                        </option>
+                    </select>
+                    <label>Semestre:</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                    <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'dashboard' }"
+                            :class="{ active: $route.name === 'dashboard' }"    
                             :to="{ name: 'dashboard' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="display"
-                                size="1x" />
+                                icon="display"/>
                                 Dashboard
                             </router-link>
                         </li>
@@ -24,8 +35,7 @@
                             :class="{ active: $route.name === 'gerircoordenadores' }"
                             :to="{ name: 'gerircoordenadores' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="person-lines-fill"
-                                size="1x" />
+                                icon="person-lines-fill"/>
                                 Gerir Coordenadores
                             </router-link>
                         </li>
@@ -34,8 +44,7 @@
                             :class="{ active: $route.name === 'gerircursos' }"
                             :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="mortarboard"
-                                size="1x" />
+                                icon="mortarboard"/>
                                 Gerir Curso
                             </router-link>
                         </li>
@@ -44,8 +53,7 @@
                             :class="{ active: $route.name === 'geriralunos' }"
                             :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="people"
-                                size="1x" />
+                                icon="people"/>
                                 Gerir alunos
                             </router-link>
                         </li>
@@ -54,8 +62,7 @@
                             :class="{ active: $route.name === 'gerirperiodos' }"
                             :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="calendar-event"
-                                size="1x" />
+                                icon="calendar-event"/>
                                 Gerir Periodos
                             </router-link>
                         </li>
@@ -64,8 +71,7 @@
                             :class="{ active: $route.name === 'gerirconfirmacoes' }"
                             :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="clipboard2-check"
-                                size="1x" />
+                                icon="clipboard2-check"/>
                                 Gerir Confirmações UC
                             </router-link>
                         </li>
@@ -74,8 +80,7 @@
                             :class="{ active: $route.name === 'atualizardados' }"
                             :to="{ name: 'atualizardados' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="arrow-clockwise"
-                                size="1x" />
+                                icon="arrow-clockwise"/>
                                 Atualizar Base de Dados
                             </router-link>
                         </li>
@@ -84,8 +89,7 @@
                             :class="{ active: $route.name === 'logs' }"
                             :to="{ name: 'logs' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="list-columns-reverse"
-                                size="1x" />
+                                icon="list-columns-reverse"/>
                                 Logs
                             </router-link>
                         </li>
@@ -110,18 +114,41 @@
 </template>
 
 <script>
+import { useCounterStore } from "../../stores/counter"
 export default {
   name: "AdminRoot",
   component: {},
-  methods: {
-    
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
   },
   data() {
     return {
-        
+        anosLetivos: [],
     };
   },
-  mounted() {},
+  methods: {
+    getAnosLetivos(){
+        this.$axios.get("anoletivo")
+        .then((response) => {
+            this.anosLetivos = response.data
+            this.anosLetivos.forEach((anoLetivo) => {
+                if (anoLetivo.ativo == 1) {
+                    this.counterStore.selectedAnoletivo = anoLetivo.id
+                }
+                if (anoLetivo.semestreativo != null) {
+                    this.counterStore.semestre = anoLetivo.semestreativo
+                }
+            })
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    }
+  },
+  mounted() {
+      this.getAnosLetivos()
+  },
 };
 </script>
 

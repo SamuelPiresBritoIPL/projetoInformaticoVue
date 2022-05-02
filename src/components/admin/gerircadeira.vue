@@ -5,8 +5,8 @@
     <div class="card">
       <div class="card-body">
         <div v-if="this.cadeira != null" style="margin-bottom:20px;" class="text-center">
-            <span style="margin-right: 35px; font-size: 20px;" class="" v-bind:class="{ 'turnoactive': activeTurno[0]}" @click="getStats()">Todos</span>
-            <span style="margin-right: 35px; font-size: 20px;" class="" v-for="(turno,index) in this.cadeira.turnos" :key="turno" @click="getStatsTurno(turno.id)" v-bind:class="{ 'turnoactive': activeTurno[(index+1)]}">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</span>
+            <span style="margin-right: 35px; font-size: 20px;" class="hoverclick" v-bind:class="{ 'turnoactive': activeTurno[0]}" @click="getStats()">Todos</span>
+            <span style="margin-right: 35px; font-size: 20px;" class="hoverclick" v-for="(turno,index) in this.cadeira.turnos" :key="turno" @click="getStatsTurno(turno.id)" v-bind:class="{ 'turnoactive': activeTurno[(index+1)]}">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</span>
           </div>
         <div class="row text-center">
             <div class="col">
@@ -50,7 +50,7 @@
         </div>
         <div v-if="this.cadeira != null" class="card">
           <div class="card-body">
-            <h5 class="card-title">titulo</h5>
+            <h5 class="card-title">Gerir</h5>
 
             <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
             <div class="input-group mb-3">
@@ -292,6 +292,9 @@ export default {
 .turnoactive {
   font-weight: bold;
   text-decoration: underline;
+}
+.hoverclick:hover{
+  cursor: pointer;
 }
 @media (min-width: 1024px) {
   .about {

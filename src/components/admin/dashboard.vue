@@ -5,7 +5,7 @@
       <div class="card-header">
         Periodos de Inscrição e de Confirmação de UC´s de cada Curso
       </div>
-      <div class="card-body">
+      <div v-if="hasValue" class="card-body">
         <table class="table" style="text-align:left;">
           <thead>
             <tr>
@@ -44,19 +44,32 @@
 </template>
 
 <script>
+import { useCounterStore } from "../../stores/counter"
 export default {
   name: "Dashboard",
   component: {},
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
+  },
   data() {
     return {
         coursesWithAberturas: []
     };
   },
+  computed: {
+    hasValue(){
+      if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
+        this.getCoursesAberturas()
+        return true
+      } 
+      return false
+    }
+  },
   methods: {
     getCoursesAberturas(){
-      this.$axios.get("curso/aberturas/1/2")
+      this.$axios.get("curso/aberturas/"+this.counterStore.selectedAnoletivo+"/"+this.counterStore.semestre)
         .then((response) => {
-          console.log(response.data);
           this.coursesWithAberturas = response.data;
         })
         .catch((error) => {
@@ -65,7 +78,7 @@ export default {
     }
   },
   mounted() {
-    this.getCoursesAberturas()
+    
   },
 };
 </script>
