@@ -6,7 +6,6 @@ import App from './App.vue'
 import router from './router'
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
-import 'bootstrap-icons/font/bootstrap-icons.css'
 import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons';
 
 import Toaster from "@meforma/vue-toaster";

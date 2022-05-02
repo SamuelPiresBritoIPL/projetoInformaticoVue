@@ -38,14 +38,14 @@
             <label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.nome }}</label>
             <label for="inputEmail3" class="col-sm-2 col-form-label">Data:</label>
             <label class="col-sm-10 col-form-label">{{ selectedPedido.data.replace('.000000Z', '').replace('T', ' ') }}</label>
-            <label for="inputEmail3" class="col-sm-4 col-form-label" style="margin-top: 10px; margin-bottom: 10px;">Cadeiras requeridas:</label>
+            <label for="inputEmail3" class="col-sm-4 col-form-label" style="margin-top: 10px; margin-bottom: 10px;">UC's requeridas:</label>
             <div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" style="margin-left: 30px;">
               <input class="form-check-input" style="margin-right: 10px" type="checkbox" :value="cadeira.id" v-model="approvedCadeiras">
               <label class="form-check-label">
                 {{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}
               </label>
             </div>
-            <label class="col-sm-2 col-form-label" style="margin-top: 15px;">Descrição:</label>
+            <label class="col-sm-2 col-form-label" style="margin-top: 15px;">Justificação:</label>
             <p style="margin-left: 30px;">{{ selectedPedido.descricao }}</p>
             <div style="text-align: center;">
               <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="handleRequest(selectedPedido, 0)">Aprovar Selecionadas</button>

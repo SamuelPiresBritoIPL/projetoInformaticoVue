@@ -239,8 +239,8 @@ export default {
             "tipoAbertura": type,
             "dataAbertura": dataAbertura,
             "dataEncerar": dataEncerrar,
-            "semestre": 2,
-            "idAnoletivo": 1
+            "semestre": this.counterStore.semestre,
+            "idAnoletivo": this.counterStore.selectedAnoletivo
           })
         .then((response) => {
           this.$toast.success("Periodo de abertura criado com sucesso!",);

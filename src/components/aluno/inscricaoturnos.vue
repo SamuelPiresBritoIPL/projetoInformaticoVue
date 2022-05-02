@@ -12,16 +12,16 @@
                 <hr>
                 <div style="margin-top: 35px; text-align: left;">
                   <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
-                  <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(selecione um turno para cada tipo)</label>
+                  <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
                   <br><br>
                   <div v-for="(cadeira, cadeiraIndex) in cadeirasWithTurnos" :key="cadeira.cadeira.id">
                     <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
                     <label class="col-sm-8 col-form-label">
                       <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
-                        <span v-for="(turnotipo) in turno" :key="turnotipo.id">
+                        <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
                           <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
                           <label class="form-check-label">
-                            {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero+" " }}
+                            {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
                           </label>
                         </span>
                         <br>
@@ -111,7 +111,7 @@ export default {
             this.allTurnosIds = []
         })
         .catch((error) => {
-          this.$toast.error("Não foi possível inscrever!");
+          this.$toast.error("Não foi possível inscrever! " + error.response.data);
           this.allTurnosIds = []
         });
     }
