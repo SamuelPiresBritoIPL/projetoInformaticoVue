@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     getCadeirasToConfirm(){
-      this.$axios.get("cadeiras/utilizador/5185")
+      this.$axios.get("cadeirasaluno/utilizador/5185")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
         })
@@ -115,7 +115,7 @@ export default {
     },
     inscricaoCadeiras(state){
       this.errorMessages = null
-      this.$axios.post("cadeiras/pedidos", {
+      this.$axios.post("cadeirasaluno/pedidos", {
             "estado": state,
             ...(state == 0 ? { "descricao": "cadeiras confirmadas" } : {"descricao": this.requestDescription}),
             "idUtilizador": 5185,
@@ -144,7 +144,7 @@ export default {
       this.getCadeirasNaoAprovadas()
     },
     getCadeirasNaoAprovadas(){
-      this.$axios.get("cadeiras/naoaprovadas/5185")
+      this.$axios.get("cadeirasaluno/naoaprovadas/5185")
         .then((response) => {
           this.cadeirasNaoAprovadas = response.data;
           for (let index = 0; index < this.cadeirasNaoAprovadas.length; index++) {

@@ -290,7 +290,7 @@ export default {
         });
     },
     deleteInscricao(inscricaoid,indexTable){
-      this.$axios.delete("cadeiras/inscricao/" + inscricaoid)
+      this.$axios.delete("cadeirasaluno/inscricao/" + inscricaoid)
         .then((response) => {
           this.$toast.success(response.data);
           this.dadosInscritos.splice(indexTable,1)
