@@ -87,6 +87,19 @@
           </div>
         </div>
         <br>
+        <div v-if="this.cadeira != null" class="card">
+          <div class="card-body">
+            <h5 class="card-title">Alterar vagas turnos</h5>
+            <label for="exampleFormControlInput1" class="form-label">Alterar vagas para todos os turnos ao mesmo tempo</label>
+            <div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
+              <label class="col-sm-1 col-form-label">{{info.turno + " (" + info.numeroturnos + ")  "}}</label>
+              <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="número de vagas" v-model="info.valor">
+              <span class="col-form-label">&nbsp;&nbsp;{{"Média de vagas por turno: " + info.mediavagas}}</span>
+            </div>
+            <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar número de vagas por turno</button>
+          </div>
+        </div>
+        <br>
         <table class="table" style="text-align:left;">
           <thead>
             <tr>
@@ -142,6 +155,7 @@ export default {
         turnoescolhido: null,
         turnovisivel:0,
         turno: null,
+        turnoInfo: [],
         turnorepetentes:0
     };
   },
@@ -207,6 +221,10 @@ export default {
       this.$axios.get("cadeiras/"+this.$route.params.cadeiraId+"/"+this.counterStore.selectedAnoletivo)
         .then((response) => {
           this.cadeira = response.data.cadeiras
+          this.turnoInfo = response.data.info
+          this.turnoInfo.forEach(function (element) {
+            element.valor = null;
+          });
           this.activeTurno.splice(0)
           this.activeTurno.push(false)
           this.cadeira.turnos.forEach((value, index) => {
@@ -274,6 +292,25 @@ export default {
     deleteInscricao(inscricaoid,indexTable){
       this.$axios.delete("cadeiras/inscricao/" + inscricaoid)
         .then((response) => {
+          this.$toast.success(response.data);
+          this.dadosInscritos.splice(indexTable,1)
+        })
+        .catch((error) => {
+          this.$toast.error(response.data);
+        });
+    },
+    saveTurnoVagas(){
+      //fazer o endpoint
+      var dataToSend = [];
+      var dataToSend2 = [];
+      this.turnoInfo.forEach((value, index) => {
+              dataToSend.push(value.turno)
+              dataToSend2.push(value.valor)
+          });
+      this.$axios.put("cadeiras/turnovagas/" + this.cadeira.id + "/" + this.counterStore.selectedAnoletivo, {
+            "tipoturno": dataToSend,
+            "vagas": dataToSend2
+          }).then((response) => {
           this.$toast.success(response.data);
           this.dadosInscritos.splice(indexTable,1)
         })
