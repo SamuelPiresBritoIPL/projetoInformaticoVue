@@ -6,36 +6,46 @@
         Periodos de Inscrição e de Confirmação de UC´s de cada Curso
       </div>
       <div v-if="hasValue" class="card-body">
-        <table class="table" style="text-align:left;">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Curso</th>
-              <th scope="col">Periodo de Confirmação </th>
-              <th scope="col">Periodo de Inscrição</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="course in coursesWithAberturas" :key="course">
-              <td>{{ course.id }}</td>
-              <td>{{ "["+course.codigo+"] "+course.nome }}</td>
-              <td>
-                <div>
-                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 0 ? "Ano: "+abertura.ano : ''}}<br>
-                  {{ abertura.tipoAbertura == 0 ? "Início: "+abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}<br> 
-                  {{ abertura.tipoAbertura == 0 ? "Fim: "+ abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+        <div class="card w-100 border-dark" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
+          <div class="card-body">
+            <h6 class="card-title">{{ "["+course.codigo+"] "+course.nome }}</h6>
+            <hr>
+            <div class="row">
+              <div class="col-sm-1">
+              </div>
+              <div class="col-sm-5">
+                <div class="card border-info mb-3" style="max-width: 18rem;">
+                  <div class="card-body">
+                    <h6 class="card-title" style="margin-bottom: 20px;">Confirmação de UC's</h6>
+                    <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Ano: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 0 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p>
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Início: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 0 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Fim: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 0 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                      </div>
+                  </div>
                 </div>
-              </td>
-              <td>
-                <div>
-                  <p v-for="abertura in course.aberturas" :key="abertura.id">{{ abertura.tipoAbertura == 1 ? "Ano: "+abertura.ano : ''}}<br>
-                  {{ abertura.tipoAbertura == 1 ? "Início: "+abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}<br> 
-                  {{ abertura.tipoAbertura == 1 ? "Fim: "+abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+              </div>
+              <div class="col-sm-5">
+                <div class="card border-info mb-3" style="max-width: 18rem;">
+                  <div class="card-body">
+                    <h6 class="card-title" style="margin-bottom: 20px;">Inscrição nos Turnos</h6>
+                    <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Ano: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p> 
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Início: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p> 
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Fim: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                      </div>
+                  </div>
                 </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <br>
