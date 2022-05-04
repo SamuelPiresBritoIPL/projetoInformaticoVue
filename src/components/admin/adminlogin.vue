@@ -47,11 +47,14 @@ export default {
       async login(){
         try {
             await this.counterStore.login(this.credentials)
+            if (this.counterStore.utilizadorLogado.tipo != 3) {
+                throw "Não tem permissões!"
+            } 
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "dashboard" });
         } catch (error) {
-            console.log(error.response.data.message)
-            this.$toast.error(error.response.data.message);
+            console.log(error.response)
+            this.$toast.error("Não foi possível fazer login.");
         }
       }
   },
