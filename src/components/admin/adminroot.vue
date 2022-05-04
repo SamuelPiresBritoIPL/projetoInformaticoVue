@@ -43,7 +43,7 @@
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'gerircursos' }"
+                            :class="{ active: $route.name === 'gerircursos' || $route.name === 'gerircadeira' }"
                             :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="mortarboard"/>

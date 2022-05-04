@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     getCadeirasToConfirm(){
-      this.$axios.get("cadeirasaluno/utilizador/3134")
+      this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
         })
@@ -118,7 +118,7 @@ export default {
       this.$axios.post("cadeirasaluno/pedidos", {
             "estado": state,
             ...(state == 0 ? { "descricao": "cadeiras confirmadas" } : {"descricao": this.requestDescription}),
-            "idUtilizador": 5185,
+            "idUtilizador": this.counterStore.utilizadorLogado.id,
             "idAnoletivo": this.counterStore.selectedAnoletivo,
             "semestre": this.counterStore.semestre,
             ...(state == 0 ? { } : {"cadeirasIds": this.cadeirasToRequest})
@@ -144,7 +144,7 @@ export default {
       this.getCadeirasNaoAprovadas()
     },
     getCadeirasNaoAprovadas(){
-      this.$axios.get("cadeirasaluno/naoaprovadas/3134")
+      this.$axios.get("cadeirasaluno/naoaprovadas/" + this.counterStore.utilizadorLogado.id)
         .then((response) => {
           this.cadeirasNaoAprovadas = response.data;
           for (let index = 0; index < this.cadeirasNaoAprovadas.length; index++) {
@@ -164,7 +164,9 @@ export default {
       }
     },
     addUCToInscrever(){
-      this.cadeirasOutrosCursos.push(this.selectedCadeira)
+      if (this.selectedCadeira != null) {
+        this.cadeirasOutrosCursos.push(this.selectedCadeira)
+      }
       console.log(this.selectedCadeira)
     }
   },

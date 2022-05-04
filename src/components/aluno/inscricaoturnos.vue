@@ -51,9 +51,14 @@
 </template>
 
 <script>
+import { useCounterStore } from "../../stores/counter"
 export default {
   name: "InscricaoTurnos",
   component: {},
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
+  },
   data() {
     return {
       cadeirasWithTurnos: [],
@@ -65,7 +70,7 @@ export default {
   },
   methods: {
     getCadeirasWithTurnos(){
-      this.$axios.get("cadeirasaluno/utilizador/3134")
+      this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
           this.cadeirasWithTurnos = response.data;
           this.cadeirasWithTurnos.forEach((cadeira, index) => {
@@ -100,7 +105,7 @@ export default {
         }   
       });
       this.$axios.post("cadeirasaluno/inscricao", {
-            "idUtilizador": 3134,
+            "idUtilizador": this.counterStore.utilizadorLogado.id,
             "turnosIds": this.allTurnosIds
           })
         .then((response) => {

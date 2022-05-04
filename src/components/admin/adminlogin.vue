@@ -48,6 +48,12 @@ export default {
         try {
             await this.counterStore.login(this.credentials)
             if (this.counterStore.utilizadorLogado.tipo != 3) {
+                sessionStorage.removeItem("tokenAluno");
+                localStorage.removeItem("alunoState");
+                sessionStorage.removeItem("tokenCoordenador");
+                localStorage.removeItem("coordenadorState");
+                sessionStorage.removeItem("tokenProfessor");
+                localStorage.removeItem("professorState");
                 throw "Não tem permissões!"
             } 
             this.$toast.success("Login efetuado com sucesso!");
