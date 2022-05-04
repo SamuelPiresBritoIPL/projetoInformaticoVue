@@ -20,6 +20,7 @@ import PaginaInicial from '../components/aluno/paginainicial.vue'
 import AdminLogin from '../components/admin/adminlogin.vue'
 import CoordenadorLogin from '../components/coordenador/coordenadorlogin.vue'
 import AlunoLogin from '../components/aluno/login.vue'
+import ProfessorLogin from '../components/professor/professorlogin.vue'
 
 
 const router = createRouter({
@@ -67,6 +68,23 @@ const router = createRouter({
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
         localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: '/loginprofessor',
+      name: 'professorlogin',
+      component: ProfessorLogin,
+      meta: { requiresAuth: false, title: "Login" },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno") ||
         localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
           next({
             name: "not-found",
@@ -216,6 +234,17 @@ const router = createRouter({
       component: ProfessorRoot,
       redirect: {
         name: "dashboardprofessor",
+      },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno") ||
+        localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
       },
       children: [
         {

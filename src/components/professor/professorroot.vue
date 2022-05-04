@@ -7,6 +7,8 @@
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Professor</span>
                     </a>
+                    <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
+                    <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
@@ -32,7 +34,7 @@
                     </ul>
                     <hr>
                     <div>
-                        <a class="d-flex align-items-center link-dark text-decoration-none">
+                        <a type="button" class="d-flex align-items-center link-dark text-decoration-none" @click="logout()">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>Logout</strong>
                         </a>
@@ -53,15 +55,30 @@
 export default {
   name: "ProfessorRoot",
   component: {},
-  methods: {
-    
-  },
   data() {
     return {
-        
+        utilizadorLogado: []
     };
   },
-  mounted() {},
+  methods: {
+    logout(){
+      sessionStorage.removeItem("tokenProfessor");
+      localStorage.removeItem("professorState");
+      this.$router.push("/loginprofessor");
+    },
+    getInfoUtilizadorLogado(){
+        this.$axios.get("utilizadorlogado")
+        .then((response) => {
+            this.utilizadorLogado = response.data.data
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    }
+  },
+  mounted() {
+      this.getInfoUtilizadorLogado()
+  },
 };
 </script>
 

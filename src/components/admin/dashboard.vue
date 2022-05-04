@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Dashboard</h2>
-    <div class="card text-center">
+    <div v-if="adminLogged" class="card text-center">
       <div class="card-header">
         Periodos de Inscrição e de Confirmação de UC´s de cada Curso
       </div>
@@ -64,7 +64,9 @@ export default {
   },
   data() {
     return {
-        coursesWithAberturas: []
+        coursesWithAberturas: [],
+        adminLogged: false,
+        coordenadorLogged: false
     };
   },
   computed: {
@@ -88,7 +90,9 @@ export default {
     }
   },
   mounted() {
-    
+    if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
+      this.adminLogged = true
+    }
   },
 };
 </script>

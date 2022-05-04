@@ -25,9 +25,9 @@
             </router-link> 
           </li>
         </ul>
-        <ul class="navbar-nav" style="text-align: left;">
+        <ul class="navbar-nav" style="text-align: left;" @click="logout()">
             <li class="nav-item">
-                <a class="nav-link" href="#">Logout</a>
+                <a class="nav-link" href="#">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }} ({{ utilizadorLogado.login }}) - Logout</a>
             </li>
         </ul>
       </div>
@@ -47,10 +47,15 @@ export default {
   },
   data() {
     return {
-        
+      utilizadorLogado: []
     };
   },
   methods: {
+    logout(){
+      sessionStorage.removeItem("tokenAluno");
+      localStorage.removeItem("alunoState");
+      this.$router.push("/login");
+    },
     getAnosLetivos(){
       this.$axios.get("anoletivo")
       .then((response) => {
@@ -67,10 +72,20 @@ export default {
       .catch((error) => {
           console.log(error.response);
       });
+    },
+    getInfoUtilizadorLogado(){
+        this.$axios.get("utilizadorlogado")
+        .then((response) => {
+            this.utilizadorLogado = response.data.data
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
     }
   },
   mounted() {
     this.getAnosLetivos()
+    this.getInfoUtilizadorLogado()
   }
 }
 </script>

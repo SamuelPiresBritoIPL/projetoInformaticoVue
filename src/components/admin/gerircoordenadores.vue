@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir Coordenadores</h2>
-    <div class="card text-center">
+    <div v-if="adminLogged" class="card text-center">
       <div class="card-header">
         Coordenadores e sub coordenadores de cada curso
       </div>
@@ -108,7 +108,9 @@ export default {
         selectedCourse: null,
         roleId: null,
         login: null,
-        selectedCoordinator: null
+        selectedCoordinator: null,
+        adminLogged: false,
+        coordenadorLogged: false
     };
   },
   methods: {
@@ -161,6 +163,9 @@ export default {
     },
   },
   mounted() {
+    if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
+      this.adminLogged = true
+    }
     this.getCoursesCoordinators()
     this.counterStore.getCourses()
   },

@@ -7,6 +7,20 @@
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Coordenador</span>
                     </a>
+                    <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
+                    <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
+                    <hr>
+                    <label >Ano letivo:</label>
+                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo">
+                        <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
+                        {{ anoletivo.anoletivo }}
+                        </option>
+                    </select>
+                    <label>Semestre:</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
@@ -72,7 +86,7 @@
                     </ul>
                     <hr>
                     <div>
-                        <a class="d-flex align-items-center link-dark text-decoration-none">
+                        <a type="button" class="d-flex align-items-center link-dark text-decoration-none" @click="logout()">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>Logout</strong>
                         </a>
@@ -90,18 +104,56 @@
 </template>
 
 <script>
+import { useCounterStore } from "../../stores/counter"
 export default {
   name: "CoordenadorRoot",
   component: {},
-  methods: {
-    
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
   },
   data() {
     return {
-        
+        utilizadorLogado: []
     };
   },
-  mounted() {},
+  methods: {
+    logout(){
+      sessionStorage.removeItem("tokenCoordenador");
+      localStorage.removeItem("coordenadorState");
+      this.$router.push("/coordenadorlogin");
+    },
+    getAnosLetivos(){
+        this.$axios.get("anoletivo")
+        .then((response) => {
+            this.anosLetivos = response.data
+            this.anosLetivos.forEach((anoLetivo) => {
+                if (anoLetivo.ativo == 1) {
+                    this.counterStore.selectedAnoletivo = anoLetivo.id
+                }
+                if (anoLetivo.semestreativo != null) {
+                    this.counterStore.semestre = anoLetivo.semestreativo
+                }
+            })
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    },
+    getInfoUtilizadorLogado(){
+        this.$axios.get("utilizadorlogado")
+        .then((response) => {
+            this.utilizadorLogado = response.data.data
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
+    }
+  },
+  mounted() {
+      this.getAnosLetivos()
+      this.getInfoUtilizadorLogado()
+  },
 };
 </script>
 

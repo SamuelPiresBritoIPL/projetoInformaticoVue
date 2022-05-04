@@ -5,7 +5,7 @@
             <div class="card mb-3" style="width: 30%">
                 <div class="card-header bg-transparent" style="text-align: center">
                     <label style="margin-top: 10px;">Aplicação de Gestão/Inscrição nos Turnos</label>
-                    <h5>Login - Coordenador</h5>
+                    <h5>Login - Professor</h5>
                 </div>
                 <div class="card-body text-dark">
                     <div style="padding: 10px 20px">
@@ -47,11 +47,11 @@ export default {
     async login(){
         try {
             await this.counterStore.login(this.credentials)
-            if (this.counterStore.utilizadorLogado.tipo != 2) {
+            if (this.counterStore.utilizadorLogado.tipo != 1) {
                 throw "Não tem permissões!"
             } 
             this.$toast.success("Login efetuado com sucesso!");
-            this.$router.push({ name: "coordenadorroot" });
+            this.$router.push({ name: "dashboardprofessor" });
         } catch (error) {
             console.log(error.response)
             this.$toast.error("Não foi possível fazer login");

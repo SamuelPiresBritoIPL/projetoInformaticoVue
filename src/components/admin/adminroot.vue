@@ -7,6 +7,8 @@
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Administrador</span>
                     </a>
+                    <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
+                    <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
                     <hr>
                     <label >Ano letivo:</label>
                     <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo">
@@ -96,7 +98,7 @@
                     </ul>
                     <hr>
                     <div>
-                        <a class="d-flex align-items-center link-dark text-decoration-none">
+                        <a type="button" class="d-flex align-items-center link-dark text-decoration-none" @click="logout()">
                             <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
                             <strong>Logout</strong>
                         </a>
@@ -125,9 +127,15 @@ export default {
   data() {
     return {
         anosLetivos: [],
+        utilizadorLogado: []
     };
   },
   methods: {
+    logout(){
+      sessionStorage.removeItem("tokenAdmin");
+      localStorage.removeItem("adminState");
+      this.$router.push("/adminlogin");
+    },
     getAnosLetivos(){
         this.$axios.get("anoletivo")
         .then((response) => {
@@ -144,10 +152,20 @@ export default {
         .catch((error) => {
             console.log(error.response);
         });
+    },
+    getInfoUtilizadorLogado(){
+        this.$axios.get("utilizadorlogado")
+        .then((response) => {
+            this.utilizadorLogado = response.data.data
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
     }
   },
   mounted() {
       this.getAnosLetivos()
+      this.getInfoUtilizadorLogado()
   },
 };
 </script>
