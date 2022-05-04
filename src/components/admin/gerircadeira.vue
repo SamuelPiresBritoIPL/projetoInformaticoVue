@@ -87,7 +87,7 @@
           </div>
         </div>
         <br>
-        <div v-if="this.cadeira != null" class="card">
+        <div v-if="this.turno == null" class="card">
           <div class="card-body">
             <h5 class="card-title">Alterar vagas turnos</h5>
             <label for="exampleFormControlInput1" class="form-label">Alterar vagas para todos os turnos ao mesmo tempo</label>
@@ -99,6 +99,8 @@
             <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar número de vagas por turno</button>
           </div>
         </div>
+        <br>
+        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
         <br>
         <table class="table" style="text-align:left;">
           <thead>
@@ -315,7 +317,28 @@ export default {
           this.dadosInscritos.splice(indexTable,1)
         })
         .catch((error) => {
-          this.$toast.error(response.data);
+          this.$toast.error(error);
+        });
+    },
+    downloadExcel(){
+      this.$axios.get("turno/export/" + this.counterStore.turnoToManage, {
+            headers: {"Accept": "application/vnd.ms-excel"},
+            responseType: "blob"
+          })
+        .then((response) => {
+          //let filename = response.headers['content-disposition'].split('filename=')[1];
+          const url = URL.createObjectURL(new Blob([response.data], {
+              type: 'application/vnd.ms-excel'
+          }))
+          const link = document.createElement('a')
+          link.href = url
+          console.log(this.turno)
+          link.setAttribute('download', "turnos_" + this.turno.tipo + (this.turno.numero == 0 ? "" : this.turno.numero) + "_" + this.turno.cadeira.nome + ".xls")
+          document.body.appendChild(link)
+          link.click()
+        })
+        .catch((error) => {
+          this.$toast.error(error);
         });
     }
   },
