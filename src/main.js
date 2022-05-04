@@ -39,9 +39,9 @@ app.use(Toaster, toastOptions)
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
-/* axios.defaults.headers.common["Authorization"] = `Bearer ${
-    sessionStorage.token ? sessionStorage.token : sessionStorage.admintoken
-}`; */
+axios.defaults.headers.common["Authorization"] = `Bearer ${
+    sessionStorage.tokenAluno ? sessionStorage.tokenAluno : (sessionStorage.tokenAdmin ? sessionStorage.tokenAdmin : (sessionStorage.tokenCoordenador ? sessionStorage.tokenCoordenador : (sessionStorage.tokenProfessor ? sessionStorage.tokenProfessor : "")))
+}`;
 app.config.globalProperties.$axios = axios;
 
 
