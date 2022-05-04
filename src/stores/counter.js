@@ -131,6 +131,7 @@ export const useCounterStore = defineStore({
         if (response.data.access_token && response.data.tipo == 3) {
           sessionStorage.setItem("tokenAdmin", response.data.access_token);
           localStorage.setItem("adminState", true);
+          console.log(sessionStorage.tokenAdmin)
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${sessionStorage.tokenAdmin}`;
