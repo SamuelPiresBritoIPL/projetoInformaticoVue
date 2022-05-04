@@ -65,10 +65,11 @@ export default {
   },
   methods: {
     getCadeirasWithTurnos(){
-      this.$axios.get("cadeirasaluno/utilizador/5181")
+      this.$axios.get("cadeirasaluno/utilizador/3134")
         .then((response) => {
           this.cadeirasWithTurnos = response.data;
           this.cadeirasWithTurnos.forEach((cadeira, index) => {
+            console.log(cadeira)
             this.arrayVmodel.push([])
           });
         })
@@ -99,7 +100,7 @@ export default {
         }   
       });
       this.$axios.post("cadeirasaluno/inscricao", {
-            "idUtilizador": 5181,
+            "idUtilizador": 3134,
             "turnosIds": this.allTurnosIds
           })
         .then((response) => {

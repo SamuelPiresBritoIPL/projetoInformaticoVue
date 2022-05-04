@@ -23,6 +23,7 @@ export const useCounterStore = defineStore({
     aberturaInscricao1: [],
     aberturaInscricao2: [],
     aberturaInscricao3: [],
+    utilizadorLogado: []
   }),
   getters: {
     doubleCount: (state) => state.counter * 2
@@ -118,6 +119,58 @@ export const useCounterStore = defineStore({
         console.log(error.response);
         throw error
       }
-    }
+    },
+    async login(credentials) {
+        localStorage.removeItem("adminState");
+        localStorage.removeItem("coordenadorState");
+        localStorage.removeItem("professorState");
+        localStorage.removeItem("alunoState");
+      try {
+        let response = await axios.post("login", credentials);
+        console.log(response.data)
+        if (response.data.access_token && response.data.tipo == 3) {
+          sessionStorage.setItem("tokenAdmin", response.data.access_token);
+          localStorage.setItem("adminState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenAdmin}`;
+        }
+        if (response.data.access_token && response.data.tipo == 2) {
+          sessionStorage.setItem("tokenCoordenador", response.data.access_token);
+          localStorage.setItem("coordenadorState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenCoordenador}`;
+        }
+        if (response.data.access_token && response.data.tipo == 1) {
+          sessionStorage.setItem("tokenProfessor", response.data.access_token);
+          localStorage.setItem("professorState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenProfessor}`;
+        }
+        if (response.data.access_token && response.data.tipo == 0) {
+          sessionStorage.setItem("tokenAluno", response.data.access_token);
+          localStorage.setItem("alunoState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenAluno}`;
+        }
+        this.utilizadorLogado = response.data
+      } catch (error) {
+        delete axios.defaults.headers.common.Authorization;
+        sessionStorage.removeItem("tokenAdmin");
+        localStorage.removeItem("adminState");
+        sessionStorage.removeItem("tokenCoordenador");
+        localStorage.removeItem("coordenadorState");
+        sessionStorage.removeItem("tokenProfessor");
+        localStorage.removeItem("professorState");
+        sessionStorage.removeItem("tokenAluno");
+        localStorage.removeItem("alunoState");
+        this.utilizadorLogado = null
+        console.log(error)
+        throw error;
+      }
+    },
   }
 })

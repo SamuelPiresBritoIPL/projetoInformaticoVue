@@ -17,17 +17,83 @@ import AlunoRoot from '../components/aluno/alunoroot.vue'
 import ConfirmacaoUCs from '../components/aluno/confirmacaoucs.vue'
 import InscricaoTurnos from '../components/aluno/inscricaoturnos.vue'
 import PaginaInicial from '../components/aluno/paginainicial.vue'
+import AdminLogin from '../components/admin/adminlogin.vue'
+import CoordenadorLogin from '../components/coordenador/coordenadorlogin.vue'
+import AlunoLogin from '../components/aluno/login.vue'
 
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
+      path: '/adminlogin',
+      name: 'adminlogin',
+      component: AdminLogin,
+      meta: { requiresAuth: false, title: "Login - Administrador" },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: '/coordenadorlogin',
+      name: 'coordenadorlogin',
+      component: CoordenadorLogin,
+      meta: {requiresAuth: false, title: "Login - Coordenador" },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
+      },
+    },
+    {
+      path: '/login',
+      name: 'alunologin',
+      component: AlunoLogin,
+      meta: { requiresAuth: false, title: "Login" },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
+      },
+    },
+    {
       path: '/admin',
       name: 'adminroot',
       component: AdminRoot,
+      meta: { requiresAuth: true },
       redirect: {
         name: "dashboard",
+      },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
       },
       children: [
         {
@@ -90,8 +156,20 @@ const router = createRouter({
       path: '/coordenador',
       name: 'coordenadorroot',
       component: CoordenadorRoot,
+      meta: { requiresAuth: true },
       redirect: {
         name: "dashboardC",
+      },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
       },
       children: [
         {
@@ -158,8 +236,20 @@ const router = createRouter({
       path: '/',
       name: 'alunoroot',
       component: AlunoRoot,
+      meta: { requiresAuth: true },
       redirect: {
         name: "paginainicial",
+      },
+      beforeEnter: (to, from, next) => {
+        if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
+        localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor") ||
+        localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+          next({
+            name: "not-found",
+          });
+        } else {
+          next();
+        }
       },
       children: [
         {
@@ -185,13 +275,26 @@ const router = createRouter({
   ]
 })
 
+import { useCounterStore } from "../stores/counter"
+
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title;
   next();
 });
 
 router.beforeEach((to, from, next) => {
-  next();
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if ((!localStorage.getItem("adminState") && !localStorage.getItem("coordenadorState") && !localStorage.getItem("alunoState")) ||
+      (!sessionStorage.getItem("tokenAdmin") && !sessionStorage.getItem("tokenCoordenador") && !sessionStorage.getItem("tokenAluno"))) {
+      next({
+        name: "alunologin",
+      });
+    } else {
+      next();
+    }
+  } else {
+    next();
+  }
 });
 
 export default router

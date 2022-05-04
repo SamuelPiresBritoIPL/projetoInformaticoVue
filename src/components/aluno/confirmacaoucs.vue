@@ -105,7 +105,7 @@ export default {
   },
   methods: {
     getCadeirasToConfirm(){
-      this.$axios.get("cadeirasaluno/utilizador/5185")
+      this.$axios.get("cadeirasaluno/utilizador/3134")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
         })
@@ -144,7 +144,7 @@ export default {
       this.getCadeirasNaoAprovadas()
     },
     getCadeirasNaoAprovadas(){
-      this.$axios.get("cadeirasaluno/naoaprovadas/5185")
+      this.$axios.get("cadeirasaluno/naoaprovadas/3134")
         .then((response) => {
           this.cadeirasNaoAprovadas = response.data;
           for (let index = 0; index < this.cadeirasNaoAprovadas.length; index++) {
