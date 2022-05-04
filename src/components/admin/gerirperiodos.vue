@@ -69,11 +69,15 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Ano do curso</label>
                 <div class="col-sm-10">
-                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                  <select v-if="this.counterStore.yearsCourse > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
-                    <option v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
+                    <option  v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
                     {{ year != 0 ? year : "Todos" }}
                     </option>
+                  </select>
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                    <option value="null">Selecione uma opção.</option>
+                    <option value="1">1</option>
                   </select>
                 </div>
               </div>
@@ -123,7 +127,7 @@
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                     <label class="col-sm-10 col-form-label">{{ anoAbertura.ano }}</label>
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura.replace(':00.000000Z', '').replace('T', '') }}</label>
+                    <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
                     <label class="col-sm-10 col-form-label">{{ anoAbertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <div>
@@ -145,11 +149,15 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Ano do curso</label>
                 <div class="col-sm-10">
-                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                  <select v-if="this.counterStore.yearsCourse > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
                     <option v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
                     {{ year != 0 ? year : "Todos" }}
                     </option>
+                  </select>
+                  <select v-else class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                    <option value="null">Selecione uma opção.</option>
+                    <option value="1">1</option>
                   </select>
                 </div>
               </div>

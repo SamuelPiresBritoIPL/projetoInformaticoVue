@@ -294,11 +294,12 @@ export default {
     deleteInscricao(inscricaoid,indexTable){
       this.$axios.delete("cadeirasaluno/inscricao/" + inscricaoid)
         .then((response) => {
+          this.getStatsTurno();
           this.$toast.success(response.data);
           this.dadosInscritos.splice(indexTable,1)
         })
         .catch((error) => {
-          this.$toast.error(response.data);
+          this.$toast.error(error);
         });
     },
     saveTurnoVagas(){
@@ -314,7 +315,6 @@ export default {
             "vagas": dataToSend2
           }).then((response) => {
           this.$toast.success(response.data);
-          this.dadosInscritos.splice(indexTable,1)
         })
         .catch((error) => {
           this.$toast.error(error);
