@@ -164,7 +164,8 @@ export default {
       }
     },
     addUCToInscrever(){
-      if (this.selectedCadeira != null) {
+      console.log(this.selectedCadeira != "null")
+      if (this.selectedCadeira != "null") {
         this.cadeirasOutrosCursos.push(this.selectedCadeira)
       }
       console.log(this.selectedCadeira)

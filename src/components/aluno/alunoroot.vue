@@ -27,7 +27,7 @@
         </ul>
         <ul class="navbar-nav" style="text-align: left;" @click="logout()">
             <li class="nav-item">
-                <a class="nav-link" href="#">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }} ({{ utilizadorLogado.login }}) - Logout</a>
+                <a class="nav-link" href="#">{{ counterStore.utilizadorLogado.nome ? counterStore.utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }} ({{ counterStore.utilizadorLogado.login }}) - Logout</a>
             </li>
         </ul>
       </div>
@@ -76,7 +76,7 @@ export default {
     getInfoUtilizadorLogado(){
         this.$axios.get("utilizadorlogado")
         .then((response) => {
-            this.utilizadorLogado = response.data.data
+            this.counterStore.utilizadorLogado = response.data.data
         })
         .catch((error) => {
             console.log(error.response);
