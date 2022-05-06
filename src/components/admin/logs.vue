@@ -20,7 +20,7 @@
               <td>{{ log.descricao }}</td>
               <td>{{ log.tabela }}</td>
               <td>{{ log.utilizador.login }}</td>
-              <td>{{ log.utilizador.tipo = 0 ? "admin" : "coordenador" }}</td>
+              <td>{{ log.utilizador.tipo = 3 ? "admin" : "coordenador" }}</td>
               <td>{{ log.created_at.replace('.000000Z', '').replace('T', ' ') }}</td>
             </tr>
           </tbody>
