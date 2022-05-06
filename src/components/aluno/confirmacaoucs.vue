@@ -66,8 +66,11 @@
                   <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; resize: none;" v-model="requestDescription"></textarea>
                   <label for="floatingTextarea2">Justifique:</label>
                 </div>
-                <div v-if="errorMessages != null" style="color: red; margin-bottom: 15px">
-                  <small>{{ errorMessages }}</small>
+                <div v-if="hasError" class="errorMessages" style="margin-bottom: 15px">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errorMessages }}</small>
+                </div>
+                <div v-if="hasErrorDescricao" class="errorMessages" style="margin-bottom: 15px">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errorMessages.descricao[0] }}</small>
                 </div>
                 <div style="text-align: center;">
                   <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="inscricaoCadeiras(1)">Submeter</button>
@@ -102,6 +105,25 @@ export default {
         showBtnAdicionarUCOutroCurso: false,
         errorMessages: null
     };
+  },
+  computed: {
+    hasError(){
+      if (this.errorMessages != null) {
+        if (this.errorMessages.descricao) {
+          return false
+        }
+        return true
+      }
+      return false
+    },
+    hasErrorDescricao(){
+      if (this.errorMessages != null) {
+        if (this.errorMessages.descricao) {
+          return true
+        }
+      }
+      return false
+    },
   },
   methods: {
     getCadeirasToConfirm(){
@@ -164,7 +186,6 @@ export default {
       }
     },
     addUCToInscrever(){
-      console.log(this.selectedCadeira != "null")
       if (this.selectedCadeira != "null") {
         this.cadeirasOutrosCursos.push(this.selectedCadeira)
       }

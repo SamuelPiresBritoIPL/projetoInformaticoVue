@@ -45,16 +45,19 @@ export default {
   },
   methods: {
     async login(){
+        var tipoLogin = 1
         try {
-            await this.counterStore.login(this.credentials)
+            await this.counterStore.login(this.credentials, tipoLogin)
             if (this.counterStore.utilizadorLogado.tipo != 1) {
-                sessionStorage.removeItem("tokenAluno");
-                localStorage.removeItem("alunoState");
-                sessionStorage.removeItem("tokenAdmin");
-                localStorage.removeItem("adminState");
-                sessionStorage.removeItem("tokenCoordenador");
-                localStorage.removeItem("coordenadorState");
-                throw "Não tem permissões!"
+                if (this.counterStore.utilizadorLogado.isProfessor == 0) {
+                    sessionStorage.removeItem("tokenAluno");
+                    localStorage.removeItem("alunoState");
+                    sessionStorage.removeItem("tokenAdmin");
+                    localStorage.removeItem("adminState");
+                    sessionStorage.removeItem("tokenCoordenador");
+                    localStorage.removeItem("coordenadorState");
+                    throw "Não tem permissões!"
+                }
             } 
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "dashboardprofessor" });

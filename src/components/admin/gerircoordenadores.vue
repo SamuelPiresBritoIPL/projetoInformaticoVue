@@ -42,6 +42,9 @@
                 {{ "["+course.codigo+"] "+course.nome }}
                 </option>
               </select>
+              <div v-if="hasErrorCurso" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.idCurso }}</small>
+              </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
@@ -50,12 +53,17 @@
                 <option value="0">Coordenador</option>
                 <option value="1">Subcoordenador</option>
               </select>
+              <div v-if="hasErrorTipo"  class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.tipo }}</small>
+              </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Login/Email:</label>
-              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="name" v-model="login">
+              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Login/Email" v-model="login">
+              <div v-if="hasErrorLogin" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+              </div>
             </div>
-            <small></small>
             <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
           </div>
         </div>
@@ -72,6 +80,12 @@
                 {{ "["+course.codigo+"] "+course.nome }}
                 </option>
               </select>
+              <div v-if="hasErrorCursoNullRemover" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ nullCurso }}</small>
+              </div>
+              <div v-if="hasErrorCursoRemover" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+              </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Coordenador:</label>
@@ -81,6 +95,12 @@
                 {{ coordenador.utilizador.login }}
                 </option>
               </select>
+              <div v-if="hasErrorLoginNullRemover" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ nullCoordenador }}</small>
+              </div>
+              <div v-if="hasErrorLoginRemover" class="errorMessages">
+                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+              </div>
             </div>
             <small></small>
             <button class="btn btn-danger" @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)">Remover</button>
@@ -110,8 +130,66 @@ export default {
         login: null,
         selectedCoordinator: null,
         adminLogged: false,
-        coordenadorLogged: false
+        coordenadorLogged: false,
+        grantRoleError: null,
+        revokeRoleError: null,
+        nullCoordenador: null,
+        nullCurso: null
     };
+  },
+  computed: {
+    hasErrorCurso(){
+      if (this.grantRoleError != null) {
+        if (this.grantRoleError.idCurso) {
+          return true
+        }  
+      }
+      return false
+    },
+    hasErrorTipo(){
+      if (this.grantRoleError != null) {
+        if (this.grantRoleError.tipo) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorLogin(){
+      if (this.grantRoleError != null) {
+        if (this.grantRoleError.login) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorCursoRemover(){
+      if (this.revokeRoleError != null) {
+        if (this.revokeRoleError.idCurso) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorCursoNullRemover(){
+      if (this.nullCurso != null) {
+        return true
+      }
+      return false
+    },
+    hasErrorLoginNullRemover(){
+      if (this.nullCoordenador != null) {
+        return true
+      }
+      return false
+    },
+    hasErrorLoginRemover(){
+      if (this.revokeRoleError != null) {
+        if (this.revokeRoleError.login) {
+          return true
+        }
+      }
+      return false
+    }
   },
   methods: {
     getCoursesCoordinators(){
@@ -136,6 +214,16 @@ export default {
           this.login = null
         })
         .catch((error) => {
+          this.grantRoleError = error.response.data
+          if (this.grantRoleError.idCurso) {
+            this.grantRoleError.idCurso = "Deve selecionar um curso."
+          }
+          if (this.grantRoleError.tipo) {
+            this.grantRoleError.tipo = "Deve selecionar o tipo de coordenador."
+          }
+          if (this.grantRoleError.login) {
+            this.grantRoleError.login = "Login/Email não encontrado."
+          }
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },
@@ -150,6 +238,17 @@ export default {
         });
     },
     revokeCoordinatorRole(coordinatorId, courseId){
+      if (courseId == null && coordinatorId == null) {
+        this.nullCurso = "Deve selecionar um curso"
+        this.nullCoordenador = "Deve selecionar um coordenador"
+        this.$toast.error("Não foi possível retirar o role a este utilizador!");
+        throw "Error"
+      }
+      if (coordinatorId == null) {
+        this.nullCoordenador = "Deve selecionar um coordenador"
+        this.$toast.error("Não foi possível retirar o role a este utilizador!");
+        throw "Error"
+      }
       this.$axios.delete("coordenador/" + coordinatorId)
         .then((response) => {
           this.$toast.success("Role retirado com sucesso!");
@@ -173,6 +272,11 @@ export default {
 </script>
 
 <style>
+.errorMessages{
+  background-color: #f2dede; 
+  border-radius: 3px;
+  text-align: center
+}
 @media (min-width: 1024px) {
   .about {
     min-height: 100vh;

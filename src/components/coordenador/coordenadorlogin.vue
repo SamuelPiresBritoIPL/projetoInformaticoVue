@@ -45,16 +45,19 @@ export default {
   },
   methods: {
     async login(){
+        var tipoLogin = 2
         try {
-            await this.counterStore.login(this.credentials)
+            await this.counterStore.login(this.credentials, tipoLogin)
             if (this.counterStore.utilizadorLogado.tipo != 2) {
-                sessionStorage.removeItem("tokenAluno");
-                localStorage.removeItem("alunoState");
-                sessionStorage.removeItem("tokenAdmin");
-                localStorage.removeItem("adminState");
-                sessionStorage.removeItem("tokenProfessor");
-                localStorage.removeItem("professorState");
-                throw "Não tem permissões!"
+                if (this.counterStore.utilizadorLogado.isCoordenador == 0) {
+                    sessionStorage.removeItem("tokenAluno");
+                    localStorage.removeItem("alunoState");
+                    sessionStorage.removeItem("tokenAdmin");
+                    localStorage.removeItem("adminState");
+                    sessionStorage.removeItem("tokenProfessor");
+                    localStorage.removeItem("professorState");
+                    throw "Não tem permissões!"
+                }
             } 
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "coordenadorroot" });

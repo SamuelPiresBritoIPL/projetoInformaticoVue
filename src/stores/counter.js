@@ -120,7 +120,7 @@ export const useCounterStore = defineStore({
         throw error
       }
     },
-    async login(credentials) {
+    async login(credentials, tipoLogin) {
         localStorage.removeItem("adminState");
         localStorage.removeItem("coordenadorState");
         localStorage.removeItem("professorState");
@@ -128,7 +128,31 @@ export const useCounterStore = defineStore({
       try {
         let response = await axios.post("login", credentials);
         console.log(response.data)
-        if (response.data.access_token && response.data.tipo == 3) {
+        //se for admin mas é coordenador tbm
+        if (response.data.access_token && response.data.tipo == 3 && response.data.isCoordenador == 1 && tipoLogin == 2) {
+          sessionStorage.setItem("tokenCoordenador", response.data.access_token);
+          localStorage.setItem("coordenadorState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenCoordenador}`;
+        }
+        //se for admin mas é professor tbm
+        if (response.data.access_token && response.data.tipo == 3 && response.data.isProfessor == 1 && tipoLogin == 1) {
+          sessionStorage.setItem("tokenProfessor", response.data.access_token);
+          localStorage.setItem("professorState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenProfessor}`;
+        }
+        //se for coordenador mas é professor tbm
+        if (response.data.access_token && response.data.tipo == 2 && response.data.isProfessor == 1 && tipoLogin == 1) {
+          sessionStorage.setItem("tokenProfessor", response.data.access_token);
+          localStorage.setItem("professorState", true);
+          axios.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${sessionStorage.tokenProfessor}`;
+        }
+        if (response.data.access_token && response.data.tipo == 3 && tipoLogin == 3) {
           sessionStorage.setItem("tokenAdmin", response.data.access_token);
           localStorage.setItem("adminState", true);
           console.log(sessionStorage.tokenAdmin)
@@ -136,21 +160,21 @@ export const useCounterStore = defineStore({
             "Authorization"
           ] = `Bearer ${sessionStorage.tokenAdmin}`;
         }
-        if (response.data.access_token && response.data.tipo == 2) {
+        if (response.data.access_token && response.data.tipo == 2 && tipoLogin == 2) {
           sessionStorage.setItem("tokenCoordenador", response.data.access_token);
           localStorage.setItem("coordenadorState", true);
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${sessionStorage.tokenCoordenador}`;
         }
-        if (response.data.access_token && response.data.tipo == 1) {
+        if (response.data.access_token && response.data.tipo == 1 && tipoLogin == 1) {
           sessionStorage.setItem("tokenProfessor", response.data.access_token);
           localStorage.setItem("professorState", true);
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${sessionStorage.tokenProfessor}`;
         }
-        if (response.data.access_token && response.data.tipo == 0) {
+        if (response.data.access_token && response.data.tipo == 0 && tipoLogin == 0) {
           sessionStorage.setItem("tokenAluno", response.data.access_token);
           localStorage.setItem("alunoState", true);
           axios.defaults.headers.common[

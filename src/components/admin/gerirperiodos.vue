@@ -79,18 +79,27 @@
                     <option value="null">Selecione uma opção.</option>
                     <option value="1">1</option>
                   </select>
+                  <div v-if="hasErrorAno" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.ano[0] }}</small>
+                  </div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura</label>
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataAbertura">
+                  <div v-if="hasErrorDataAbertura" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                  </div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar</label>
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataEncerrar">
+                  <div v-if="hasErrorDataEncerrar" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataEncerar[0] }}</small>
+                  </div>
                 </div>
               </div>
               <button v-if="editarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
@@ -159,18 +168,27 @@
                     <option value="null">Selecione uma opção.</option>
                     <option value="1">1</option>
                   </select>
+                  <div v-if="hasErrorAno" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.ano[0] }}</small>
+                  </div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura</label>
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataAbertura">
+                  <div v-if="hasErrorDataAbertura" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                  </div>
                 </div>
               </div>
               <div class="row mb-3">
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar</label>
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataEncerrar">
+                  <div v-if="hasErrorDataEncerrar" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataEncerar[0] }}</small>
+                  </div>
                 </div>
               </div>
               <button v-if="editarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
@@ -209,11 +227,39 @@ export default {
       editarInscricao: false,
       iniciarConfirmacao: false,
       editarConfirmacao: false,
-      aberturaToEdit: null
+      aberturaToEdit: null,
+      errorIniciarPC: null
     };
+  },
+  computed: {
+    hasErrorDataAbertura(){
+      if (this.errorIniciarPC != null) {
+        if (this.errorIniciarPC.dataAbertura) {
+          return true
+        }  
+      }
+      return false
+    },
+    hasErrorDataEncerrar(){
+      if (this.errorIniciarPC != null) {
+        if (this.errorIniciarPC.dataEncerar) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorAno(){
+      if (this.errorIniciarPC != null) {
+        if (this.errorIniciarPC.ano) {
+          return true
+        }
+      }
+      return false
+    },
   },
   methods: {
     openEditarConfirmacao(abertura){
+      this.errorIniciarPC = null
       this.editarConfirmacao = true
       this.formConfirmacao = true 
       this.aberturaToEdit = abertura.id
@@ -222,6 +268,7 @@ export default {
       this.dataEncerrar = abertura.dataEncerar.replace(':00.000000Z', '')
     },
     cancelarEdicaoIniciacao(){
+      this.errorIniciarPC = null
       this.formConfirmacao = false
       this.editarConfirmacao = false
       this.iniciarConfirmacao = false
@@ -233,6 +280,7 @@ export default {
       this.dataEncerrar = null
     },
     openEditarInscricao(abertura){
+      this.errorIniciarPC = null
       this.editarInscricao = true
       this.formInscricao = true 
       this.aberturaToEdit = abertura.id
@@ -251,11 +299,12 @@ export default {
             "idAnoletivo": this.counterStore.selectedAnoletivo
           })
         .then((response) => {
-          this.$toast.success("Periodo de abertura criado com sucesso!",);
+          this.$toast.success("Periodo de abertura criado com sucesso!");
           this.counterStore.getAberturasByCourse(courseId)
           this.cancelarEdicaoIniciacao();
         })
         .catch((error) => {
+          this.errorIniciarPC = error.response.data
           this.$toast.error("Não foi possível criar a abertura!");
         });
     },
@@ -271,6 +320,7 @@ export default {
           this.cancelarEdicaoIniciacao();
         })
         .catch((error) => {
+          this.errorIniciarPC = error.response.data
           this.$toast.error("Não foi possível editar a abertura!");
         });
     },

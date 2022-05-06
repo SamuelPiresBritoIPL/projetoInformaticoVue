@@ -45,8 +45,9 @@ export default {
   },
   methods: {
       async login(){
+          var tipoLogin = 3
         try {
-            await this.counterStore.login(this.credentials)
+            await this.counterStore.login(this.credentials, tipoLogin)
             if (this.counterStore.utilizadorLogado.tipo != 3) {
                 sessionStorage.removeItem("tokenAluno");
                 localStorage.removeItem("alunoState");
@@ -59,7 +60,7 @@ export default {
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "dashboard" });
         } catch (error) {
-            console.log(error.response)
+            console.log(error)
             this.$toast.error("Não foi possível fazer login.");
         }
       }
