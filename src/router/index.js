@@ -232,6 +232,7 @@ const router = createRouter({
       path: '/professor',
       name: 'professor',
       component: ProfessorRoot,
+      meta: { requiresAuth: true },
       redirect: {
         name: "dashboardprofessor",
       },
@@ -313,8 +314,8 @@ router.beforeEach((to, from, next) => {
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if ((!localStorage.getItem("adminState") && !localStorage.getItem("coordenadorState") && !localStorage.getItem("alunoState")) ||
-      (!sessionStorage.getItem("tokenAdmin") && !sessionStorage.getItem("tokenCoordenador") && !sessionStorage.getItem("tokenAluno"))) {
+    if ((!localStorage.getItem("adminState") && !localStorage.getItem("coordenadorState") && !localStorage.getItem("alunoState") && !localStorage.getItem("professorState")) ||
+      (!sessionStorage.getItem("tokenAdmin") && !sessionStorage.getItem("tokenCoordenador") && !sessionStorage.getItem("tokenAluno") && !sessionStorage.getItem("tokenProfessor"))) {
       next({
         name: "alunologin",
       });
