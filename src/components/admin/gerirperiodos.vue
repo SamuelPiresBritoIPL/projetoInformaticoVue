@@ -69,13 +69,13 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Ano do curso</label>
                 <div class="col-sm-10">
-                  <select v-if="this.counterStore.yearsCourse > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                  <select v-if="this.counterStore.yearsCourse.length > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
                     <option  v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
                     {{ year != 0 ? year : "Todos" }}
                     </option>
                   </select>
-                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                  <select v-else class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
                     <option value="1">1</option>
                   </select>
@@ -158,7 +158,7 @@
               <div class="row mb-3">
                 <label class="col-sm-2 col-form-label">Ano do curso</label>
                 <div class="col-sm-10">
-                  <select v-if="this.counterStore.yearsCourse > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
+                  <select v-if="this.counterStore.yearsCourse.length > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
                     <option value="null">Selecione uma opção.</option>
                     <option v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
                     {{ year != 0 ? year : "Todos" }}
@@ -290,7 +290,6 @@ export default {
     },
     createAbertura(courseId, year, type, dataAbertura, dataEncerrar){
       this.$axios.post("abertura/"+courseId, {
-            "idUtilizador": 25,
             "ano": year,
             "tipoAbertura": type,
             "dataAbertura": dataAbertura,
@@ -305,7 +304,11 @@ export default {
         })
         .catch((error) => {
           this.errorIniciarPC = error.response.data
-          this.$toast.error("Não foi possível criar a abertura!");
+          if(error.response.data.erros){
+            this.$toast.error(error.response.data.erros);
+          }else{
+            this.$toast.error("Não foi possível criar a abertura!");
+          }
         });
     },
     updateAbertura(year, dataAbertura, dataEncerrar){
