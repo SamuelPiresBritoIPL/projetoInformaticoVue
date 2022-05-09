@@ -72,6 +72,7 @@ export default {
     getCadeirasWithTurnos(){
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
+          console.log(response)
           this.cadeirasWithTurnos = response.data;
           this.cadeirasWithTurnos.forEach((cadeira, index) => {
             console.log(cadeira)

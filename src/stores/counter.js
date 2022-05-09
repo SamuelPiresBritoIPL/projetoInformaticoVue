@@ -41,7 +41,7 @@ export const useCounterStore = defineStore({
     },
     async getCourses() {
       try {
-        let response = await axios.get("curso")
+        let response = await axios.get("cursoauth")
         this.courses = response.data
         return response.data;
       } catch (error) {
@@ -51,7 +51,7 @@ export const useCounterStore = defineStore({
     },
     async getCourseWithUCs(courseId){
       try {
-        let response = await axios.get("curso/cadeiras/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
+        let response = await axios.get("cursoauth/cadeiras/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.courseWithUCs = response.data;
       } catch {
         console.log(error.response);
