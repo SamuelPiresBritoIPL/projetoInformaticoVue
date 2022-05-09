@@ -109,9 +109,11 @@ export default {
             this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "coordenadorroot" });
         } catch (error) {
-            if ((this.credentials.login != null && this.credentials.password != null) || this.credentials.password != null) {
-                this.messageError = error.response.data
-                console.log(this.messageError.message)
+            if (error.response) {
+              if ((this.credentials.login != null && this.credentials.password != null) || this.credentials.password != null) {
+                  this.messageError = error.response.data
+                  console.log(this.messageError.message)
+              }
             }
             this.$toast.error("Não foi possível fazer login");
         }

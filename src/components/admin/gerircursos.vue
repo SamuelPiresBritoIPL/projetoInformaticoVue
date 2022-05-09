@@ -10,7 +10,7 @@
         </option>
       </select>
     </div>
-    <button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>
+    <!--<button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>-->
     <div v-if="gerirCursoNaAplicacao">
       <div v-if="this.counterStore.courseWithUCs.nome" class="card text-center">
         <div class="card-header">
