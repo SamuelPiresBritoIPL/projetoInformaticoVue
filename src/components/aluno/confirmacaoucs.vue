@@ -131,6 +131,7 @@ export default {
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
+          console.log(this.cadeirasToConfirm)
         })
         .catch((error) => {
           console.log(error.response);

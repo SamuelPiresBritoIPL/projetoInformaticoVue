@@ -10,23 +10,35 @@
                 <h5 class="card-title" style="margin-bottom: 25px; text-align: center;">Inscrição nos Turnos</h5>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">[9119] Licenciatura em Engenharia Informática</p>
                 <hr>
-                <div style="margin-top: 35px; text-align: left;">
-                  <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
-                  <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
-                  <br><br>
-                  <div v-for="(cadeira, cadeiraIndex) in cadeirasWithTurnos" :key="cadeira.cadeira.id">
-                    <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
-                    <label class="col-sm-8 col-form-label">
-                      <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
-                        <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
-                          <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
-                          <label class="form-check-label">
-                            {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
+                <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
+                  <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
+                  <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
+                    <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
+                    <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
+                    <br><br>
+                    <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
+                      <div v-if="index == index2">
+                        <h5>{{ inscricaoucs[0].nomeCurso }}</h5>
+                        <div v-for="(cadeira, cadeiraIndex) in inscricaoucs" :key="cadeira.cadeira.id">
+                          <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
+                          <label class="col-sm-8 col-form-label">
+                            <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
+                              <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
+                                <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
+                                <label class="form-check-label">
+                                  {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
+                                </label>
+                              </span>
+                              <br>
+                            </span>
                           </label>
-                        </span>
-                        <br>
-                      </span>
-                    </label>  
+                        </div>
+                        <div style="margin-top: 20px; text-align: center;">
+                          <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
+                        </div>
+                      </div>
+                    </div>
+                    <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
                   </div>
                 </div> 
                 <div v-if="showTurnosRejeitados == true" style="color: red">
@@ -37,12 +49,9 @@
                         Turno - {{ turnoRejeitado.tipo }} (UC: {{ turnoRejeitado.cadeira }} / Curso: {{ turnoRejeitado.curso }})
                       </small> 
                     </div>
-                </div>
+                  </div>
                   <hr>
                 </div> 
-                <div style="margin-top: 20px; text-align: center;">
-                  <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
-                </div>
               </div>
             </div>  
           </div>
@@ -61,23 +70,41 @@ export default {
   },
   data() {
     return {
-      cadeirasWithTurnos: [],
+      cadeirasWithTurnosPorCurso: [],
       arrayVmodel: [],
       allTurnosIds: [],
       showTurnosRejeitados: false,
-      turnosRejeitados: []
+      turnosRejeitados: [],
+      showInscricaoForm: false,
+      buttonArray: [],
+      buttonBlockArray: []
     };
+  },
+  computed: {
+    hasButtonSelected(){
+      for (let index = 0; index < this.buttonArray.length; index++) {
+        if (this.buttonArray[index] == true) {
+          console.log(this.buttonArray[index])
+          return false
+        }
+      }
+      return true
+    }
   },
   methods: {
     getCadeirasWithTurnos(){
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
-          console.log(response)
-          this.cadeirasWithTurnos = response.data;
-          this.cadeirasWithTurnos.forEach((cadeira, index) => {
-            console.log(cadeira)
-            this.arrayVmodel.push([])
-          });
+          this.cadeirasWithTurnosPorCurso = response.data;
+          console.log(this.cadeirasWithTurnosPorCurso)
+          Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index) => {
+            this.buttonArray.push(false)
+            inscricaoucs.forEach((cadeira, index) => {
+              console.log(cadeira)
+              this.arrayVmodel.push([])
+            });
+          })
+          console.log(this.buttonArray)
         })
         .catch((error) => {
           console.log(error);
