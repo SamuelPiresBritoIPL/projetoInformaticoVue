@@ -16,7 +16,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="tableRow" v-for="turno in cadeiras.cadeiras" :key="turno" @click="selectCadeiraToManage(turno.idCadeira)">
+              <tr class="tableRow" v-for="(turno,index) in cadeiras.cadeiras" :key="turno" @click="selectCadeiraToManage(index)">
                 <td>{{ "["+turno[0].codigo+"] "+turno[0].nome }}</td>
                 <td>
                   <p v-for="t in turno" :key="t">
@@ -25,7 +25,7 @@
                 </td>
                 <td>
                   <p v-for="t in turno" :key="t">
-                    <a :key="t" class="hoverturno" @click.stop="" style="text-decoration:none">{{ t.numero != 0 ? t.tipo+t.numero :  t.tipo }}&nbsp;&nbsp;</a>
+                    <a :key="t" class="hoverturno" @click.stop="selectTurnoToManage(index,t)" style="text-decoration:none">{{ t.numero != 0 ? t.tipo+t.numero :  t.tipo }}&nbsp;&nbsp;</a>
                   </p>
                 </td>
               </tr>
@@ -62,10 +62,17 @@ export default {
           console.log(error.response)
         });
     },
+    selectCadeiraToManage(idCadeira){
+      this.counterStore.turnoToManage = null
+      this.$router.push("/professor/gerircadeira/" + idCadeira);
+    },
+    selectTurnoToManage(idCadeira,turno){
+      this.counterStore.turnoToManage = turno.id
+      this.$router.push("/professor/gerircadeira/" + idCadeira)
+    }
   },
   mounted() {
     this.getTurnos()
-
   },
 };
 </script>

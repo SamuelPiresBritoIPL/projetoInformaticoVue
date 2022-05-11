@@ -10,6 +10,18 @@
                     <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
                     <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
                     <hr>
+                    <label >Ano letivo:</label>
+                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo">
+                        <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
+                        {{ anoletivo.anoletivo }}
+                        </option>
+                    </select>
+                    <label>Semestre:</label>
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                    </select>
+                    <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
@@ -52,9 +64,14 @@
 </template>
 
 <script>
+import { useCounterStore } from "../../stores/counter"
 export default {
   name: "ProfessorRoot",
   component: {},
+  setup() {
+    const counterStore = useCounterStore()
+    return { counterStore }
+  },
   data() {
     return {
         utilizadorLogado: []
@@ -74,9 +91,27 @@ export default {
         .catch((error) => {
             console.log(error.response);
         });
+    },
+    getAnosLetivos(){
+        this.$axios.get("anoletivo")
+        .then((response) => {
+            this.anosLetivos = response.data
+            this.anosLetivos.forEach((anoLetivo) => {
+                if (anoLetivo.ativo == 1) {
+                    this.counterStore.selectedAnoletivo = anoLetivo.id
+                }
+                if (anoLetivo.semestreativo != null) {
+                    this.counterStore.semestre = anoLetivo.semestreativo
+                }
+            })
+        })
+        .catch((error) => {
+            console.log(error.response);
+        });
     }
   },
   mounted() {
+      this.getAnosLetivos()
       this.getInfoUtilizadorLogado()
   },
 };

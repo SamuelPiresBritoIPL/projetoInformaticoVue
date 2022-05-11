@@ -94,6 +94,8 @@ export default {
         }
         var tipoLogin = 1
         try {
+          console.log(this.credentials)
+          console.log(tipoLogin)
             await this.counterStore.login(this.credentials, tipoLogin)
             if (this.counterStore.utilizadorLogado.tipo != 1) {
                 if (this.counterStore.utilizadorLogado.isProfessor == 0) {

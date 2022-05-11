@@ -21,6 +21,7 @@ import AdminLogin from '../components/admin/adminlogin.vue'
 import CoordenadorLogin from '../components/coordenador/coordenadorlogin.vue'
 import AlunoLogin from '../components/aluno/login.vue'
 import ProfessorLogin from '../components/professor/professorlogin.vue'
+import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
 
 
 const router = createRouter({
@@ -259,6 +260,12 @@ const router = createRouter({
           name: "vercadeiras",
           component: VerCadeiras,
           meta: { title: "Cadeiras" },
+        },
+        {
+          path: "gerircadeira/:cadeiraId",
+          name: "gerircadeiraprof",
+          component: GerirCadeiraProf,
+          meta: { title: "Unidade curricular" },
         },
       ],
     },
