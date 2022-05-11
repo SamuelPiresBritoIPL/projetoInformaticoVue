@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     getCadeirasToConfirm(){
-      this.$axios.get("cadeirasaluno/utilizador")
+      this.$axios.get("cadeirasaluno/confirmar/utilizador")
         .then((response) => {
           this.cadeirasToConfirm = response.data;
           console.log(this.cadeirasToConfirm)
