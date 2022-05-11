@@ -101,6 +101,7 @@
         </div>
         <br>
         <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
+        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
         <br>
         <table class="table" style="text-align:left;">
           <thead>
@@ -334,6 +335,28 @@ export default {
           link.href = url
           console.log(this.turno)
           link.setAttribute('download', "turnos_" + this.turno.tipo + (this.turno.numero == 0 ? "" : this.turno.numero) + "_" + this.turno.cadeira.nome + ".xls")
+          document.body.appendChild(link)
+          link.click()
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    downloadExcelCadeira(){
+      console.log(this.cadeira)
+      this.$axios.get("cadeirasprofessor/export/" + this.cadeira.id, {
+            headers: {"Accept": "application/vnd.ms-excel"},
+            responseType: "blob"
+          })
+        .then((response) => {
+          //let filename = response.headers['content-disposition'].split('filename=')[1];
+          const url = URL.createObjectURL(new Blob([response.data], {
+              type: 'application/vnd.ms-excel'
+          }))
+          const link = document.createElement('a')
+          link.href = url
+          console.log(this.turno)
+          link.setAttribute('download', this.cadeira.nome + ".xls")
           document.body.appendChild(link)
           link.click()
         })
