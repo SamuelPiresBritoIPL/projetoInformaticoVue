@@ -129,7 +129,7 @@ export const useCounterStore = defineStore({
         let response = await axios.post("login", credentials);
         console.log(response.data)
         //se for admin mas é coordenador tbm
-        if (response.data.access_token && response.data.tipo == 3 && response.data.isCoordenador == 1 && tipoLogin == 2) {
+        if (response.data.access_token && response.data.tipo == 1 && response.data.isCoordenador == 1 && tipoLogin == 2) {
           sessionStorage.setItem("tokenCoordenador", response.data.access_token);
           localStorage.setItem("coordenadorState", true);
           axios.defaults.headers.common[
