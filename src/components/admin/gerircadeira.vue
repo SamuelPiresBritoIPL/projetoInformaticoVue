@@ -103,6 +103,15 @@
         <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
         <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
         <br>
+        <br>
+        <select v-if="this.turno != null" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoSelected">
+          <option value="null">Selecione um turno.</option>
+          <option v-for="(turno) in filteredArray" :key="turno.id" v-bind:value="turno.id">
+          {{ turno.tipo + (turno.numero == 0 ? "" : turno.numero) }}
+          </option>
+        </select>
+        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="moverEstudantes()">Mover estudantes</button>
+        <br>
         <table class="table" style="text-align:left;">
           <thead>
             <tr>
@@ -111,6 +120,7 @@
               <th scope="col">Email</th>
               <th scope="col">Repetente </th>
               <th scope="col">{{this.counterStore.turnoToManage == null ? "Inscrito Turno" : "Remover"}}</th>
+              <th scope="col" v-if="this.counterStore.turnoToManage != null">Selecionado</th>
             </tr>
           </thead>
           <tbody>
@@ -125,6 +135,9 @@
                 </button>
               </td>
               <td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
+              <td v-if="this.counterStore.turnoToManage != null">
+                <input type="checkbox" :value="aluno.id" v-model="estudantesSelected">
+              </td>
             </tr>
           </tbody>
         </table>
@@ -159,7 +172,9 @@ export default {
         turnovisivel:0,
         turno: null,
         turnoInfo: [],
-        turnorepetentes:0
+        turnorepetentes:0,
+        estudantesSelected: [],
+        turnoSelected: null,
     };
   },
   computed: {
@@ -174,7 +189,10 @@ export default {
         return true
       } 
       return false
-    }
+    },
+    filteredArray() {
+      return this.cadeira.turnos.filter(turno => turno.id != this.turno.id);
+    },
   },
   methods: {
     getStats(){
@@ -359,6 +377,21 @@ export default {
           link.setAttribute('download', this.cadeira.nome + ".xls")
           document.body.appendChild(link)
           link.click()
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    moverEstudantes(){
+      console.log(this.estudantesSelected)
+      this.$axios.put("cadeiras/mudarturno/"+this.turnoSelected, {
+          "inscricaoIds": this.estudantesSelected
+        })
+        .then((response) => {
+          this.$toast.success(response.data)
+          this.estudantesSelected = []
+          console.log(this.estudantesSelected)
+          this.getStatsTurno(this.turno.id)
         })
         .catch((error) => {
           this.$toast.error(error);
