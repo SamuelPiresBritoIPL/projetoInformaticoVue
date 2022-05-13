@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-3" style="padding-left: 0px;">
             <nav>
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height: 100vh;">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-container" style="width: 280px; min-height: 100vh;">
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Professor</span>
                     </a>

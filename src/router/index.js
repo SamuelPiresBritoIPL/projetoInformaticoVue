@@ -216,6 +216,12 @@ const router = createRouter({
           meta: { title: "Gerir Cursos" },
         },
         {
+          path: "gerircadeira/:cadeiraId",
+          name: "gerircadeiraC",
+          component: GerirCadeira,
+          meta: { title: "Gerir Cadeira" },
+        },
+        {
           path: "gerirconfirmacoes",
           name: "gerirconfirmacoesC",
           component: GerirConfirmacoes,
