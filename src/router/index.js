@@ -82,7 +82,7 @@ const router = createRouter({
       path: '/loginprofessor',
       name: 'professorlogin',
       component: ProfessorLogin,
-      meta: { requiresAuth: false, title: "Login" },
+      meta: { requiresAuth: false, title: "Login - Professor" },
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
         localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno") ||
