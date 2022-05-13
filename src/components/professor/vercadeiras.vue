@@ -4,7 +4,7 @@
     <div v-if="this.turnos.length != 0" class="card text-center">
       <div v-for="cadeiras in this.turnos" :key="cadeiras" >
         <div class="card-header">
-          {{ cadeiras.curso }}
+          {{ "["+cadeiras.codigoCurso+"] "+cadeiras.curso }}
         </div>
         <div class="card-body">
           <table class="table" style="text-align: left;">
