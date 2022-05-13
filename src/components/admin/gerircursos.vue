@@ -11,7 +11,7 @@
       </select>
     </div>
     <!--<button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>-->
-    <div v-if="gerirCursoNaAplicacao">
+    <div v-if="gerirCursoNaAplicacao && hasValue">
       <div v-if="this.counterStore.courseWithUCs.nome" class="card text-center">
         <div class="card-header">
           Cadeiras de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
@@ -86,6 +86,13 @@ export default {
     };
   },
   computed: {
+    hasValue(){
+      if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
+        this.counterStore.getCourses(1)
+        return true
+      } 
+      return false
+    },
     hasMoreThanOneCurso(){
       if (this.counterStore.courses.length > 1) {
         return true
@@ -96,15 +103,25 @@ export default {
   methods: {
     selectCadeiraToManage(cadeira){
       this.counterStore.turnoToManage = null
-      this.$router.push("/admin/gerircadeira/" + cadeira.id);
+      if (sessionStorage.tokenCoordenador && localStorage.coordenadorState) {
+        this.$router.push("/coordenador/gerircadeira/" + cadeira.id);
+      }
+      if (sessionStorage.tokenAdmin && localStorage.adminState) {
+        this.$router.push("/admin/gerircadeira/" + cadeira.id);
+      }
     },
     selectTurnoToManage(cadeira,turno){
       this.counterStore.turnoToManage = turno.id
-      this.$router.push("/admin/gerircadeira/" + cadeira.id)
+      if (sessionStorage.tokenCoordenador && localStorage.coordenadorState) {
+        this.$router.push("/coordenador/gerircadeira/" + cadeira.id);
+      }
+      if (sessionStorage.tokenAdmin && localStorage.adminState) {
+        this.$router.push("/admin/gerircadeira/" + cadeira.id);
+      }
     }
   },
   mounted() {
-    this.counterStore.getCourses(1)
+    
   },
 };
 </script>
