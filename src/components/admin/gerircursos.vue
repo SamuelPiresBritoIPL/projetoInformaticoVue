@@ -32,7 +32,7 @@
                 <td>
                   <p v-for="turno in cadeira.turnos" :key="turno">
                     <span v-for="turnotipo in turno" :key="turnotipo"> 
-                      <a class="hoverturno" @click.stop="selectTurnoToManage(cadeira,turnotipo)" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}</a>{{"(" + turnotipo.vagasocupadas + "/" + turnotipo.vagastotal + ")"}}&nbsp;&nbsp;
+                      <a class="hoverturno" @click.stop="selectTurnoToManage(cadeira,turnotipo)" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}</a>{{"(" + turnotipo.vagasocupadas + "/" + (turnotipo.vagastotal == null ? "-" : turnotipo.vagastotal) + ")"}}&nbsp;&nbsp;
                      
                     </span> 
                   </p>
