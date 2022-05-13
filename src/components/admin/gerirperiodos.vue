@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir Periodos</h2>
-    <div class="mb-3">
+    <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir periodos:</label>
       <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="this.counterStore.getAberturasByCourse(selectedCourse)">
         <option value="null">Selecione um curso.</option>
@@ -232,6 +232,12 @@ export default {
     };
   },
   computed: {
+    hasMoreThanOneCurso(){
+      if (this.counterStore.courses.length > 1) {
+        return true
+      }
+      return false
+    },
     hasErrorDataAbertura(){
       if (this.errorIniciarPC != null) {
         if (this.errorIniciarPC.dataAbertura) {
@@ -340,7 +346,7 @@ export default {
     }
   },
   mounted() {
-    this.counterStore.getCourses()
+    this.counterStore.getCourses(2)
   },
 };
 </script>

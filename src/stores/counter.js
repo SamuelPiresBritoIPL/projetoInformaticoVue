@@ -46,6 +46,10 @@ export const useCounterStore = defineStore({
         if (this.courses.length == 1 && tipo == 1) {
           this.getCourseWithUCs(this.courses[0].id)
         }
+        if (this.courses.length == 1 && tipo == 2) {
+          console.log("aqui")
+          this.getAberturasByCourse(this.courses[0].id)
+        }
         return response.data;
       } catch (error) {
         console.log(error.response)
