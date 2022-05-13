@@ -39,10 +39,13 @@ export const useCounterStore = defineStore({
         throw error
       }
     },
-    async getCourses() {
+    async getCourses(tipo = 0) {
       try {
         let response = await axios.get("cursoauth")
         this.courses = response.data
+        if (this.courses.length == 1 && tipo == 1) {
+          this.getCourseWithUCs(this.courses[0].id)
+        }
         return response.data;
       } catch (error) {
         console.log(error.response)

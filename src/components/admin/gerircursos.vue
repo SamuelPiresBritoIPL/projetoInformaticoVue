@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir Curso na Aplicação</h2>
-    <div class="mb-3">
+    <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="this.counterStore.getCourseWithUCs(selectedCourse)">
         <option value="null">Selecione um curso.</option>
@@ -82,6 +82,14 @@ export default {
         cadeirasToGerir: []
     };
   },
+  computed: {
+    hasMoreThanOneCurso(){
+      if (this.counterStore.courses.length > 1) {
+        return true
+      }
+      return false
+    }
+  },
   methods: {
     selectCadeiraToManage(cadeira){
       this.counterStore.turnoToManage = null
@@ -93,7 +101,7 @@ export default {
     }
   },
   mounted() {
-    this.counterStore.getCourses()
+    this.counterStore.getCourses(1)
   },
 };
 </script>
