@@ -28,6 +28,33 @@
         </div>
       </div>
     </div>
+    <div v-if="!adminLogged && hasMoreThanOneCursoCoordinators" class="card text-center">
+      <div class="card-header">
+        Coordenadores e sub coordenadores de cada curso
+      </div>
+      <div class="card-body">
+        <div class="table-responsive" style="max-height: 350px;">
+          <table class="table" style="text-align: left;">
+            <thead style="position: sticky; top: 0; z-index: 1; background-color:white;">
+              <tr >
+                <th scope="col">Curso</th>
+                <th scope="col">Nº de Coordenadores</th>
+                <th scope="col">Login </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="course in coursesWithCoordinatores" :key="course">
+                <td>{{ "["+course.codigo+"] "+course.nome }}</td>
+                <td>{{ course.coordenadores.length }}</td>
+                <td scope="col">
+                  <p v-for="coordenador in course.coordenadores" :key="coordenador">{{ coordenador.utilizador.login }}</p> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     <br>
     <div class="row">
       <div class="col-sm-6">
@@ -36,7 +63,10 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+              <span v-if="this.counterStore.courses[0]">
+                <label v-if="!hasMoreThanOneCurso">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
+              </span>
+              <select v-if="hasMoreThanOneCurso" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
                 <option value="null">Selecione um curso.</option>
                 <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
                 {{ "["+course.codigo+"] "+course.nome }}
@@ -74,7 +104,8 @@
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourseRemove" v-on:change="getCoordinatorsByCourse(selectedCourseRemove)">
+              <label v-if="!hasMoreThanOneCurso && this.counterStore.courses[0]">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
+              <select v-if="hasMoreThanOneCurso" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourseRemove" v-on:change="getCoordinatorsByCourse(selectedCourseRemove)">
                 <option value="null">Selecione um curso.</option>
                 <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
                 {{ "["+course.codigo+"] "+course.nome }}
@@ -138,6 +169,21 @@ export default {
     };
   },
   computed: {
+    hasMoreThanOneCurso(){
+      if (this.counterStore.courses.length > 1) {
+        return true
+      }
+      if (this.counterStore.courses[0]) {
+        this.getCoordinatorsByCourse(this.counterStore.courses[0].id)
+      }
+      return false
+    },
+    hasMoreThanOneCursoCoordinators(){
+      if (this.coursesWithCoordinatores.length > 1) {
+        return true
+      }
+      return false
+    },
     hasErrorCurso(){
       if (this.grantRoleError != null) {
         if (this.grantRoleError.idCurso) {
@@ -193,7 +239,7 @@ export default {
   },
   methods: {
     getCoursesCoordinators(){
-      this.$axios.get("curso/coordenadores")
+      this.$axios.get("cursoauth/coordenadores")
         .then((response) => {
           console.log(response.data);
           this.coursesWithCoordinatores = response.data;
@@ -203,6 +249,9 @@ export default {
         });
     },
     grantCoordinatorRole(idCurso, type, login){
+      if (idCurso == null) {
+        idCurso = this.counterStore.courses[0].id
+      }
       this.$axios.post("coordenador", {
             "login": login,
             "idCurso": idCurso,
@@ -238,6 +287,9 @@ export default {
         });
     },
     revokeCoordinatorRole(coordinatorId, courseId){
+      if (courseId == null) {
+        courseId = this.counterStore.courses[0].id
+      }
       if (courseId == null && coordinatorId == null) {
         this.nullCurso = "Deve selecionar um curso"
         this.nullCoordenador = "Deve selecionar um coordenador"
@@ -267,6 +319,10 @@ export default {
     }
     this.getCoursesCoordinators()
     this.counterStore.getCourses()
+   /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
+      
+      console.log(this.coordinatoresByCourse)
+    } */
   },
 };
 </script>

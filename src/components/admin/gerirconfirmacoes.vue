@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir Confirmações das UC's</h2>
-    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="selectCourse(selectedCourse)">
+    <select v-if="hasMoreThanOneCurso" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="selectCourse(selectedCourse)">
       <option value="null">Selecione um curso.</option>
       <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
       {{ "["+course.codigo+"] "+course.nome }}
@@ -78,6 +78,17 @@ export default {
         approvedCadeiras: [],
         rejectedCadeiras: []
     };
+  },
+  computed: {
+    hasMoreThanOneCurso(){
+      if (this.counterStore.courses.length > 1) {
+        return true
+      }
+      if (this.counterStore.courses[0]) {
+        this.selectCourse(this.counterStore.courses[0].id)
+      }
+      return false
+    }
   },
   methods: {
     selectCourse(selectedCourse){
