@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-3" style="padding-left: 0px;">
             <nav>
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width: 280px; min-height: 100vh;">
+                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-container" style="width: 280px; min-height: 100vh;">
                     <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
                         <span class="fs-4" style="text-align:center;">Coordenador</span>
                     </a>
@@ -45,7 +45,7 @@
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'gerircursosC' }"
+                            :class="{ active: $route.name === 'gerircursosC' || $route.name === 'gerircadeiraC'}"
                             :to="{ name: 'gerircursosC' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="mortarboard"
