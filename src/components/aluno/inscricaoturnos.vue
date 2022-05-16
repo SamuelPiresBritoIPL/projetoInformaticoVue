@@ -20,18 +20,20 @@
                       <div v-if="index == index2">
                         <h5>{{ inscricaoucs[0].nomeCurso }}</h5>
                         <div v-for="(cadeira, cadeiraIndex) in inscricaoucs" :key="cadeira.cadeira.id">
-                          <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
-                          <label class="col-sm-8 col-form-label">
-                            <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
-                              <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
-                                <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
-                                <label class="form-check-label">
-                                  {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
-                                </label>
+                          <div v-if="cadeira.cadeira.turnos.length != 0">
+                            <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
+                            <label class="col-sm-8 col-form-label">
+                              <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
+                                <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
+                                  <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
+                                  <label class="form-check-label">
+                                    {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
+                                  </label>
+                                </span>
+                                <br>
                               </span>
-                              <br>
-                            </span>
-                          </label>
+                            </label>
+                          </div>
                         </div>
                         <div style="margin-top: 20px; text-align: center;">
                           <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>

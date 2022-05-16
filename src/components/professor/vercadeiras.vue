@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2>Ver Cadeiras</h2>
+    <h2>Unidades Curriculares</h2>
     <div v-if="this.turnos.length != 0" class="card text-center">
       <div v-for="cadeiras in this.turnos" :key="cadeiras" >
         <div class="card-header">

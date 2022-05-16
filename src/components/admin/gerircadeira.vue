@@ -100,6 +100,16 @@
           </div>
         </div>
         <br>
+        <div v-if="this.turno == null" class="card">
+          <div class="card-body">
+            <h5 class="card-title">Alterar visibilidade</h5>
+            <label for="exampleFormControlInput7" class="form-label">Alterar a visibilidade para todos os turnos</label>
+            <br>
+            <button class=" btn btn-danger text-right" @click="changeVisibility(0)">Tornar todos os turnos invisiveis</button><br><br>
+            <button class=" btn btn-primary text-right" @click="changeVisibility(1)">Tornar todos os turnos visiveis</button>
+          </div>
+        </div>
+        <br>
         <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
         <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
         <br>
@@ -392,6 +402,15 @@ export default {
           this.estudantesSelected = []
           console.log(this.estudantesSelected)
           this.getStatsTurno(this.turno.id)
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        });
+    },
+    changeVisibility(visivel){
+      this.$axios.post("cadeiras/turnosinvisivel/" + this.cadeira.id + "/" + this.counterStore.selectedAnoletivo + "/" + visivel)
+        .then((response) => {
+          this.$toast.success(response.data)
         })
         .catch((error) => {
           this.$toast.error(error);
