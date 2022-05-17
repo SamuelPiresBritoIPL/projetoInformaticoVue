@@ -48,29 +48,43 @@
                 </div>
             </div>
         </div>
-        <div v-if="this.cadeira != null" class="card">
-          <div class="card-body">
-            <h5 class="card-title">Gerir</h5>
-            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
-            <div class="input-group mb-3">
-              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="número/email" v-model="numeroadicionar">
-              <div class="input-group-append">
-                <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
+        <div class="accordion" id="accordionExample" v-if="this.cadeira != null">
+          <div class="accordion-item" >
+            <h2 class="accordion-header" id="headingOne">
+              <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" :aria-expanded="this.collapsed[0]" aria-controls="collapseOne" @click="changeCollapsed(0)">
+                Adicionar aluno a UC/Turno
+              </button>
+            </h2>
+            <div id="collapseOne" :class="{collapse:this.collapsed[0]}" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a unidade curricular</label>
+                <div class="input-group mb-3">
+                  <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="número/email" v-model="numeroadicionar">
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
+                  </div>
+                </div>
+                <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
+                <div class="input-group mb-3">
+                  <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
+                      <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
+                    </select>
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
+                  </div>
+                </div>  
               </div>
             </div>
-            
-            <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
-            <div class="input-group mb-3">
-              <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
-                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
-                  <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
-                </select>
-              <div class="input-group-append">
-                <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
-              </div>
-            </div>
-            <div class="card" v-if="this.turno != null">
-              <div class="card-body">
+          </div>
+          <div class="accordion-item">
+            <h2 class="accordion-header" id="headingTwo">
+              <button class="accordion-button" :class="{collapsed:this.collapsed[1]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed[1]" aria-controls="collapseTwo" @click="changeCollapsed(1)" >
+                Alterar Vagas Turnos
+              </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[1]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+              <div class="accordion-body" v-if="this.turno != null">
                 <label for="exampleFormControlInput3" class="form-label">Alterar número de vagas</label>
                 <div class="input-group mb-3">
                   <input type="number" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
@@ -81,32 +95,35 @@
                 <input type="checkbox" id="checkboxrepetentes" v-model="turno.repetentes" true-value="1" false-value="0">
                 <label for="checkboxrepetentes">Turno aceita repetentes</label>
                 <br>
-                <button class="btn btn-primary text-right" @click="changeTurnoData()">Guardar Alterações</button>
+                <button class="btn btn-primary text-right" @click="changeTurnoData()">Guardar Alterações</button>  
+              </div>
+              <div class="card-body" v-if="this.turno == null">
+                <h5 class="card-title">Alterar vagas turnos</h5>
+                <label for="exampleFormControlInput4" class="form-label">Alterar vagas para todos os turnos ao mesmo tempo</label>
+                <div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
+                  <label class="col-sm-1 col-form-label">{{info.turno + " (" + info.numeroturnos + ")  "}}</label>
+                  <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="número de vagas" v-model="info.valor">
+                  <span class="col-form-label">&nbsp;&nbsp;{{"Média de vagas por turno: " + info.mediavagas}}</span>
+                </div>
+                <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar número de vagas por turno</button> <br><br>  
               </div>
             </div>
           </div>
-        </div>
-        <br>
-        <div v-if="this.turno == null" class="card">
-          <div class="card-body">
-            <h5 class="card-title">Alterar vagas turnos</h5>
-            <label for="exampleFormControlInput1" class="form-label">Alterar vagas para todos os turnos ao mesmo tempo</label>
-            <div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
-              <label class="col-sm-1 col-form-label">{{info.turno + " (" + info.numeroturnos + ")  "}}</label>
-              <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="número de vagas" v-model="info.valor">
-              <span class="col-form-label">&nbsp;&nbsp;{{"Média de vagas por turno: " + info.mediavagas}}</span>
+          <div class="accordion-item" v-if="this.turno == null">
+            <h2 class="accordion-header" id="headingThree">
+              <button class="accordion-button" :class="{collapsed:this.collapsed[2]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[2]" aria-controls="collapseThree" @click="changeCollapsed(2)">
+                Alterar visibilidade da UC
+              </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                 <h5 class="card-title">Alterar visibilidade</h5>
+                <label for="exampleFormControlInput7" class="form-label">Alterar a visibilidade para todos os turnos</label>
+                <br>
+                <button class=" btn btn-danger text-right" @click="changeVisibility(0)">Tornar Unidade Curricular invisivel</button><br><br>
+                <button class=" btn btn-primary text-right" @click="changeVisibility(1)">Tornar Unidade Curricular visivel</button>
+              </div>
             </div>
-            <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar número de vagas por turno</button>
-          </div>
-        </div>
-        <br>
-        <div v-if="this.turno == null" class="card">
-          <div class="card-body">
-            <h5 class="card-title">Alterar visibilidade</h5>
-            <label for="exampleFormControlInput7" class="form-label">Alterar a visibilidade para todos os turnos</label>
-            <br>
-            <button class=" btn btn-danger text-right" @click="changeVisibility(0)">Tornar todos os turnos invisiveis</button><br><br>
-            <button class=" btn btn-primary text-right" @click="changeVisibility(1)">Tornar todos os turnos visiveis</button>
           </div>
         </div>
         <br>
@@ -185,6 +202,7 @@ export default {
         turnorepetentes:0,
         estudantesSelected: [],
         turnoSelected: null,
+        collapsed:[false,true,true]
     };
   },
   computed: {
@@ -415,6 +433,9 @@ export default {
         .catch((error) => {
           this.$toast.error(error);
         });
+    },
+    changeCollapsed(number){
+      this.collapsed[number] = (this.collapsed[number] == true ? false : true)
     }
   },
   mounted() {
