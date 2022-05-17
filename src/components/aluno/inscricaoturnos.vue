@@ -11,18 +11,19 @@
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <p v-if="this.cadeirasWithTurnosPorCurso.length == 0" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="!hasButtonSelected && buttonArray[index]" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="!buttonArray[index] && hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
                   </div>
                   <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
-                    <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
-                    <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
-                    <br><br>
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                       <div v-if="index == index2">
                         <h5>{{ inscricaoucs[0].nomeCurso }}</h5>
+                        <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
+                        <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
+                        <br>
                         <div v-for="(cadeira, cadeiraIndex) in inscricaoucs" :key="cadeira.cadeira.id">
                           <div v-if="cadeira.cadeira.turnos.length != 0">
                             <label class="col-sm-4 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
@@ -31,7 +32,7 @@
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
                                   <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
                                   <label class="form-check-label">
-                                    {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ inscricaoucs[0].nrinscricoes }}/30)</small>
+                                    {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ turnotipo.vagasocupadas }}/{{ turnotipo.vagastotal }})</small>
                                   </label>
                                 </span>
                                 <br>
@@ -41,10 +42,10 @@
                         </div>
                         <div style="margin-top: 20px; text-align: center;">
                           <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
+                          <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
                         </div>
                       </div>
                     </div>
-                    <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
                   </div>
                 </div> 
                 <div v-if="showTurnosRejeitados == true" style="color: red">
@@ -144,9 +145,10 @@ export default {
           })
         .then((response) => {
             this.$toast.success("Inscrição feita com sucesso");
-            if (response.data) {
+            if (response.data && response.data != 201) {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data
+              console.log(this.turnosRejeitados)
             }
             this.allTurnosIds = []
         })
