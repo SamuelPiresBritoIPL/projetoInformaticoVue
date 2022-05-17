@@ -74,7 +74,7 @@
                             :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="clipboard2-check"/>
-                                Gerir Confirmações UC
+                                Gerir Pedidos UC
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">

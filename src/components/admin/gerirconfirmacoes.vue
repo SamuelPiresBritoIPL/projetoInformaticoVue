@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Confirmações das UC's</h2>
+    <h2>Gerir pedidos de inscrição nas UC's</h2>
     <select v-if="!hasMoreThanOneCurso && this.counterStore.courses.length > 1" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="selectCourse(selectedCourse)">
       <option value="null">Selecione um curso.</option>
       <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
