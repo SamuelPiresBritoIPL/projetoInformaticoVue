@@ -65,11 +65,58 @@
               <h6 class="card-title" style="margin-bottom:25px;">Unidades curriculares</h6>
               <p style="margin-bottom:25px;">O aluno não foi aprovado em nenhuma unidade curricular até ao momento</p>
             </div>
+            <div v-else>
+              <div v-for="curso in this.ucsAprovadas" :key="curso">
+                <h6>{{curso.nome}}</h6>
+                <table class="table" style="text-align: left;">
+                  <thead>
+                    <tr>
+                      <th scope="col">Unidade Curricular</th>
+                      <th scope="col">Número de inscrições</th>
+                      <th scope="col">Ano letivo</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="tableRow" v-for="cadeira in curso.cadeiras" :key="cadeira">
+                      <td>{{ "["+cadeira.codigo+"] "+cadeira.nome }}</td>
+                      <td>{{ cadeira.nrinscricoes }}</td>
+                      <td>{{ cadeira.anoletivo }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
           </div>
           <div v-if="navTabs[2] == true" class="card-body">
             <div v-if="this.pedidos.length == 0">
               <h6 class="card-title" style="margin-bottom:25px;">Pedidos de confirmação de unidades curriculares</h6>
               <p style="margin-bottom:25px;">O aluno não tem nenhum pedido de confirmação de unidades curriculares</p>
+            </div>
+            <div v-else>
+              <div>
+                <table class="table" style="text-align: left;">
+                  <thead>
+                    <tr>
+                      <th scope="col">Curso</th>
+                      <th scope="col">Ano letivo</th>
+                      <th scope="col">Unidades Curriculares</th>
+                      <th scope="col">Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="tableRow" v-for="pedido in this.pedidos" :key="pedido">
+                      <td>{{pedido.cadeiras[0].cadeira.curso}}</td>
+                      <td>{{pedido.anoletivo.anoletivo}}</td>
+                      <td>
+                        <p v-for="cadeira in pedido.cadeiras" :key="cadeira">
+                          {{cadeira.cadeira.nome  + (cadeira.aceite == 1 ? " (aceite)" : (cadeira.aceite == 0 ? " (rejeitada)" : ""))}}
+                        </p>
+                      </td>
+                      <td>{{(pedido.estado == 1 ? "Pendente" : ((pedido.estado == 2) ? "Aceite" : ((pedido.estado == 3) ? "Recusado" : "Parcial")))}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
@@ -98,6 +145,9 @@ export default {
   },
   methods: {
     getAlunoInfo(){
+      this.pedidos = []
+      this.ucsInscritas = []
+      this.ucsAprovadas = []
       this.$axios.get("estudante/dados/" + this.login + "/" +  this.counterStore.selectedAnoletivo + "/" + this.counterStore.semestre)
         .then((response) => {
           console.log(response.data)
