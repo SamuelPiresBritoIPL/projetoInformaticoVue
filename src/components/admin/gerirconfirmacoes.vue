@@ -81,7 +81,7 @@ export default {
   },
   computed: {
     hasMoreThanOneCurso(){
-      if (this.counterStore.courses.length == 1) {
+      if (this.counterStore.courses.length == 1 && this.counterStore.pedidosByCourse.length == 0) {
         this.counterStore.getCourses(3)
         return true
       }
@@ -140,7 +140,7 @@ export default {
     }
   },
   mounted() {
-    this.counterStore.getCourses(3)
+    this.counterStore.getCourses()
   },
 };
 </script>
