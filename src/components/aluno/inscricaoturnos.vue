@@ -13,7 +13,9 @@
                 <hr>
                 <p v-if="this.cadeirasWithTurnosPorCurso.length == 0" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
-                  <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" style="text-align: center;" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
+                  <div style="text-align: center;">
+                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
+                  </div>
                   <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
                     <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
                     <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
@@ -29,7 +31,7 @@
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
                                   <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
                                   <label class="form-check-label">
-                                    {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> (0/30)</small>
+                                    {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ inscricaoucs[0].nrinscricoes }}/30)</small>
                                   </label>
                                 </span>
                                 <br>
