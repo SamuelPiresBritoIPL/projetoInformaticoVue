@@ -7,11 +7,13 @@
             <br>
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title" style="margin-bottom: 25px; text-align: center;">Inscrição nos Turnos</h5>
-                <p class="card-title" style="margin-bottom: 25px; text-align: center;">[9119] Licenciatura em Engenharia Informática</p>
+                <h5 class="card-title" style="margin-bottom: 20px; text-align: center;">Inscrição nos Turnos</h5>
+                <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
+                <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
+                <p v-if="this.cadeirasWithTurnosPorCurso.length == 0" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
-                  <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
+                  <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" style="text-align: center;" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
                   <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
                     <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
                     <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>

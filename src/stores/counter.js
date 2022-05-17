@@ -5,6 +5,7 @@ export const useCounterStore = defineStore({
   id: 'counter',
   state: () => ({
     selectedAnoletivo: null,
+    ano: null,
     semestre: null,
     anosletivos: [],
     courses: [],
@@ -45,10 +46,10 @@ export const useCounterStore = defineStore({
         this.courses = response.data
         if (this.courses.length == 1 && tipo == 1) {
           this.getCourseWithUCs(this.courses[0].id)
-        }
-        if (this.courses.length == 1 && tipo == 2) {
-          console.log("aqui")
+        } else if (this.courses.length == 1 && tipo == 2) {
           this.getAberturasByCourse(this.courses[0].id)
+        } else if (this.courses.length == 1 && tipo == 3) {
+          this.getPedidosByCourse(this.courses[0].id)
         }
         return response.data;
       } catch (error) {
@@ -66,12 +67,14 @@ export const useCounterStore = defineStore({
       }        
     },
     async getPedidosByCourse(courseId){
-      if(this.pedidosByCourse.length != 0){
+      if(this.courses.length > 1 && this.pedidosByCourse.length != 0){
+        console.log("AQUI")
         this.pedidosByCourse = []
       }
       try {
-        let response = await axios.get("curso/pedidos/" + courseId + "/1/2")
+        let response = await axios.get("curso/pedidos/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.pedidosByCourse = response.data;
+        console.log(this.pedidosByCourse)
       } catch {
         console.log(error.response);
         throw error
