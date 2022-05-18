@@ -81,6 +81,56 @@
             </div>
           </div>
         </div>
+        <br>
+        <br>
+        <br>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+              <div v-if="this.pedidos.length != 0">
+                <div class="accordion" id="accordionExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                      <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[0]" aria-controls="collapseThree" @click="changeCollapsed(0)">
+                        Pedidos de Alteração
+                      </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                      <div class="accordion-body">
+                        <div>
+                          <table class="table" style="text-align: left;">
+                            <thead>
+                              <tr>
+                                <th scope="col">Curso</th>
+                                <th scope="col">Ano letivo</th>
+                                <th scope="col">Unidades Curriculares</th>
+                                <th scope="col">Estado</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr class="tableRow" v-for="pedido in this.pedidos" :key="pedido">
+                                <td>{{pedido.cadeiras[0].cadeira.curso}}</td>
+                                <td>{{pedido.anoletivo.anoletivo}}</td>
+                                <td>
+                                  <p v-for="cadeira in pedido.cadeiras" :key="cadeira">
+                                    {{cadeira.cadeira.nome  + (cadeira.aceite == 1 ? " (aceite)" : (cadeira.aceite == 0 ? " (rejeitada)" : ""))}}
+                                  </p>
+                                </td>
+                                <td>{{(pedido.estado == 1 ? "Pendente" : ((pedido.estado == 2) ? "Aceite" : ((pedido.estado == 3) ? "Recusado" : "Parcial")))}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
     </div> 
 </template>
 
@@ -96,6 +146,7 @@ export default {
   data() {
     return {
         cadeirasToConfirm: [],
+        pedidos: [],
         adicionarCadeirasForm: false,
         cadeirasNaoAprovadas: [],
         cadeirasToRequest: [],
@@ -104,7 +155,8 @@ export default {
         selectedCadeira: null,
         cadeirasOutrosCursos: [],
         showBtnAdicionarUCOutroCurso: false,
-        errorMessages: null
+        errorMessages: null,
+        collapsed: [true]
     };
   },
   computed: {
@@ -130,8 +182,9 @@ export default {
     getCadeirasToConfirm(){
       this.$axios.get("cadeirasaluno/confirmar/utilizador")
         .then((response) => {
-          this.cadeirasToConfirm = response.data;
-          console.log(this.cadeirasToConfirm)
+          this.cadeirasToConfirm = response.data.cursos;
+          this.pedidos = response.data.pedidos;
+          console.log(this.pedidos)
         })
         .catch((error) => {
           console.log(error.response);
@@ -192,6 +245,9 @@ export default {
         this.cadeirasOutrosCursos.push(this.selectedCadeira)
       }
       console.log(this.selectedCadeira)
+    },
+     changeCollapsed(number){
+      this.collapsed[number] = (this.collapsed[number] == true ? false : true)
     }
   },
   mounted() {
