@@ -30,7 +30,7 @@
                             <label class="col-sm-8 col-form-label">
                               <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
-                                  <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px">
+                                  <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px" @click="clearRadio(cadeiraIndex, index, turnotipo.id)">
                                   <label class="form-check-label">
                                     {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ turnotipo.vagasocupadas }}/{{ turnotipo.vagastotal }})</small>
                                   </label>
@@ -41,6 +41,7 @@
                           </div>
                         </div>
                         <div style="margin-top: 20px; text-align: center;">
+                          <button type="button" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
                           <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
                           <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
                         </div>
@@ -99,6 +100,18 @@ export default {
     }
   },
   methods: {
+    clearRadio(cadeiraIndex, index, turnotipoId){
+      if (this.arrayVmodel[cadeiraIndex][index] == turnotipoId) {
+        this.arrayVmodel[cadeiraIndex][index] = []
+      }
+    },
+    clearRadios(){
+      for (let i = 0; i < this.arrayVmodel.length; i++) {
+        this.arrayVmodel[i] = []
+      }
+      //para ir buscar turnos ja inscritos
+      //this.getCadeirasWithTurnos()
+    },
     getCadeirasWithTurnos(){
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
