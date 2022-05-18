@@ -9,6 +9,7 @@ export const useCounterStore = defineStore({
     semestre: null,
     anosletivos: [],
     courses: [],
+    coursesToVSelect: [],
     courseWithUCs: [],
     turnoToManage: null,
     aberturasByCourse: [],
@@ -51,6 +52,9 @@ export const useCounterStore = defineStore({
         } else if (this.courses.length == 1 && tipo == 3) {
           this.getPedidosByCourse(this.courses[0].id)
         }
+        this.courses.forEach(curso => {
+          this.coursesToVSelect.push({label: "["+curso.codigo+"] "+curso.nome, code: curso.id})
+        });
         return response.data;
       } catch (error) {
         console.log(error.response)
@@ -58,6 +62,7 @@ export const useCounterStore = defineStore({
       }
     },
     async getCourseWithUCs(courseId){
+      console.log(courseId)
       try {
         let response = await axios.get("cursoauth/cadeiras/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.courseWithUCs = response.data;

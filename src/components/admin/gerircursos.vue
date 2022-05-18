@@ -3,12 +3,8 @@
     <h2>Gerir Curso na Aplicação</h2>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
-      <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="this.counterStore.getCourseWithUCs(selectedCourse)">
-        <option value="null">Selecione um curso.</option>
-        <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-        {{ "["+course.codigo+"] "+course.nome }}
-        </option>
-      </select>
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCurso(selectedCourse)">
+      </v-select>
     </div>
     <!--<button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>-->
     <div v-if="gerirCursoNaAplicacao && hasValue">
@@ -118,6 +114,9 @@ export default {
       if (sessionStorage.tokenAdmin && localStorage.adminState) {
         this.$router.push("/admin/gerircadeira/" + cadeira.id);
       }
+    },
+    selectCurso(curso){
+      this.counterStore.getCourseWithUCs(curso.code)
     }
   },
   mounted() {

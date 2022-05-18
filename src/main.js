@@ -6,9 +6,12 @@ import App from './App.vue'
 import router from './router'
 
 import bootstrap from "bootstrap/dist/css/bootstrap.min.css";
+import vueselect from 'vue-select/dist/vue-select.css';
 import BootstrapIcon from '@dvuckovic/vue3-bootstrap-icons';
 
 import Toaster from "@meforma/vue-toaster";
+
+import vSelect from 'vue-select'
 
 let toastOptions = {
     position: "top",
@@ -34,7 +37,9 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(bootstrap)
+app.use(vueselect)
 app.component('BootstrapIcon', BootstrapIcon)
+app.component('v-select', vSelect)
 app.use(Toaster, toastOptions)
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
