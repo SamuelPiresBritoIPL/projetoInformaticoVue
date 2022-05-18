@@ -79,6 +79,7 @@ export default {
   data() {
     return {
       cadeirasWithTurnosPorCurso: [],
+      isncricoes: [],
       arrayVmodel: [],
       allTurnosIds: [],
       showTurnosRejeitados: false,
@@ -115,7 +116,9 @@ export default {
     getCadeirasWithTurnos(){
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
-          this.cadeirasWithTurnosPorCurso = response.data;
+          this.cadeirasWithTurnosPorCurso = response.data.cursos
+          this.inscricoes = response.data.inscricoes
+          console.log(this.inscricoes)
           console.log(this.cadeirasWithTurnosPorCurso)
           Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index) => {
             this.buttonArray.push(false)
