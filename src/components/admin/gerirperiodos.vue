@@ -3,12 +3,8 @@
     <h2>Gerir Periodos</h2>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir periodos:</label>
-      <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="this.counterStore.getAberturasByCourse(selectedCourse)">
-        <option value="null">Selecione um curso.</option>
-        <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-        {{ "["+course.codigo+"] "+course.nome }}
-        </option>
-      </select>
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="this.counterStore.getAberturasByCourse(selectedCourse)">
+      </v-select>
     </div>
     <div v-if="this.counterStore.aberturasByCourse.nome != null" class="card text-center">
       <div class="card-header">

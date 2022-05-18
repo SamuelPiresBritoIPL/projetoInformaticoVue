@@ -66,12 +66,8 @@
               <span v-if="this.counterStore.courses[0]">
                 <label v-if="!hasMoreThanOneCurso">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
               </span>
-              <select v-if="hasMoreThanOneCurso" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
-                <option value="null">Selecione um curso.</option>
-                <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-                {{ "["+course.codigo+"] "+course.nome }}
-                </option>
-              </select>
+              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse">
+              </v-select>
               <div v-if="hasErrorCurso" class="errorMessages">
                 <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.idCurso }}</small>
               </div>
@@ -105,12 +101,8 @@
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
               <label v-if="!hasMoreThanOneCurso && this.counterStore.courses[0]">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
-              <select v-if="hasMoreThanOneCurso" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourseRemove" v-on:change="getCoordinatorsByCourse(selectedCourseRemove)">
-                <option value="null">Selecione um curso.</option>
-                <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-                {{ "["+course.codigo+"] "+course.nome }}
-                </option>
-              </select>
+              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourseRemove" @option:selected="getCoordinatorsByCourse(selectedCourseRemove)">
+              </v-select>
               <div v-if="hasErrorCursoNullRemover" class="errorMessages">
                 <small style="color: #a94442; margin-left: 5px;">{{ nullCurso }}</small>
               </div>
@@ -248,13 +240,13 @@ export default {
           console.log(error.response);
         });
     },
-    grantCoordinatorRole(idCurso, type, login){
-      if (idCurso == null) {
-        idCurso = this.counterStore.courses[0].id
+    grantCoordinatorRole(course, type, login){
+      if (course.code == null) {
+        course.code = this.counterStore.courses[0].id
       }
       this.$axios.post("coordenador", {
             "login": login,
-            "idCurso": idCurso,
+            "idCurso": course.code,
             "tipo": parseInt(type)
           })
         .then((response) => {
@@ -276,8 +268,8 @@ export default {
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },
-    getCoordinatorsByCourse(courseId){
-      this.$axios.get("curso/coordenadores/" + courseId)
+    getCoordinatorsByCourse(course){
+      this.$axios.get("curso/coordenadores/" + course.code)
         .then((response) => {
           console.log(response.data);
           this.coordinatoresByCourse = response.data.coordenadores;
@@ -286,11 +278,11 @@ export default {
           console.log(error.response);
         });
     },
-    revokeCoordinatorRole(coordinatorId, courseId){
-      if (courseId == null) {
-        courseId = this.counterStore.courses[0].id
+    revokeCoordinatorRole(coordinatorId, course){
+      if (course.code == null) {
+        course.code = this.counterStore.courses[0].id
       }
-      if (courseId == null && coordinatorId == null) {
+      if (course.code == null && coordinatorId == null) {
         this.nullCurso = "Deve selecionar um curso"
         this.nullCoordenador = "Deve selecionar um coordenador"
         this.$toast.error("Não foi possível retirar o role a este utilizador!");
@@ -306,7 +298,7 @@ export default {
           this.$toast.success("Role retirado com sucesso!");
           this.selectedCoordinator = null
           this.getCoursesCoordinators()
-          this.getCoordinatorsByCourse(courseId)
+          this.getCoordinatorsByCourse(course.code)
         })
         .catch((error) => {
           this.$toast.error("Não foi possível retirar o role a este utilizador!");

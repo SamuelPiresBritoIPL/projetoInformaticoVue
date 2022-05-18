@@ -118,16 +118,27 @@ export default {
         .then((response) => {
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
+          console.log(response.data)
           console.log(this.inscricoes)
           console.log(this.cadeirasWithTurnosPorCurso)
-          Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index) => {
+          Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index3) => {
             this.buttonArray.push(false)
-            inscricaoucs.forEach((cadeira, index) => {
+            inscricaoucs.forEach((cadeira, cadeiraIndex) => {
               console.log(cadeira)
               this.arrayVmodel.push([])
+              Object.values(cadeira.cadeira.turnos).forEach((turno, index) => {
+                turno.forEach((turnotipo, index2) => {
+                  this.inscricoes.forEach((inscricao) => {
+                    if (cadeira.id == inscricao.idCadeira && turnotipo.id == inscricao.id && turnotipo.tipo === inscricao.tipo ) {
+                      this.arrayVmodel[cadeiraIndex][index] = inscricao.id
+                    }
+                  })
+                })
+              })
             });
           })
           console.log(this.buttonArray)
+          console.log(this.arrayVmodel)
         })
         .catch((error) => {
           console.log(error);
@@ -135,6 +146,7 @@ export default {
     },
     submitInscricao(){
       this.turnosRejeitados = null
+      console.log(this.arrayVmodel)
       this.arrayVmodel.forEach((cadeira) => {
         if (cadeira.TP != undefined) {
           this.allTurnosIds = this.allTurnosIds.concat(cadeira.TP)

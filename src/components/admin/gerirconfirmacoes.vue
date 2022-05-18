@@ -1,12 +1,8 @@
 <template>
   <div class="container-fluid">
     <h2>Gerir pedidos de inscrição nas UC's</h2>
-    <select v-if="!hasMoreThanOneCurso && this.counterStore.courses.length > 1" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse" v-on:change="selectCourse(selectedCourse)">
-      <option value="null">Selecione um curso.</option>
-      <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-      {{ "["+course.codigo+"] "+course.nome }}
-      </option>
-    </select>
+    <v-select v-if="!hasMoreThanOneCurso && this.counterStore.courses.length > 1" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse(selectedCourse)">
+    </v-select>
     <div class="row">
       <div class="col-md-5">
         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 100%; margin-top:5px;">
@@ -92,12 +88,12 @@ export default {
     }
   },
   methods: {
-    selectCourse(selectedCourse){
+    selectCourse(course){
       this.pedidoForm = false
       if(this.selectedPedido.length != 0){
         this.selectedPedido = []
       }
-      this.counterStore.getPedidosByCourse(selectedCourse)
+      this.counterStore.getPedidosByCourse(course.code)
     },
     openPedido(pedido){
       this.pedidoForm = true
@@ -123,7 +119,7 @@ export default {
             this.$toast.success("Pedido rejeitado com sucesso!");
           }
           this.pedidoForm = false
-          this.counterStore.getPedidosByCourse(this.selectedCourse)
+          this.counterStore.getPedidosByCourse(this.selectedCourse.code)
         })
         .catch((error) => {
           if (type == 0) {
