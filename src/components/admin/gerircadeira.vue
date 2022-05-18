@@ -64,16 +64,23 @@
                     <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
                   </div>
                 </div>
+                <div v-if="hasErroraddAluno"  class="errorMessages">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errors.addAluno }}</small>
+                </div>
                 <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
                 <div class="input-group mb-3">
                   <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="número/email" v-model="numeroadicionarTurno">
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
-                      <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
-                    </select>
+                  <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
+                    <option value="null">Selecione um turno.</option>
+                    <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
+                  </select>
                   <div class="input-group-append">
                     <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
                   </div>
                 </div>  
+                <div v-if="hasErroraddAlunoTurno"  class="errorMessages">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errors.addAlunoTurno }}</small>
+                </div>
               </div>
             </div>
           </div>
@@ -87,7 +94,10 @@
               <div class="accordion-body" v-if="this.turno != null">
                 <label for="exampleFormControlInput3" class="form-label">Alterar número de vagas</label>
                 <div class="input-group mb-3">
-                  <input type="number" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
+                  <input type="number" min="1" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
+                </div>
+                <div v-if="hasErrorAlterarVagas"  class="errorMessages">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errors.alterarVagas }}</small>
                 </div>
                 <input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0">
                 <label for="checkboxvisivel">Turno visivel</label>
@@ -202,7 +212,8 @@ export default {
         turnorepetentes:0,
         estudantesSelected: [],
         turnoSelected: null,
-        collapsed:[false,true,true]
+        collapsed:[false,true,true],
+        errors: null
     };
   },
   computed: {
@@ -220,6 +231,24 @@ export default {
     },
     filteredArray() {
       return this.cadeira.turnos.filter(turno => turno.id != this.turno.id);
+    },
+    hasErroraddAlunoTurno(){
+      if (this.errors != null && this.errors.addAlunoTurno != null) {
+        return true
+      }
+      return false
+    },
+    hasErroraddAluno(){
+      if (this.errors != null && this.errors.addAluno != null) {
+        return true
+      }
+      return false
+    },
+    hasErrorAlterarVagas(){
+      if (this.errors != null && this.errors.alterarVagas != null) {
+        return true
+      }
+      return false
     },
   },
   methods: {
@@ -285,6 +314,16 @@ export default {
         });
     },
     addStudentToUC(){
+      if (this.errors != null) {
+        if (this.errors.addAluno) {
+          this.errors.addAluno = null
+        }
+      }
+      if(this.numeroadicionar == null){
+        this.errors = {addAluno: "Deve escrever o número do aluno que pretende adicionar"}
+        console.log(this.errors)
+        return;
+      }
       this.$axios.post("cadeiras/addaluno/"+this.cadeira.id, {
             "login": this.numeroadicionar
           })
@@ -302,6 +341,16 @@ export default {
         });
     },
     addStudentToTurno(numeroadicionarTurno,turnoescolhido){
+      if (this.errors != null) {
+        if (this.errors.addAlunoTurno) {
+          this.errors.addAlunoTurno = null
+        }
+      }
+      if(numeroadicionarTurno == null || turnoescolhido == null){
+        this.errors = {addAlunoTurno: "Deve escrever um número de um aluno e selecionar um Turno!"}
+        console.log(this.errors)
+        return;
+      }
       this.$axios.post("cadeiras/addalunoturno/"+turnoescolhido, {
             "login": numeroadicionarTurno
           })
@@ -319,6 +368,16 @@ export default {
         });
     },
     changeTurnoData(){
+      if (this.errors != null) {
+        if (this.errors.alterarVagas) {
+          this.errors.alterarVagas = null
+        }
+      }
+      if(this.turno.vagastotal != null && this.turno.vagastotal <= 0){
+        this.errors = {alterarVagas: "O número de vagas tèm de ser superior a 0!"}
+        console.log(this.errors)
+        return;
+      }
       var objToSend = {
         "visivel": this.turno.visivel,
         "repetentes": this.turno.repetentes
