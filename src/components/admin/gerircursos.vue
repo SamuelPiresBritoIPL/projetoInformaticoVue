@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Curso na Aplicação</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Curso na Aplicação</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCurso(selectedCourse)">
@@ -10,7 +10,7 @@
     <div v-if="gerirCursoNaAplicacao && hasValue">
       <div v-if="this.counterStore.courseWithUCs.nome" class="card text-center">
         <div class="card-header">
-          Cadeiras de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
+          Unidades Curriculares de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
         </div>
         <div class="card-body">
           <table class="table" style="text-align: left;">

@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <h2>Dashboard</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Dashboard</h3>
     <div v-if="adminLogged" class="card text-center">
       <div class="card-header">
-        Periodos de Inscrição e de Confirmação de UC´s de cada Curso
+        Informações sobre os Periodos atualmente Ativos por Curso
       </div>
       <div v-if="hasValue" class="card-body">
         <div class="card w-100 border-dark" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">

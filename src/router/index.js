@@ -131,13 +131,13 @@ const router = createRouter({
           path: "gerircoordenadores",
           name: "gerircoordenadores",
           component: GerirCoordenadores,
-          meta: { title: "Gerir Coordenadores" },
+          meta: { title: "Gestão de Coordenadores" },
         },
         {
           path: "gerircursos",
           name: "gerircursos",
           component: GerirCursos,
-          meta: { title: "Gerir Cursos" },
+          meta: { title: "Gestão de Cursos" },
         },
         {
           path: "atualizardados",
@@ -149,19 +149,19 @@ const router = createRouter({
           path: "gerirconfirmacoes",
           name: "gerirconfirmacoes",
           component: GerirConfirmacoes,
-          meta: { title: "Gerir Confirmações" },
+          meta: { title: "Gestão de Pedidos UC" },
         },
         {
           path: "gerirperiodos",
           name: "gerirperiodos",
           component: GerirPeriodos,
-          meta: { title: "Gerir Cursos" },
+          meta: { title: "Gestão de Cursos" },
         },
         {
           path: "gerircadeira/:cadeiraId",
           name: "gerircadeira",
           component: GerirCadeira,
-          meta: { title: "Gerir Cadeira" },
+          meta: { title: "Gestão de UC's" },
         },
         {
           path: "logs",
@@ -201,37 +201,37 @@ const router = createRouter({
           path: "geriralunos",
           name: "geriralunosC",
           component: GerirAlunos,
-          meta: { title: "Gerir Alunos" },
+          meta: { title: "Gestão de Alunos" },
         },
         {
           path: "gerircoordenadores",
           name: "gerircoordenadoresC",
           component: GerirCoordenadores,
-          meta: { title: "Gerir Coordenadores" },
+          meta: { title: "Gestão de Coordenadores" },
         },
         {
           path: "gerircursos",
           name: "gerircursosC",
           component: GerirCursos,
-          meta: { title: "Gerir Cursos" },
+          meta: { title: "Gestão de Cursos" },
         },
         {
           path: "gerircadeira/:cadeiraId",
           name: "gerircadeiraC",
           component: GerirCadeira,
-          meta: { title: "Gerir Cadeira" },
+          meta: { title: "Gestão de UC's" },
         },
         {
           path: "gerirconfirmacoes",
           name: "gerirconfirmacoesC",
           component: GerirConfirmacoes,
-          meta: { title: "Gerir Confirmações" },
+          meta: { title: "Gestão de Pedidos UC" },
         },
         {
           path: "gerirperiodos",
           name: "gerirperiodosC",
           component: GerirPeriodos,
-          meta: { title: "Gerir Cursos" },
+          meta: { title: "Gestão de Periodos" },
         },
       ],
     },
@@ -241,7 +241,7 @@ const router = createRouter({
       component: ProfessorRoot,
       meta: { requiresAuth: true },
       redirect: {
-        name: "dashboardprofessor",
+        name: "vercadeiras",
       },
       beforeEnter: (to, from, next) => {
         if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin") ||
@@ -256,16 +256,10 @@ const router = createRouter({
       },
       children: [
         {
-          path: " ",
-          name: "dashboardprofessor",
-          component: DashboardProfessor,
-          meta: { title: "Dashboard" },
-        },
-        {
           path: "vercadeiras",
           name: "vercadeiras",
           component: VerCadeiras,
-          meta: { title: "Cadeiras" },
+          meta: { title: "Minhas UC's" },
         },
         {
           path: "gerircadeira/:cadeiraId",
@@ -305,7 +299,7 @@ const router = createRouter({
           path: "confirmacaoucs",
           name: "confirmacaoucs",
           component: ConfirmacaoUCs,
-          meta: { title: "Confirmação de UCs" },
+          meta: { title: "Minhas UC's" },
         },
         {
           path: "inscricaoturnos",

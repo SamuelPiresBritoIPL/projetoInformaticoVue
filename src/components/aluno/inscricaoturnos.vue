@@ -7,15 +7,15 @@
             <br>
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title" style="margin-bottom: 20px; text-align: center;">Inscrição nos Turnos</h5>
+                <h3 class="card-title" style="margin-bottom: 20px; text-align: center;">Inscrição nos Turnos</h3>
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <p v-if="!hasButtonSelected" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="!hasButtonSelected && noInscricoes" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
                 <p v-if="hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
-                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
+                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">{{ inscricaoucs[0].nomeCurso }}</button>
                   </div>
                   <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
@@ -86,7 +86,8 @@ export default {
       turnosRejeitados: [],
       showInscricaoForm: false,
       buttonArray: [],
-      buttonBlockArray: []
+      buttonBlockArray: [],
+      noInscricoes: true
     };
   },
   computed: {

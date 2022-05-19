@@ -25,16 +25,6 @@
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
-                            :class="{ active: $route.name === 'dashboardprofessor' }"
-                            :to="{ name: 'dashboardprofessor' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="display"
-                                size="1x" />
-                                Dashboard
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'vercadeiras' }"
                             :to="{ name: 'vercadeiras' }">
                                 <BootstrapIcon style="margin-right: 15px"

@@ -38,7 +38,7 @@
                             :to="{ name: 'gerircoordenadores' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="person-lines-fill"/>
-                                Gerir Coordenadores
+                                Coordenadores
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -47,7 +47,7 @@
                             :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="mortarboard"/>
-                                Gerir Curso
+                                Gestão de Cursos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -56,7 +56,7 @@
                             :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="people"/>
-                                Gerir alunos
+                                Gestão de Alunos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -65,7 +65,7 @@
                             :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="calendar-event"/>
-                                Gerir Periodos
+                                Gestão de Periodos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -74,8 +74,8 @@
                             :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="clipboard2-check"/>
-                                Gerir Pedidos UC
-                            </router-link>
+                                Gestão de Pedidos UC
+                            </router-link>  
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
@@ -83,7 +83,7 @@
                             :to="{ name: 'atualizardados' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="arrow-clockwise"/>
-                                Atualizar Base de Dados
+                                Atualizar Base Dados
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">

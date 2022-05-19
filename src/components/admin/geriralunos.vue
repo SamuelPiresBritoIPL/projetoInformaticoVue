@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <h2>Ver dados Aluno</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Alunos</h3>
     <div class="card">
       <div class="card-header">
-        Gerir Aluno
+        Gestão de Aluno
       </div>
       <div class="card-body">
         <h6 class="card-title">Insira o número de aluno que pretende ver</h6>

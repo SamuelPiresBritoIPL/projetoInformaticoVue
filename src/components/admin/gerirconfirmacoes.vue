@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir pedidos de inscrição nas UC's</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir pedidos de inscrição nas UC's</h3>
     <v-select v-if="!hasMoreThanOneCurso && this.counterStore.courses.length > 1" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse(selectedCourse)">
     </v-select>
     <div class="row">

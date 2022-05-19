@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h2 v-if="this.cadeira != null">Gerir UC {{ this.cadeira.nome}}</h2>
+    <h3 v-if="this.cadeira != null" style="margin-top: 20px; margin-bottom: 25px;">Gestão da UC: {{ this.cadeira.nome}}</h3>
     <h5 v-if="this.cadeira != null">{{ this.cadeira.curso.nome}}</h5>
     <div v-if="hasValue" class="card">
       <div class="card-body">

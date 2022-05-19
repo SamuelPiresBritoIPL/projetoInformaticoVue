@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Coordenadores</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Coordenadores</h3>
     <div v-if="adminLogged" class="card text-center">
       <div class="card-header">
-        Coordenadores e sub coordenadores de cada curso
+        Coordenadores de Cada Curso na Aplicação
       </div>
       <div class="card-body">
         <div class="table-responsive" style="max-height: 350px;">
@@ -59,7 +59,7 @@
     <div class="row">
       <div class="col-sm-6">
         <div class="card border-light mb-3" style="max-width: 32rem;">
-          <div class="card-header">Adicionar Coordenadores</div>
+          <div class="card-header">Adicionar Coordenador</div>
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
@@ -96,7 +96,7 @@
       </div>
       <div class="col-sm-6">
         <div class="card border-light mb-3" style="max-width: 32rem;">
-          <div class="card-header">Remover Coordenadores</div>
+          <div class="card-header">Remover Coordenador</div>
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>

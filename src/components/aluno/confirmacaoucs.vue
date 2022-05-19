@@ -1,7 +1,6 @@
 <template>
     <div class="container-fluid">
-        <h2 style="text-align: center; margin-bottom: 35px">Confirmação de UCs</h2>
-        <div class="row">
+        <div class="row" style="margin-top: 20px">
           <div class="col-md-1" :class="{ 'col-md-3': adicionarCadeirasForm == false}">
           </div>
           <div class="col-md-5" :class="{ 'col-md-6': adicionarCadeirasForm == false}">

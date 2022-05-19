@@ -1,16 +1,16 @@
 <template>
   <div class="container-fluid">
-    <h2>Gerir Periodos</h2>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Periodos</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir periodos:</label>
-      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="this.counterStore.getAberturasByCourse(selectedCourse)">
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="this.counterStore.getAberturasByCourse(selectedCourse.code)">
       </v-select>
     </div>
     <div v-if="this.counterStore.aberturasByCourse.nome != null" class="card text-center">
       <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
           <li class="nav-item">
-            <a class="nav-link" role="button" :class="{ active: navTabConfirmacaoUCs == true }" @click="navTabConfirmacaoUCs = true">Confirmação de UCs</a>
+            <a class="nav-link" role="button" :class="{ active: navTabConfirmacaoUCs == true }" @click="navTabConfirmacaoUCs = true">Pedidos de UC's</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" role="button" :class="{ active: navTabConfirmacaoUCs == false }" @click="navTabConfirmacaoUCs = false">Inscrição nos Turnos</a>
@@ -20,7 +20,7 @@
       <div class="card-body">
         <!-- GESTÃO DE ABERTURAS - CONFIRMAÇÕES -->
         <div v-if="navTabConfirmacaoUCs == true">
-          <h6 class="card-title" style="margin-bottom:25px;">Periodo de confirmação de UCs - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
+          <h6 class="card-title" style="margin-bottom:25px;">Periodo de Pedidos de UC's - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formConfirmacao == false">
             <div v-if="this.counterStore.aberturaConfirmacaoTodos.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao1.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao2.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao3.dataEncerar > new Date().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaConfirmacaoTodos.length != 0" class="row">
@@ -53,7 +53,7 @@
               </div>
             </div>
             <div v-else>
-              <p style="margin-bottom:25px;">O periodo de confirmação de UCs não se encontra ativo neste momento</p>
+              <p style="margin-bottom:25px;">O periodo de pedidos de UC's não se encontra ativo de momento</p>
             </div>
             <button v-if="this.counterStore.aberturaConfirmacaoTodos.length == 0 && (this.counterStore.aberturaConfirmacao1.length == 0 || this.counterStore.aberturaConfirmacao2.length == 0 || this.counterStore.aberturaConfirmacao3.length == 0)" type="button" class="btn btn-primary" @click="formConfirmacao = true; iniciarConfirmacao = true">Iniciar</button>
           </div>
@@ -111,7 +111,7 @@
         </div>
         <!-- GESTÃO DE ABERTURAS - INSCRIÇÕES -->
         <div v-else>
-          <h6 class="card-title" style="margin-bottom:25px;">Periodo de inscrição nos turnos - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
+          <h6 class="card-title" style="margin-bottom:25px;">Periodo de Inscrição nos Turnos - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formInscricao == false">
             <div v-if="this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao1.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao2.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao3.dataEncerar > new Date().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaInscricaoTodos.length != 0" class="row">
@@ -144,7 +144,7 @@
               </div>
             </div>
             <div v-else>
-              <p style="margin-top:25px; margin-bottom:25px;">O periodo de inscrição nos turnos não se encontra ativo neste momento</p>
+              <p style="margin-top:25px; margin-bottom:25px;">O periodo de inscrição nos turnos não se encontra ativo de momento</p>
             </div>
             <button v-if="this.counterStore.aberturaInscricaoTodos.length == 0 && (this.counterStore.aberturaInscricao1.length == 0 || this.counterStore.aberturaInscricao2.length == 0 || this.counterStore.aberturaInscricao3.length == 0)" type="button" class="btn btn-primary" @click="formInscricao = true; iniciarInscricao = true">Iniciar</button>
           </div>

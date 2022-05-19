@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
-    <h2>Atualizar Base de Dados</h2>
-    <p>Todas as ações poderam demorar algum tempo (não dar refresh a página).</p>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Atualizar Base de Dados</h3>
+    <p>Todas as ações poderam demorar algum tempo (não dar refresh a página, o que implica também não sair da mesma).</p>
     <div class="row">
       <div class="col-sm-12">
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Atualizar os endpoints</h5>
-            <p class="card-text">Os endpoints tem de acabar com "?" porque depois vao ser automaticamente colocados com o ano letivo e o semestre</p>
+            <p class="card-text">Os endpoints tem de terminar com "?" de forma a serem automaticamente colocados com o ano letivo e semestre</p>
             <div class="card-body ">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Url cursos/turnos</label>

@@ -1,8 +1,8 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container-fluid">
+    <div class="container">
       <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav mx-auto justify-content-center">
+        <ul class="navbar-nav mx-auto">
           <li class="nav-item">
             <router-link class="nav-link" 
             :class="{ active: $route.name === 'paginainicial' }"
@@ -14,7 +14,7 @@
             <router-link class="nav-link" 
             :class="{ active: $route.name === 'confirmacaoucs' }"
             :to="{ name: 'confirmacaoucs' }">
-                Confirmação de UCs
+                Minhas Unidades Curriculares
             </router-link> 
           </li>
           <li class="nav-item">
@@ -92,5 +92,7 @@ export default {
 </script>
 
 <style scoped>
-
+.mx-auto{
+  margin-left: 0px!important;
+}
 </style>
