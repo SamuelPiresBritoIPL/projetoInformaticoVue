@@ -11,8 +11,8 @@
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <p v-if="!hasButtonSelected && buttonArray[index]" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
-                <p v-if="!buttonArray[index] && hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
+                <p v-if="!hasButtonSelected" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">{{ inscricaoucs[0].nomeCurso }}</button>
@@ -118,26 +118,21 @@ export default {
         .then((response) => {
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
-          console.log(response.data)
-          console.log(this.inscricoes)
-          console.log(this.cadeirasWithTurnosPorCurso)
           Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index3) => {
             this.buttonArray.push(false)
             inscricaoucs.forEach((cadeira, cadeiraIndex) => {
-              console.log(cadeira)
               this.arrayVmodel.push([])
               Object.values(cadeira.cadeira.turnos).forEach((turno, index) => {
                 turno.forEach((turnotipo, index2) => {
                   this.inscricoes.forEach((inscricao) => {
                     if (cadeira.id == inscricao.idCadeira && turnotipo.id == inscricao.id && turnotipo.tipo === inscricao.tipo ) {
-                      this.arrayVmodel[cadeiraIndex][index] = inscricao.id
+                      this.arrayVmodel[cadeiraIndex][inscricao.tipo] = inscricao.id
                     }
                   })
                 })
               })
             });
           })
-          console.log(this.buttonArray)
           console.log(this.arrayVmodel)
         })
         .catch((error) => {
