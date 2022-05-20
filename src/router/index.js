@@ -25,7 +25,8 @@ import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
 
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  //history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/adminlogin',
@@ -79,7 +80,7 @@ const router = createRouter({
       },
     },
     {
-      path: '/loginprofessor',
+      path: '/professorlogin',
       name: 'professorlogin',
       component: ProfessorLogin,
       meta: { requiresAuth: false, title: "Login - Professor" },
@@ -125,7 +126,7 @@ const router = createRouter({
           path: "geriralunos",
           name: "geriralunos",
           component: GerirAlunos,
-          meta: { title: "Gerir Alunos" },
+          meta: { title: "Alunos" },
         },
         {
           path: "gerircoordenadores",
@@ -201,7 +202,7 @@ const router = createRouter({
           path: "geriralunos",
           name: "geriralunosC",
           component: GerirAlunos,
-          meta: { title: "Gestão de Alunos" },
+          meta: { title: "Alunos" },
         },
         {
           path: "gerircoordenadores",

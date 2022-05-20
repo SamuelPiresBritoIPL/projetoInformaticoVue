@@ -71,7 +71,7 @@ export default {
     logout(){
       sessionStorage.removeItem("tokenProfessor");
       localStorage.removeItem("professorState");
-      this.$router.push("/loginprofessor");
+      this.$router.push("/professorlogin");
     },
     getInfoUtilizadorLogado(){
         this.$axios.get("utilizadorlogado")

@@ -1,21 +1,21 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Alunos</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Alunos</h3>
     <div class="card">
       <div class="card-header">
-        Gestão de Aluno
+        Informações do Aluno
       </div>
       <div class="card-body">
-        <h6 class="card-title">Insira o número de aluno que pretende ver</h6>
+        <h6 class="card-title">Insira o número de aluno que pretende verificar</h6>
         <div class="mb-3">
           <label for="exampleFormControlInput1" class="form-label">Número de aluno</label>
           <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número aluno" v-model="login">
         </div>
         <button class="btn btn-primary" @click="getAlunoInfo()">Procurar</button>
         <hr>
-        <h5 class="card-title">Dados aluno</h5>
+        <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
         <!-- CARD TAB -->
-        <div class="card text-center">
+        <div v-if="alunoRequested" class="card text-center">
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
@@ -36,7 +36,7 @@
             </div>
             <div v-else>
               <div v-for="curso in this.ucsInscritas" :key="curso">
-                <h6>{{curso.nome}}</h6>
+                <h6>{{"["+ curso.codigo +"] "+curso.nome}}</h6>
                 <table class="table" style="text-align: left;">
                   <thead>
                     <tr>
@@ -140,7 +140,9 @@ export default {
       navTabs: [true,false,false],
       ucsInscritas: [],
       ucsAprovadas: [],
-      pedidos: []
+      pedidos: [],
+      alunoRequested: false,
+      infoAluno: []
     };
   },
   methods: {
@@ -154,6 +156,8 @@ export default {
           this.pedidos = response.data["pedidos"]
           this.ucsInscritas = response.data["cadeirasInscritas"]
           this.ucsAprovadas = response.data["cadeirasAprovadas"]
+          this.infoAluno = response.data["aluno"]
+          this.alunoRequested = true
         })
         .catch((error) => {
           console.log(error.response);

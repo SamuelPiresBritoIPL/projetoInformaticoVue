@@ -60,7 +60,7 @@
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="people"
                                 size="1x" />
-                                Gerir alunos
+                                Alunos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">

@@ -56,7 +56,7 @@
                             :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="people"/>
-                                Gestão de Alunos
+                                Alunos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
