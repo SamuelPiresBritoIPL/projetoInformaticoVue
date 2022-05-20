@@ -25,8 +25,8 @@ import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
 
 
 const router = createRouter({
-  //history: createWebHashHistory(),
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(),
+  //history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/adminlogin',
