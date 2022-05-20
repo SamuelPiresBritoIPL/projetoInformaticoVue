@@ -52,6 +52,7 @@ export const useCounterStore = defineStore({
         } else if (this.courses.length == 1 && tipo == 3) {
           this.getPedidosByCourse(this.courses[0].id)
         }
+        this.coursesToVSelect = []
         this.courses.forEach(curso => {
           this.coursesToVSelect.push({label: "["+curso.codigo+"] "+curso.nome, code: curso.id})
         });
