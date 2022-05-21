@@ -11,6 +11,7 @@ export const useCounterStore = defineStore({
     courses: [],
     coursesToVSelect: [],
     courseWithUCs: [],
+    tipoTurnoCurso: [],
     turnoToManage: null,
     aberturasByCourse: [],
     yearsCourse: [],
@@ -66,7 +67,12 @@ export const useCounterStore = defineStore({
       console.log(courseId)
       try {
         let response = await axios.get("cursoauth/cadeiras/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
-        this.courseWithUCs = response.data;
+        this.courseWithUCs = response.data.cadeiras
+        this.tipoTurnoCurso = []
+        response.data.tiposTurnos.forEach(turno => {
+          this.tipoTurnoCurso.push({tipo: turno,vagas: null})
+        })
+        console.log(this.tipoTurnoCurso)
       } catch {
         console.log(error.response);
         throw error
