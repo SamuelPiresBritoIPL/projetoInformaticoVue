@@ -94,7 +94,7 @@ export const useCounterStore = defineStore({
     },
     async getAberturasByCourse(courseId){
       try {
-        let response = await axios.get("curso/aberturas/" + courseId + "/1/2")
+        let response = await axios.get("curso/aberturas/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.aberturasByCourse = response.data;
         this.yearsCourse = []
         for (let i = 0; i <= this.aberturasByCourse.totalanos; i++) {

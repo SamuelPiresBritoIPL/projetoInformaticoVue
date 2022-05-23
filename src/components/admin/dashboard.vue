@@ -6,7 +6,7 @@
         Informações sobre os Periodos atualmente Ativos por Curso
       </div>
       <div v-if="hasValue" class="card-body">
-        <div class="card w-100 border-dark" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
+        <div class="card w-100" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
           <div class="card-body">
             <h6 class="card-title">{{ "["+course.codigo+"] "+course.nome }}</h6>
             <hr>
@@ -14,10 +14,11 @@
               <div class="col-sm-1">
               </div>
               <div class="col-sm-5">
-                <div class="card border-info mb-3" style="max-width: 18rem;">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem; height: 153px;">
+                  <div class="card-header">Pedidos de UC's</div>
                   <div class="card-body">
-                    <h6 class="card-title" style="margin-bottom: 20px;">Confirmação de UC's</h6>
-                    <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
+                      <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
+                        <small>{{ abertura.tipoAbertura != 0 ? "Não está definido o periodo de pedidos de UC's" : ''}}</small>
                         <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Ano: " : ''}}</b></small>
                         {{ abertura.tipoAbertura == 0 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p>
                         <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Início: " : ''}}</b></small>
@@ -29,19 +30,26 @@
                 </div>
               </div>
               <div class="col-sm-5">
-                <div class="card border-info mb-3" style="max-width: 18rem;">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem; height: 153px;">
+                  <div class="card-header">Inscrição nos Turnos</div>
                   <div class="card-body">
-                    <h6 class="card-title" style="margin-bottom: 20px;">Inscrição nos Turnos</h6>
                     <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
-                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Ano: " : ''}}</b></small>
-                        {{ abertura.tipoAbertura == 1 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p> 
-                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Início: " : ''}}</b></small>
-                        {{ abertura.tipoAbertura == 1 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p> 
-                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Fim: " : ''}}</b></small>
-                        {{ abertura.tipoAbertura == 1 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
-                      </div>
+                      <small>{{ abertura.tipoAbertura != 1 ? "Não está definido o periodo de inscrição nos turnos" : ''}}</small>
+                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Ano: " : ''}}</b></small>
+                      {{ abertura.tipoAbertura == 1 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p> 
+                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Início: " : ''}}</b></small>
+                      {{ abertura.tipoAbertura == 1 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p> 
+                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Fim: " : ''}}</b></small>
+                      {{ abertura.tipoAbertura == 1 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                    </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class="card border-warning mb-3 mx-auto" style="max-width: 15rem; text-align: center;">
+              <div class="card-header">Pedidos de UC's pendentes</div>
+              <div class="card-body">
+                <p class="card-text">{{ course.totalpedidos }}</p>
               </div>
             </div>
           </div>
@@ -76,6 +84,14 @@ export default {
         return true
       } 
       return false
+    },
+    hasPedidos(){
+      for (let index = 0; index < this.buttonArray.length; index++) {
+        if (this.buttonArray[index] == true) {
+          return false
+        }
+      }
+      return true
     }
   },
   methods: {
