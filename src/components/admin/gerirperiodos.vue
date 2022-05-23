@@ -22,7 +22,7 @@
         <div v-if="navTabConfirmacaoUCs == true">
           <h6 class="card-title" style="margin-bottom:25px;">Periodo de Pedidos de UC's - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formConfirmacao == false">
-            <div v-if="this.counterStore.aberturaConfirmacaoTodos.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao1.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao2.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaConfirmacao3.dataEncerar > new Date().toLocaleString()" class="row" style="text-align:left;">
+            <div v-if="this.counterStore.aberturaConfirmacaoTodos.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao1.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao2.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao3.dataEncerar > new Date().getTime().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaConfirmacaoTodos.length != 0" class="row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                 <label class="col-sm-10 col-form-label">Todos</label>
@@ -113,7 +113,8 @@
         <div v-else>
           <h6 class="card-title" style="margin-bottom:25px;">Periodo de Inscrição nos Turnos - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formInscricao == false">
-            <div v-if="this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao1.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao2.dataEncerar > new Date().toLocaleString() || this.counterStore.aberturaInscricao3.dataEncerar > new Date().toLocaleString()" class="row" style="text-align:left;">
+            <!--{{ this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().getTime().toLocaleString() }}-->
+            <div v-if="this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao1.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao2.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao3.dataEncerar > new Date().getTime().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaInscricaoTodos.length != 0" class="row">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
                 <label class="col-sm-10 col-form-label">Todos</label>

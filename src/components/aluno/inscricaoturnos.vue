@@ -11,7 +11,15 @@
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <p v-if="this.buttonArray.length == 0 && noInscricoes" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length == 0" style="text-align: center;">Não existe nenhum periodo de inscrições definido.</p>
+                <div v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length > 0">
+                  <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
+                    <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
+                      <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
+                      <p>O periodo de Inscrição nos Turnos terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h (faltam {{ aberturaAno.diasAteAbertura }} dias.)</p>
+                    </div>
+                  </div>
+                </div>
                 <p v-if="this.buttonArray.length > 0" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
@@ -80,6 +88,7 @@ export default {
     return {
       cadeirasWithTurnosPorCurso: [],
       isncricoes: [],
+      aberturas: [],
       arrayVmodel: [],
       allTurnosIds: [],
       showTurnosRejeitados: false,
@@ -119,6 +128,7 @@ export default {
         .then((response) => {
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
+          this.aberturas = response.data.aberturas
           Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index3) => {
             this.buttonArray.push(false)
             inscricaoucs.forEach((cadeira, cadeiraIndex) => {
@@ -135,7 +145,7 @@ export default {
             });
           })
           this.noInscricoes = true
-          console.log(this.buttonArray)
+          console.log(this.cadeirasWithTurnosPorCurso)
         })
         .catch((error) => {
           console.log(error);

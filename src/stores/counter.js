@@ -137,6 +137,8 @@ export const useCounterStore = defineStore({
             }
           });
         }
+        console.log(this.aberturaInscricaoTodos)
+        console.log(this.aberturasByCourse)
       } catch {
         console.log(error.response);
         throw error
