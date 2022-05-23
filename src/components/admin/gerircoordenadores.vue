@@ -265,6 +265,10 @@ export default {
           if (this.grantRoleError.login) {
             this.grantRoleError.login = "Login/Email não encontrado."
           }
+          if (this.grantRoleError.login2) {
+            this.grantRoleError.login = this.grantRoleError.login2
+          }
+          console.log(error.response)
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },

@@ -17,7 +17,7 @@
                 <label for="exampleFormControlInput1" class="form-label">Url inscrições</label>
                 <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php? )" v-model="urlinscricoes">
               </div>
-              <button class="btn btn-primary" @click="updateUrls()">
+              <button :disabled='blocked' class="btn btn-primary" @click="updateUrls()">
                   <span aria-hidden="true"></span> Atualizar url's
               </button>
             </div>
@@ -48,7 +48,7 @@
                 </select>
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateCourseInformation(anoletivocurso, semestrecurso)">
-                  <span v-if="loading1" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading[0]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -76,7 +76,7 @@
 
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes, 2)">
-                  <span v-if="loading2" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading[1]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -101,7 +101,7 @@
                 </select>
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, semestreaprovacoes, 3, 'webservice/inscricaoaprovados')">
-                  <span v-if="loading3" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading[2]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -130,7 +130,7 @@
                 </select>
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateInscricoes(anoletivoinscreverturnos, semestreinscreverturnos)">
-                  <span v-if="loading5" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading[4]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -159,7 +159,7 @@
                 </select>
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateAnoletivoAtivo(anoletivoativo, semestreativo)">
-                  <span v-if="loading4" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+                  <span v-if="loading[3]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
               </button>
             </div>
           </div>
@@ -183,11 +183,7 @@ export default {
   },
   data() {
     return {
-        loading1: false,
-        loading2: false,
-        loading3: false,
-        loading4: false,
-        loading5: false,
+        loading: [false,false,false,false,false],
         blocked: false,
         anoletivocurso: null,
         semestrecurso: 1,
@@ -207,7 +203,7 @@ export default {
   },
    methods: {
      updateAnoletivoAtivo(anoletivo, semestre){
-      this.loading4 = true
+      this.loading[3] = true
       this.blocked = true
       this.$axios.put("anoletivo/" + anoletivo, {
             "semestre": semestre
@@ -222,15 +218,15 @@ export default {
           this.$toast.error(error);
         })
         .finally(() => {
-          this.loading4 = false
+          this.loading[3] = false
           this.blocked = false
         });
     },
     updateInscricaoInformation(anoletivo, semestre, numero, url="webservice/inscricao"){
       if (numero == 2) {
-        this.loading2 = true
+        this.loading[1] = true
       } else {
-        this.loading3 = true
+        this.loading[2] = true
       }
       this.blocked = true
       this.$axios.post(url, {
@@ -248,13 +244,13 @@ export default {
           this.$toast.error(error);
         })
         .finally(() => {
-          this.loading2 = false
-          this.loading3 = false
+          this.loading[1] = false
+          this.loading[2] = false
           this.blocked = false
         });
     },
     updateCourseInformation(anoletivo, semestre){
-      this.loading1 = true
+      this.loading[0] = true
       this.blocked = true
       this.$axios.post("webservice/curso", {
             "anoletivo": anoletivo,
@@ -269,7 +265,7 @@ export default {
           this.$toast.error(error);
         })
         .finally(() => {
-          this.loading1 = false
+          this.loading[0] = false
           this.blocked = false
         });
     },
@@ -298,7 +294,7 @@ export default {
         });
     },
     updateInscricoes(anoletivo, semestre){
-      this.loading5 = true
+      this.loading[4] = true
       this.blocked = true
       this.$axios.post("webservice/inscriverturnos", {
             "anoletivo": anoletivo,
@@ -311,7 +307,7 @@ export default {
         .catch((error) => {
           this.$toast.error(error);
         }).finally(() => {
-          this.loading5 = false
+          this.loading[4] = false
           this.blocked = false
         });
     },
