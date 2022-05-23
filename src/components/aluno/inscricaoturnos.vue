@@ -11,8 +11,8 @@
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <p v-if="!hasButtonSelected && noInscricoes" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
-                <p v-if="hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
+                <p v-if="this.buttonArray.length == 0 && noInscricoes" style="text-align: center;">Não existe nenhum periodo de inscrições aberto.</p>
+                <p v-if="this.buttonArray.length > 0" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">{{ inscricaoucs[0].nomeCurso }}</button>
@@ -87,7 +87,7 @@ export default {
       showInscricaoForm: false,
       buttonArray: [],
       buttonBlockArray: [],
-      noInscricoes: true
+      noInscricoes: false
     };
   },
   computed: {
@@ -134,7 +134,8 @@ export default {
               })
             });
           })
-          console.log(this.arrayVmodel)
+          this.noInscricoes = true
+          console.log(this.buttonArray)
         })
         .catch((error) => {
           console.log(error);
