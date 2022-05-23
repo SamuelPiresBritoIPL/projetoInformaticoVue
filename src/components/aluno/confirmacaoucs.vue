@@ -242,8 +242,8 @@ export default {
     addUCToInscrever(){
       if (this.selectedCadeira != "null") {
         this.cadeirasOutrosCursos.push(this.selectedCadeira)
+        this.cadeirasToRequest.push(this.selectedCadeira.id)
       }
-      console.log(this.selectedCadeira)
     },
      changeCollapsed(number){
       this.collapsed[number] = (this.collapsed[number] == true ? false : true)

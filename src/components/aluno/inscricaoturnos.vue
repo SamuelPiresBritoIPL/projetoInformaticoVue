@@ -16,7 +16,7 @@
                   <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                       <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                      <p>O periodo de Inscrição nos Turnos terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h (faltam {{ aberturaAno.diasAteAbertura }} dias.)</p>
+                      <p>O periodo de Inscrição nos Turnos para as UC´s {{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }} terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h (faltam {{ aberturaAno.diasAteAbertura }} dias.)</p>
                     </div>
                   </div>
                 </div>
