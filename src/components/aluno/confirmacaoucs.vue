@@ -206,6 +206,8 @@ export default {
             this.$toast.success("Cadeiras confirmadas com sucesso!");
           } else if (state == 1){
             this.$toast.success("Pedido de alteração de UCs efetuado com sucesso!");
+            this.adicionarCadeirasForm = false
+            this.getCadeirasToConfirm()
           }
         })
         .catch((error) => {
