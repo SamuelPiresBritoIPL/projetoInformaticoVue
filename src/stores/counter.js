@@ -80,7 +80,6 @@ export const useCounterStore = defineStore({
     },
     async getPedidosByCourse(courseId){
       if(this.courses.length > 1 && this.pedidosByCourse.length != 0){
-        console.log("AQUI")
         this.pedidosByCourse = []
       }
       try {

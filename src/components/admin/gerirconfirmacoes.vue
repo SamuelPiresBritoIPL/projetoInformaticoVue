@@ -16,6 +16,7 @@
                 <small class="active" :class="{ 'text-muted': selectedPedido.id != pedido.id}">{{ pedido.data.replace('.000000Z', '').replace('T', ' ') }}</small>
               </div>
               <div class="col-10 mb-1 small">{{ pedido.utilizador.nome }}</div>
+              <div v-if="selectedCourse.code != pedido.utilizador.idCurso" class="col-10 mb-1 small">{{ "["+pedido.utilizador.codigoCurso+"] "+pedido.utilizador.curso }}</div>
             </a>
           </div>
           <div v-if="this.counterStore.pedidosByCourse.length == 0">
@@ -28,6 +29,8 @@
             <span class="fs-5 fw-semibold">Detalhes do pedido</span>
           </a>
           <div v-if="pedidoForm == true" style="margin-left: 16px;">
+            <label v-if="selectedCourse.code != selectedPedido.utilizador.idCurso" for="inputEmail3" class="col-sm-2 col-form-label">Curso:</label>
+            <label v-if="selectedCourse.code != selectedPedido.utilizador.idCurso" class="col-sm-10 col-form-label">{{ "["+selectedPedido.utilizador.codigoCurso+"] "+selectedPedido.utilizador.curso }}</label>
             <label for="inputEmail3" class="col-sm-2 col-form-label">Login:</label>
             <label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.login }}</label>
             <label for="inputEmail3" class="col-sm-2 col-form-label">Nome:</label>
@@ -89,6 +92,7 @@ export default {
   },
   methods: {
     selectCourse(course){
+      console.log(course)
       this.pedidoForm = false
       if(this.selectedPedido.length != 0){
         this.selectedPedido = []
