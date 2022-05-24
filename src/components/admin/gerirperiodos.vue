@@ -3,7 +3,7 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Periodos</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir periodos:</label>
-      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="this.counterStore.getAberturasByCourse(selectedCourse.code)">
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse()">
       </v-select>
     </div>
     <div v-if="this.counterStore.aberturasByCourse.nome != null" class="card text-center">
@@ -261,6 +261,16 @@ export default {
     },
   },
   methods: {
+    selectCourse(){
+      this.formConfirmacao = false
+      this.formInscricao = false
+      this.selectedYear = null
+      this.dataAbertura = null
+      this.dataEncerrar = null
+      this.aberturaToEdit = null
+      this.errorIniciarPC = null
+      this.counterStore.getAberturasByCourse(this.selectedCourse.code)
+    },
     openEditarConfirmacao(abertura){
       this.errorIniciarPC = null
       this.editarConfirmacao = true
