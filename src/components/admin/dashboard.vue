@@ -14,8 +14,8 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
                   <div class="card-header">Pedidos de UC's</div>
                   <div class="card-body">
+                    <div style="text-align: left;" v-if="this.aberturasAbertas[course.id] && this.aberturasAbertas[course.id].hasPedidos == 1">
                       <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
-                        <small>{{ abertura.tipoAbertura != 0 ? "Não está definido o periodo de pedidos de UC's" : ''}}</small>
                         <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Ano: " : ''}}</b></small>
                         {{ abertura.tipoAbertura == 0 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p>
                         <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Início: " : ''}}</b></small>
@@ -23,6 +23,10 @@
                         <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 0 ? "Fim: " : ''}}</b></small>
                         {{ abertura.tipoAbertura == 0 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
                       </div>
+                    </div>
+                    <div v-else>
+                      <small>Não está definido o periodo de pedidos de UC's</small>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -30,14 +34,18 @@
                 <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
                   <div class="card-header">Inscrição nos Turnos</div>
                   <div class="card-body">
-                    <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
-                      <small>{{ abertura.tipoAbertura != 1 ? "Não está definido o periodo de inscrição nos turnos" : ''}}</small>
-                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Ano: " : ''}}</b></small>
-                      {{ abertura.tipoAbertura == 1 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p> 
-                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Início: " : ''}}</b></small>
-                      {{ abertura.tipoAbertura == 1 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p> 
-                      <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Fim: " : ''}}</b></small>
-                      {{ abertura.tipoAbertura == 1 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                    <div style="text-align: left;" v-if="this.aberturasAbertas[course.id] && this.aberturasAbertas[course.id].hasInscricao == 1">
+                      <div v-for="abertura in course.aberturas" :key="abertura.id">
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Ano: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? (abertura.ano == 0 ? 'Todos' : abertura.ano) : ''}}</p> 
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Início: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? abertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p> 
+                        <p style="margin-bottom: 2px;"><small><b>{{ abertura.tipoAbertura == 1 ? "Fim: " : ''}}</b></small>
+                        {{ abertura.tipoAbertura == 1 ? abertura.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') : ''}}</p>
+                      </div>
+                    </div>
+                    <div v-else>
+                      <small>Não está definido o periodo de inscrição nos turnos</small>
                     </div>
                   </div>
                 </div>
@@ -70,6 +78,7 @@ export default {
   data() {
     return {
         coursesWithAberturas: [],
+        aberturasAbertas: [],
         adminLogged: false,
         coordenadorLogged: false
     };
@@ -96,6 +105,20 @@ export default {
       this.$axios.get("curso/aberturas/"+this.counterStore.selectedAnoletivo+"/"+this.counterStore.semestre)
         .then((response) => {
           this.coursesWithAberturas = response.data;
+          this.coursesWithAberturas.forEach(curso => {
+            var hasPedidos = 0
+            var hasInscricao = 0
+            curso.aberturas.forEach(aberturas => {
+              if(aberturas.tipoAbertura == 0){
+                hasPedidos = 1
+              }
+              if(aberturas.tipoAbertura == 1){
+                hasInscricao = 1 
+              }
+           });
+           this.aberturasAbertas[curso.id] = {hasPedidos: hasPedidos, hasInscricao: hasInscricao}
+          });
+          console.log(this.aberturasAbertas)
         })
         .catch((error) => {
           console.log(error.response);
