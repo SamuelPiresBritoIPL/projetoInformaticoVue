@@ -103,7 +103,6 @@ export default {
     hasButtonSelected(){
       for (let index = 0; index < this.buttonArray.length; index++) {
         if (this.buttonArray[index] == true) {
-          console.log(this.buttonArray[index])
           return false
         }
       }
