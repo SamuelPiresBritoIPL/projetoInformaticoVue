@@ -2,9 +2,6 @@
   <div class="container-fluid">
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Dashboard</h3>
     <div v-if="adminLogged" class="card text-center">
-      <div class="card-header">
-        Informações sobre os Periodos atualmente Ativos por Curso
-      </div>
       <div v-if="hasValue" class="card-body">
         <div class="card w-100" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
           <div class="card-body">
@@ -14,7 +11,7 @@
               <div class="col-sm-1">
               </div>
               <div class="col-sm-5">
-                <div class="card text-dark bg-light mb-3" style="max-width: 18rem; height: 153px;">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
                   <div class="card-header">Pedidos de UC's</div>
                   <div class="card-body">
                       <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
@@ -30,7 +27,7 @@
                 </div>
               </div>
               <div class="col-sm-5">
-                <div class="card text-dark bg-light mb-3" style="max-width: 18rem; height: 153px;">
+                <div class="card text-dark bg-light mb-3" style="max-width: 18rem;">
                   <div class="card-header">Inscrição nos Turnos</div>
                   <div class="card-body">
                     <div style="text-align: left;" v-for="abertura in course.aberturas" :key="abertura.id">
@@ -108,6 +105,9 @@ export default {
   mounted() {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
       this.adminLogged = true
+    }
+    if (localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+      this.coordenadorLogged = true
     }
   },
 };
