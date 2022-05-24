@@ -12,7 +12,7 @@
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
                   <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ cadeira.nomeCadeira }}</li>
                 </ul>
-                <div style="margin-top: 35px; text-align: center;">
+                <div v-if="periodo" style="margin-top: 35px; text-align: center;">
                   <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="inscricaoCadeiras(0)" :disabled="adicionarCadeirasForm">Confirmar Cadeiras</button><br> -->
                   <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="adicionarCadeiras()" :disabled="adicionarCadeirasForm">Fazer Pedido de Alteração</button><br>     
                 </div>  
@@ -146,6 +146,7 @@ export default {
     return {
         cadeirasToConfirm: [],
         pedidos: [],
+        periodo: false,
         adicionarCadeirasForm: false,
         cadeirasNaoAprovadas: [],
         cadeirasToRequest: [],
@@ -183,6 +184,7 @@ export default {
         .then((response) => {
           this.cadeirasToConfirm = response.data.cursos;
           this.pedidos = response.data.pedidos;
+          this.periodo = response.data.periodo
           console.log(this.pedidos)
         })
         .catch((error) => {
