@@ -154,10 +154,11 @@ export default {
           "tipoturno": dataToSend,
           "vagas": dataToSend2
         }).then((response) => {
-          this.$toast.success(response.data);
+          this.$toast.success(response.data)
+          this.selectCurso(this.selectedCourse)
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error(error)
         });
     }
   },
