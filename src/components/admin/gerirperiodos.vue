@@ -24,8 +24,6 @@
           <div v-if="formConfirmacao == false">
             <div v-if="this.counterStore.aberturaConfirmacaoTodos.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao1.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao2.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao3.dataEncerar > new Date().getTime().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaConfirmacaoTodos.length != 0" class="row">
-                <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
-                <label class="col-sm-10 col-form-label">Todos</label>
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
                 <label class="col-sm-10 col-form-label">{{ this.counterStore.aberturaConfirmacaoTodos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                 <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
@@ -38,8 +36,6 @@
               <div v-else>
                 <div v-if="this.counterStore.aberturaConfirmacao123.length != 0" >
                   <div v-for="anoAbertura in this.counterStore.aberturaConfirmacao123" :key="anoAbertura" class="row">
-                    <label for="inputEmail3" class="col-sm-2 col-form-label">Ano do curso:</label>
-                    <label class="col-sm-10 col-form-label">{{ anoAbertura.ano }}</label>
                     <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura:</label>
                     <label class="col-sm-10 col-form-label">{{ anoAbertura.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</label>
                     <label for="inputPassword3" class="col-sm-2 col-form-label">Data de encerrar:</label>
@@ -63,24 +59,6 @@
             <p v-if="iniciarConfirmacao == true">Iniciação de abertura</p>
             <form>
               <div class="row mb-3">
-                <label class="col-sm-2 col-form-label">Ano do curso</label>
-                <div class="col-sm-10">
-                  <select v-if="this.counterStore.yearsCourse.length > 2" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
-                    <option value="null">Selecione uma opção.</option>
-                    <option  v-for="year in this.counterStore.yearsCourse" :key="year" v-bind:value="year">
-                    {{ year != 0 ? year : "Todos" }}
-                    </option>
-                  </select>
-                  <select v-else class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedYear">
-                    <option value="null">Selecione uma opção.</option>
-                    <option value="1">1</option>
-                  </select>
-                  <div v-if="hasErrorAno" class="errorMessages">
-                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.ano[0] }}</small>
-                  </div>
-                </div>
-              </div>
-              <div class="row mb-3">
                 <label for="inputEmail3" class="col-sm-2 col-form-label">Data de abertura</label>
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataAbertura">
@@ -99,15 +77,14 @@
                 </div>
               </div>
               <button v-if="editarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
-                @click="updateAbertura(selectedYear, dataAbertura, dataEncerrar)"
+                @click="updateAbertura(0, dataAbertura, dataEncerrar)"
                 >Confifmar Edição</button>
               <button v-if="iniciarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
-                @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 0, dataAbertura, dataEncerrar)"
+                @click="createAbertura(this.counterStore.aberturasByCourse.id, 0, 0, dataAbertura, dataEncerrar)"
                 >Confirmar Iniciação</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
             </form>
           </div>
-          <!-- EDITAR ABERTURAS - CONFIRMAÇÃO -->
         </div>
         <!-- GESTÃO DE ABERTURAS - INSCRIÇÕES -->
         <div v-else>
