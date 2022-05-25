@@ -182,6 +182,8 @@ export default {
     getCadeirasToConfirm(){
       this.$axios.get("cadeirasaluno/confirmar/utilizador")
         .then((response) => {
+          console.log("teste")
+          console.log(response.data)
           this.cadeirasToConfirm = response.data.cursos;
           this.pedidos = response.data.pedidos;
           this.periodo = response.data.periodo
@@ -206,9 +208,9 @@ export default {
             this.$toast.success("Cadeiras confirmadas com sucesso!");
           } else if (state == 1){
             this.$toast.success("Pedido de alteração de UCs efetuado com sucesso!");
-            this.cadeirasOutrosCursos = []
-            this.cadeirasToRequest = []
-            requestDescription = null
+            //this.cadeirasOutrosCursos = []
+            //this.cadeirasToRequest = []
+            this.requestDescription = null
             this.adicionarCadeirasForm = false
             this.getCadeirasToConfirm()
           }
