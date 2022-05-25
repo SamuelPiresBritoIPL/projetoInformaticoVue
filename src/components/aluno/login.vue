@@ -104,7 +104,6 @@ export default {
                 localStorage.removeItem("professorState");
                 throw "Não tem permissões!"
             } 
-            this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "paginainicial" });
         } catch (error) {
             if (error.response) {
