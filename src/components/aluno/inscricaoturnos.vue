@@ -35,10 +35,9 @@
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">Inscrever nos Turnos</button>
                   </div>
-                  <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
+                  <div v-if="buttonArray[index]" style="margin-top: 15px; text-align: left;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                       <div v-if="index == index2">
-                        <h5>{{ inscricaoucs[0].nomeCurso }}</h5>
                         <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
                         <label class="col-sm-8 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
                         <br>
