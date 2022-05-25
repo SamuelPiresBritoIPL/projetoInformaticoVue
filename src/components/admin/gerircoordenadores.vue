@@ -241,8 +241,14 @@ export default {
         });
     },
     grantCoordinatorRole(course, type, login){
-      if (course.code == null) {
-        course.code = this.counterStore.courses[0].id
+      if (course == null && this.adminLogged) {
+        this.grantRoleError = []
+        this.grantRoleError['idCurso'] = "Deve selecionar um curso."
+        throw "O curso não foi selecionado"
+      }
+      if (course == null) {
+        course = []
+        course["code"] = this.counterStore.courses[0].id
       }
       this.$axios.post("coordenador", {
             "login": login,
@@ -251,8 +257,17 @@ export default {
           })
         .then((response) => {
           this.$toast.success("Role concedido a " + login + "!",);
-          this.getCoursesCoordinators()
+          if (this.adminLogged) {
+            this.getCoursesCoordinators()
+          }
+          if (!this.adminLogged) {
+            this.getCoordinatorsByCourse(course.code)
+          }
           this.login = null
+          this.grantRoleError = null
+          this.revokeRoleError = null
+          this.nullCoordenador = null
+          this.nullCurso = null
         })
         .catch((error) => {
           this.grantRoleError = error.response.data
@@ -272,8 +287,8 @@ export default {
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },
-    getCoordinatorsByCourse(course){
-      this.$axios.get("curso/coordenadores/" + course.code)
+    getCoordinatorsByCourse(courseId){
+      this.$axios.get("curso/coordenadores/" + courseId)
         .then((response) => {
           console.log(response.data);
           this.coordinatoresByCourse = response.data.coordenadores;
@@ -283,10 +298,7 @@ export default {
         });
     },
     revokeCoordinatorRole(coordinatorId, course){
-      if (course.code == null) {
-        course.code = this.counterStore.courses[0].id
-      }
-      if (course.code == null && coordinatorId == null) {
+      if (course == null && coordinatorId == null && this.adminLogged) {
         this.nullCurso = "Deve selecionar um curso"
         this.nullCoordenador = "Deve selecionar um coordenador"
         this.$toast.error("Não foi possível retirar o role a este utilizador!");
@@ -297,12 +309,22 @@ export default {
         this.$toast.error("Não foi possível retirar o role a este utilizador!");
         throw "Error"
       }
+      if (course == null) {
+        course = []
+        course["code"] = this.counterStore.courses[0].id
+      }
       this.$axios.delete("coordenador/" + coordinatorId)
         .then((response) => {
           this.$toast.success("Role retirado com sucesso!");
           this.selectedCoordinator = null
-          this.getCoursesCoordinators()
+          if (this.adminLogged) {
+            this.getCoursesCoordinators()
+          }
           this.getCoordinatorsByCourse(course.code)
+          this.grantRoleError = null
+          this.revokeRoleError = null
+          this.nullCoordenador = null
+          this.nullCurso = null
         })
         .catch((error) => {
           this.$toast.error("Não foi possível retirar o role a este utilizador!");
@@ -313,7 +335,9 @@ export default {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
       this.adminLogged = true
     }
-    this.getCoursesCoordinators()
+    if (this.adminLogged) {
+      this.getCoursesCoordinators()
+    }
     this.counterStore.getCourses()
    /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
       

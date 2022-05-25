@@ -3,8 +3,9 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Dashboard</h3>
     <div class="card text-center">
       <div v-if="hasValue" class="card-body">
-        <p v-if="adminLogged" class="card-title" style="text-align: left;">Cursos com pelo menos um periodo definido e pedidos pendentes</p>
-        <p v-if="coordenadorLogged" class="card-title" style="text-align: left;">Meus cursos</p>
+        <div style="text-align: left;">
+          <small v-if="adminLogged" class="card-title">Cursos com pelo menos um periodo definido e pedidos pendentes</small>
+        </div>
         <div class="card w-100" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
           <div class="card-body">
             <h6 class="card-title">{{ "["+course.codigo+"] "+course.nome }}</h6>
