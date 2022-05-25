@@ -8,7 +8,6 @@
       <div class="card-body">
         <h6 class="card-title">Insira o número de aluno que pretende verificar</h6>
         <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Número de aluno</label>
           <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número aluno" v-model="login">
         </div>
         <button class="btn btn-primary" @click="getAlunoInfo()">Procurar</button>

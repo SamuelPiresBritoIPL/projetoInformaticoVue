@@ -163,7 +163,7 @@ export default {
     }
   },
   mounted() {
-    
+    this.counterStore.courseWithUCs = []
   },
 };
 </script>

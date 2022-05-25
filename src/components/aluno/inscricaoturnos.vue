@@ -20,7 +20,7 @@
                     </div>
                   </div>
                 </div>
-                <p v-if="this.buttonArray.length > 0" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
+                <p v-if="this.buttonArray.length > 0 && hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">{{ inscricaoucs[0].nomeCurso }}</button>

@@ -330,6 +330,7 @@ export default {
     }
   },
   mounted() {
+    this.counterStore.aberturasByCourse = []
     this.counterStore.getCourses(2)
   },
 };
