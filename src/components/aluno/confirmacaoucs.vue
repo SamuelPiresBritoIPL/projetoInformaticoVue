@@ -206,6 +206,9 @@ export default {
             this.$toast.success("Cadeiras confirmadas com sucesso!");
           } else if (state == 1){
             this.$toast.success("Pedido de alteração de UCs efetuado com sucesso!");
+            this.cadeirasOutrosCursos = []
+            this.cadeirasToRequest = []
+            requestDescription = null
             this.adicionarCadeirasForm = false
             this.getCadeirasToConfirm()
           }
