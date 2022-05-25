@@ -108,7 +108,6 @@ export default {
                     throw "Não tem permissões!"
                 }
             } 
-            this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "vercadeiras" });
         } catch (error) {
             if ((this.credentials.login != null && this.credentials.password != null) || this.credentials.password != null) {

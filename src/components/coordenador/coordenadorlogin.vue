@@ -106,7 +106,6 @@ export default {
                     throw "Não tem permissões!"
                 }
             } 
-            this.$toast.success("Login efetuado com sucesso!");
             this.$router.push({ name: "coordenadorroot" });
         } catch (error) {
             if (error.response) {
