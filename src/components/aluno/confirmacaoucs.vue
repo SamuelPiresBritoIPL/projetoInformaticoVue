@@ -12,6 +12,12 @@
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
                   <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ cadeira.nomeCadeira }}</li>
                 </ul>
+                <div v-if="!periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
+                  <p>O periodo de Pedidos de Alteração de UC's terá inicio a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})</p>
+                </div>
+                <div v-if="periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
+                  <p>O periodo de Pedidos de Alteração de UC's estará aberto até a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})</p>
+                </div>
                 <div v-if="periodo" style="margin-top: 35px; text-align: center;">
                   <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="inscricaoCadeiras(0)" :disabled="adicionarCadeirasForm">Confirmar Cadeiras</button><br> -->
                   <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="adicionarCadeiras()" :disabled="adicionarCadeirasForm">Fazer Pedido de Alteração</button><br>     
@@ -93,7 +99,7 @@
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingThree">
                       <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[0]" aria-controls="collapseThree" @click="changeCollapsed(0)">
-                        Pedidos de Alteração
+                        Histórico dos meus Pedidos de Alteração
                       </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -146,6 +152,7 @@ export default {
     return {
         cadeirasToConfirm: [],
         pedidos: [],
+        infoPedidos: [],
         periodo: false,
         adicionarCadeirasForm: false,
         cadeirasNaoAprovadas: [],
@@ -184,8 +191,9 @@ export default {
         .then((response) => {
           console.log("teste")
           console.log(response.data)
-          this.cadeirasToConfirm = response.data.cursos;
-          this.pedidos = response.data.pedidos;
+          this.cadeirasToConfirm = response.data.cursos
+          this.pedidos = response.data.pedidos
+          this.infoPedidos = response.data.infoPedidos
           this.periodo = response.data.periodo
           console.log(this.pedidos)
         })

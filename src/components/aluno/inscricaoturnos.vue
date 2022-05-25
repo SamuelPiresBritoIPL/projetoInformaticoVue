@@ -16,14 +16,24 @@
                   <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                       <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                      <p>O periodo de Inscrição nos Turnos para as UC´s {{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }} terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h (faltam {{ aberturaAno.diasAteAbertura }} dias.)</p>
+                      <p>O periodo de Inscrição nos Turnos para as UC´s {{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }} terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})</p>
                     </div>
                   </div>
                 </div>
-                <p v-if="this.buttonArray.length > 0 && hasButtonSelected" style="text-align: center;">Selecione o botão para iniciar a inscrição nos turnos.</p>
+                <div v-if="this.buttonArray.length > 0 && hasButtonSelected" style="text-align: center; margin-bottom: 25px;">
+                  <small>Selecione o respetivo botão para iniciar com a inscrição nos turnos.</small>
+                </div>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
+                  <div v-if="this.buttonArray.length > 0">
+                    <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
+                      <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
+                        <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
+                        <p>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</p>
+                      </div>
+                    </div>
+                  </div>
                   <div style="text-align: center;">
-                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">{{ inscricaoucs[0].nomeCurso }}</button>
+                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">Inscrever nos Turnos</button>
                   </div>
                   <div v-if="buttonArray[index]" style="margin-top: 35px; text-align: left;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
