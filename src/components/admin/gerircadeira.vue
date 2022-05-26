@@ -140,17 +140,22 @@
           </div>
         </div>
         <br>
-        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
-        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
-        <br>
-        <br>
+        <h6 v-if="this.turno != null" class="card-title">Mover estudantes do turno atual para o selecionado</h6>
         <select v-if="this.turno != null" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoSelected">
           <option value="null">Selecione um turno.</option>
           <option v-for="(turno) in filteredArray" :key="turno.id" v-bind:value="turno.id">
           {{ turno.tipo + (turno.numero == 0 ? "" : turno.numero) }}
           </option>
         </select>
-        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="moverEstudantes()">Mover estudantes</button>
+        <div v-if="hasErrorMoverAlunos"  class="errorMessages" style="margin-bottom: 15px;">
+          <small style="color: #a94442; margin-left: 5px;">{{ errorMoverAlunos.inscricaoIds[0] }}</small>
+        </div>
+        <div style="text-align: center;">
+          <button v-if="this.turno != null" class="btn btn-success text-right" style="width: 100%; margin-top: 1px;" @click="moverEstudantes()">Mover estudantes</button>
+        </div>
+        <br>
+        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
+        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
         <br>
         <table class="table" style="text-align:left;">
           <thead>
@@ -219,7 +224,8 @@ export default {
         errors: null,
         errorLoginAddToUC: null,
         errorLoginAddToTurno: null,
-        isVisivel: null
+        isVisivel: null,
+        errorMoverAlunos : null
     };
   },
   computed: {
@@ -267,6 +273,14 @@ export default {
     hasErrorLoginAddToTurno(){
       if (this.errorLoginAddToTurno != null) {
         if (this.errorLoginAddToTurno.login != null) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorMoverAlunos(){
+      if (this.errorMoverAlunos != null) {
+        if (this.errorMoverAlunos.inscricaoIds != null) {
           return true
         }
       }
@@ -509,8 +523,12 @@ export default {
         });
     },
     moverEstudantes(){
-      console.log(this.estudantesSelected)
-      this.$axios.put("cadeiras/mudarturno/"+this.turnoSelected, {
+      if (this.turnoSelected == null || this.turnoSelected == "null") {
+        this.errorMoverAlunos = []
+        this.errorMoverAlunos["inscricaoIds"] = ["Não selecionou o turno."]
+        throw "Error"
+      }
+      this.$axios.put("cadeiras/mudarturno/"+this.turnoSelected, {  
           "inscricaoIds": this.estudantesSelected
         })
         .then((response) => {
@@ -520,7 +538,10 @@ export default {
           this.getStatsTurno(this.turno.id)
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error("Não foram alunos movidos.");
+          if (error.response.data.inscricaoIds != null) {
+            this.errorMoverAlunos = error.response.data 
+          }
         });
     },
     changeVisibility(){
