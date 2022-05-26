@@ -27,13 +27,17 @@
                   <div v-if="this.buttonArray.length > 0">
                     <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
                       <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
-                        <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                        <p>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</p>
+                        <div v-if="aberturaAno.idCurso == index">
+                          <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
+                          <p>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</p>
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div style="text-align: center;">
                     <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">Inscrever nos Turnos</button>
+                    <br>
+                    <br>
                   </div>
                   <div v-if="buttonArray[index]" style="margin-top: 15px; text-align: left;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
@@ -58,8 +62,8 @@
                           </div>
                         </div>
                         <div style="margin-top: 20px; text-align: center;">
-                          <button type="button" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
-                          <button type="button" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
+                          <button type="button" style="margin-right: 10px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
+                          <button type="button" style="margin-right: 10px;" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
                           <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
                         </div>
                       </div>

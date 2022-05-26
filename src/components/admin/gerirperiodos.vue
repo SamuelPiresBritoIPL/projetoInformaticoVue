@@ -170,6 +170,8 @@
               <button v-if="iniciarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
               @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 1, dataAbertura, dataEncerrar)">Confirmar Iniciação</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
+              <br>
+              <span v-if="this.msgErrorTurnos != null" style="white-space: pre-line;color: red;">{{this.msgErrorTurnos}}</span>
             </form>
           </div>
           <!-- EDITAR ABERTURAS - INSCRIÇÕES -->
@@ -202,7 +204,8 @@ export default {
       iniciarConfirmacao: false,
       editarConfirmacao: false,
       aberturaToEdit: null,
-      errorIniciarPC: null
+      errorIniciarPC: null,
+      msgErrorTurnos: null,
     };
   },
   computed: {
@@ -279,6 +282,7 @@ export default {
       this.dataEncerrar = abertura.dataEncerar.replace(':00.000000Z', '')
     },
     createAbertura(courseId, year, type, dataAbertura, dataEncerrar){
+      this.msgErrorTurnos = null
       this.$axios.post("abertura/"+courseId, {
             "ano": year,
             "tipoAbertura": type,
@@ -293,11 +297,15 @@ export default {
           this.cancelarEdicaoIniciacao();
         })
         .catch((error) => {
-          this.errorIniciarPC = error.response.data
-          if(error.response.data.erros){
-            this.$toast.error(error.response.data.erros);
+          if(type == 1 && error.response.status == 401){
+            this.msgErrorTurnos = error.response.data.erros
           }else{
-            this.$toast.error("Não foi possível criar a abertura!");
+            this.errorIniciarPC = error.response.data
+            if(error.response.data.erros){
+              this.$toast.error(error.response.data.erros);
+            }else{
+              this.$toast.error("Não foi possível criar a abertura!");
+            }
           }
         });
     },
