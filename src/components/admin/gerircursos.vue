@@ -158,7 +158,7 @@ export default {
           this.selectCurso(this.selectedCourse)
         })
         .catch((error) => {
-          this.$toast.error(error)
+          this.$toast.error("Não foi possível atualizar as vagas.")
         });
     }
   },

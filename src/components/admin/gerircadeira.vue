@@ -64,6 +64,9 @@
                     <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
                   </div>
                 </div>
+                <div v-if="hasErrorLoginAddToUC"  class="errorMessages" style="margin-bottom: 16px;">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errorLoginAddToUC.login[0] }}</small>
+                </div>
                 <div v-if="hasErroraddAluno"  class="errorMessages">
                   <small style="color: #a94442; margin-left: 5px;">{{ errors.addAluno }}</small>
                 </div>
@@ -77,7 +80,10 @@
                   <div class="input-group-append">
                     <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
                   </div>
-                </div>  
+                </div> 
+                <div v-if="hasErrorLoginAddToTurno"  class="errorMessages">
+                  <small style="color: #a94442; margin-left: 5px;">{{ errorLoginAddToTurno.login[0] }}</small>
+                </div> 
                 <div v-if="hasErroraddAlunoTurno"  class="errorMessages">
                   <small style="color: #a94442; margin-left: 5px;">{{ errors.addAlunoTurno }}</small>
                 </div>
@@ -127,11 +133,8 @@
             </h2>
             <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                 <h5 class="card-title">Alterar visibilidade</h5>
-                <label for="exampleFormControlInput7" class="form-label">Alterar a visibilidade para todos os turnos</label>
-                <br>
-                <button class=" btn btn-danger text-right" @click="changeVisibility(0)">Tornar Unidade Curricular invisivel</button><br><br>
-                <button class=" btn btn-primary text-right" @click="changeVisibility(1)">Tornar Unidade Curricular visivel</button>
+                 <h5 class="card-title" style="margin-bottom: 10px;">Alterar visibilidade</h5>
+                <button class=" btn btn-success text-right" :class="{ 'btn-danger': isVisivel == true }" @click="changeVisibility()">{{ isVisivel ? "Tornar Unidade Curricular Invisivel" : "Tornar Unidade Curricular Visivel"}}</button><br><br>
               </div>
             </div>
           </div>
@@ -213,7 +216,10 @@ export default {
         estudantesSelected: [],
         turnoSelected: null,
         collapsed:[false,true,true],
-        errors: null
+        errors: null,
+        errorLoginAddToUC: null,
+        errorLoginAddToTurno: null,
+        isVisivel: null
     };
   },
   computed: {
@@ -247,6 +253,22 @@ export default {
     hasErrorAlterarVagas(){
       if (this.errors != null && this.errors.alterarVagas != null) {
         return true
+      }
+      return false
+    },
+    hasErrorLoginAddToUC(){
+      if (this.errorLoginAddToUC != null) {
+        if (this.errorLoginAddToUC.login != null) {
+          return true
+        }
+      }
+      return false
+    },
+    hasErrorLoginAddToTurno(){
+      if (this.errorLoginAddToTurno != null) {
+        if (this.errorLoginAddToTurno.login != null) {
+          return true
+        }
       }
       return false
     },
@@ -300,6 +322,7 @@ export default {
         .then((response) => {
           this.cadeira = response.data.cadeiras
           this.turnoInfo = response.data.info
+          this.isVisivel = response.data.isVisivel
           this.turnoInfo.forEach(function (element) {
             element.valor = null;
           });
@@ -337,7 +360,10 @@ export default {
           this.numeroadicionar = null
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error("Não foi possível adicionar o aluno indicado à UC");
+          if (error.response.data.login) {
+            this.errorLoginAddToUC = error.response.data
+          }
         });
     },
     addStudentToTurno(numeroadicionarTurno,turnoescolhido){
@@ -346,10 +372,20 @@ export default {
           this.errors.addAlunoTurno = null
         }
       }
-      if(numeroadicionarTurno == null || turnoescolhido == null){
+      if(numeroadicionarTurno == null && (turnoescolhido == null || turnoescolhido == "null")){
         this.errors = {addAlunoTurno: "Deve escrever um número de um aluno e selecionar um Turno!"}
         console.log(this.errors)
-        return;
+        throw "Erro";
+      }
+      if(numeroadicionarTurno == null){
+        this.errors = {addAlunoTurno: "Deve escrever um número de um aluno!"}
+        console.log(this.errors)
+        throw "Erro";
+      }
+      if(turnoescolhido == null || turnoescolhido == "null"){
+        this.errors = {addAlunoTurno: "Deve selecionar um Turno!"}
+        console.log(this.errors)
+        throw "Erro";
       }
       this.$axios.post("cadeiras/addalunoturno/"+turnoescolhido, {
             "login": numeroadicionarTurno
@@ -364,7 +400,10 @@ export default {
           this.numeroadicionarTurno = null
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error("Não foi efetuada com sucesso");
+          if (error.response.data.login) {
+            this.errorLoginAddToTurno = error.response.data
+          }
         });
     },
     changeTurnoData(){
@@ -423,7 +462,7 @@ export default {
           this.$toast.success(response.data);
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error("Não foi possível concluir a operação");
         });
     },
     downloadExcel(){
@@ -484,10 +523,16 @@ export default {
           this.$toast.error(error);
         });
     },
-    changeVisibility(visivel){
+    changeVisibility(){
+      if (this.isVisivel == true) {
+        var visivel = 0
+      } else {
+        var visivel = 1
+      }
       this.$axios.post("cadeiras/turnosinvisivel/" + this.cadeira.id + "/" + this.counterStore.selectedAnoletivo + "/" + visivel)
         .then((response) => {
           this.$toast.success(response.data)
+          this.getCadeiraInfo()
         })
         .catch((error) => {
           this.$toast.error(error);
