@@ -10,6 +10,9 @@
         <div class="mb-3">
           <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número aluno" v-model="login">
         </div>
+        <div v-if="hasError" class="errorMessages" style="margin-bottom: 16px;">
+          <small style="color: #a94442; margin-left: 5px;">{{ errorMsg }}</small>
+        </div>
         <button class="btn btn-primary" @click="getAlunoInfo()">Procurar</button>
         <hr>
         <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
@@ -141,8 +144,17 @@ export default {
       ucsAprovadas: [],
       pedidos: [],
       alunoRequested: false,
-      infoAluno: []
+      infoAluno: [],
+      errorMsg: null
     };
+  },
+  computed: {
+    hasError(){
+      if (this.errorMsg != null) {
+        return true
+      }
+      return false
+    },
   },
   methods: {
     getAlunoInfo(){
@@ -160,6 +172,8 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+          this.errorMsg = error.response.data
+          this.$toast.error("Não foi possível procurar este utilizador!");
         });
     }
   },
