@@ -25,20 +25,26 @@
                 </div>
                 <div v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                   <div v-if="this.buttonArray.length > 0">
-                    <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
-                      <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
-                        <div v-if="aberturaAno.idCurso == index">
-                          <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                          <h5>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</h5>
+                    <div v-for="aberturaCurso in aberturas" :key="aberturaCurso" style="text-align: center;">
+                      <div v-if="(aberturaCurso[0].idCurso == index && noButtonSelectedMsgs) || (aberturaCurso[0].idCurso == index && buttonArray[index])">
+                        <h6>{{ "["+aberturaCurso[0].codigo+"] "+aberturaCurso[0].nome }}</h6>
+                        <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso">
+                          <h5>O periodo de Inscrição nos Turnos estará aberto para {{ aberturaAno.ano == 0 ? "todos os anos " : "o ano "+aberturaAno.ano }} até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</h5>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div style="text-align: center;">
-                    <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false">Inscrever nos Turnos</button>
-                    <br>
+                  <div v-if="hasButtonSelected">
+                    <div style="text-align: center; margin-bottom: 25px;">
+                      <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false; noButtonSelectedMsgs = false">Inscrever nos Turnos</button>
+                    </div>
                   </div>
-                  <div v-if="buttonArray[index]" style="margin-top: 15px; text-align: left;">
+                  <div v-else>
+                    <div style="text-align: center">
+                      <button v-if="!buttonArray[index] && hasButtonSelected" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noInscricoes = false; noButtonSelectedMsgs = false">Inscrever nos Turnos</button>
+                    </div>
+                  </div>
+                  <div v-if="buttonArray[index]" style="margin-top: 15px; text-align: left; margin-bottom: 35px;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                       <div v-if="index == index2">
                         <label class="col-sm-4 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
@@ -63,7 +69,7 @@
                         <div style="margin-top: 20px; text-align: center;">
                           <button type="button" style="margin-right: 10px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
                           <button type="button" style="margin-right: 10px;" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
-                          <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]">Voltar</button>
+                          <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
                         </div>
                       </div>
                     </div>
@@ -108,8 +114,22 @@ export default {
       showInscricaoForm: false,
       buttonArray: [],
       buttonBlockArray: [],
-      noInscricoes: false
+      noInscricoes: false,
+      myUCsIds: [],
+      noButtonSelectedMsgs: true
     };
+  },
+  sockets: {
+    newInscricao(response) {
+      myUCsIds.forEach(element => {
+        response.forEach(responseElement => {
+          if (element == responseElement) {
+            this.getCadeirasWithTurnos()
+            return
+          }
+        })
+      });
+    }
   },
   computed: {
     hasButtonSelected(){
@@ -119,6 +139,9 @@ export default {
         }
       }
       return true
+    },
+    hasOneMsgToShow(){
+
     }
   },
   methods: {
@@ -141,9 +164,11 @@ export default {
           this.inscricoes = response.data.inscricoes
           this.aberturas = response.data.aberturas
           Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index3) => {
-            this.buttonArray.push(false)
             inscricaoucs.forEach((cadeira, cadeiraIndex) => {
+              this.buttonArray[cadeira.idCurso] = false
               this.arrayVmodel.push([])
+              this.myUCsIds.push(cadeira.id)
+              console.log(this.myUCsIds)
               Object.values(cadeira.cadeira.turnos).forEach((turno, index) => {
                 turno.forEach((turnotipo, index2) => {
                   this.inscricoes.forEach((inscricao) => {
@@ -196,6 +221,7 @@ export default {
               this.turnosRejeitados = response.data
               console.log(this.turnosRejeitados)
             }
+            //this.$socket.emit("newInscricao", response.data);
             this.allTurnosIds = []
         })
         .catch((error) => {
