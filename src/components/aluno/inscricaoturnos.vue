@@ -218,8 +218,9 @@ export default {
             this.$toast.success("Inscrição feita com sucesso");
             if (response.data && response.data != 201) {
               this.showTurnosRejeitados = true
-              this.turnosRejeitados = response.data
+              this.turnosRejeitados = response.data.rejeitados
               console.log(this.turnosRejeitados)
+              console.log(response.data.idsCadeiras)
             }
             //this.$socket.emit("newInscricao", response.data);
             this.allTurnosIds = []
