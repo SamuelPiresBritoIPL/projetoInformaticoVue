@@ -230,12 +230,17 @@ export default {
   },
   computed: {
     hasValue(){
+      if(this.activeTurno.length > 0){
+        return true
+      }
       if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
         this.getCadeiraInfo()
-        if(this.counterStore.turnoToManage == null){
-          this.getStats()
-        }else{
-          this.getStatsTurno()
+        if(this.activeTurno.length == 0){
+          if(this.counterStore.turnoToManage == null){
+            this.getStats()
+          }else{
+            this.getStatsTurno()
+          }
         }
         return true
       } 
@@ -564,7 +569,7 @@ export default {
     }
   },
   mounted() {
-   
+  
   },
 };
 </script>
