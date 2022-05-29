@@ -28,8 +28,7 @@
                             :class="{ active: $route.name === 'vercadeiras' }"
                             :to="{ name: 'vercadeiras' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="mortarboard"
-                                size="1x" />
+                                icon="mortarboard"/>
                                 Unidades Curriculares
                             </router-link>
                         </li>

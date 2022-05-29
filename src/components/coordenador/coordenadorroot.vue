@@ -28,8 +28,7 @@
                             :class="{ active: $route.name === 'dashboardC' }"
                             :to="{ name: 'dashboardC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="display"
-                                size="1x" />
+                                icon="display"/>
                                 Dashboard
                             </router-link>
                         </li>
@@ -38,8 +37,7 @@
                             :class="{ active: $route.name === 'gerircoordenadoresC' }"
                             :to="{ name: 'gerircoordenadoresC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="person-lines-fill"
-                                size="1x" />
+                                icon="person-lines-fill" />
                                 Gerir Coordenadores
                             </router-link>
                         </li>
@@ -48,8 +46,7 @@
                             :class="{ active: $route.name === 'gerircursosC' || $route.name === 'gerircadeiraC'}"
                             :to="{ name: 'gerircursosC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="mortarboard"
-                                size="1x" />
+                                icon="mortarboard"/>
                                 Gerir Cursos
                             </router-link>
                         </li>
@@ -58,8 +55,7 @@
                             :class="{ active: $route.name === 'geriralunosC' }"
                             :to="{ name: 'geriralunosC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="people"
-                                size="1x" />
+                                icon="people"/>
                                 Alunos
                             </router-link>
                         </li>
@@ -68,8 +64,7 @@
                             :class="{ active: $route.name === 'gerirconfirmacoesC' }"
                             :to="{ name: 'gerirconfirmacoesC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="clipboard2-check"
-                                size="1x" />
+                                icon="clipboard2-check"/>
                                 Gerir Confirmações UC
                             </router-link>
                         </li>
@@ -78,8 +73,7 @@
                             :class="{ active: $route.name === 'gerirperiodosC' }"
                             :to="{ name: 'gerirperiodosC' }">
                                 <BootstrapIcon style="margin-right: 15px"
-                                icon="calendar-event"
-                                size="1x" />
+                                icon="calendar-event"/>
                                 Gerir Periodos
                             </router-link>
                         </li>

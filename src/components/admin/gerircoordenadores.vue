@@ -101,7 +101,7 @@
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
               <label v-if="!hasMoreThanOneCurso && this.counterStore.courses[0]">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
-              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourseRemove" @option:selected="getCoordinatorsByCourse(selectedCourseRemove)">
+              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourseRemove" @option:selected="getCoordinatorsByCourse(selectedCourseRemove.code)">
               </v-select>
               <div v-if="hasErrorCursoNullRemover" class="errorMessages">
                 <small style="color: #a94442; margin-left: 5px;">{{ nullCurso }}</small>
