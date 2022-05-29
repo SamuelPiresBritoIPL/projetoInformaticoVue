@@ -16,7 +16,7 @@
                   <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                       <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                      <p>O periodo de Inscrição nos Turnos para as UC´s {{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }} terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})</p>
+                      <h5>O periodo de Inscrição nos Turnos para as UC´s {{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }} terá inicio a {{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})</h5>
                     </div>
                   </div>
                 </div>
@@ -29,7 +29,7 @@
                       <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                         <div v-if="aberturaAno.idCurso == index">
                           <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
-                          <p>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</p>
+                          <h5>O periodo de Inscrição nos Turnos estará aberto até a {{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})</h5>
                         </div>
                       </div>
                     </div>

@@ -13,10 +13,10 @@
                   <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ cadeira.nomeCadeira }}</li>
                 </ul>
                 <div v-if="!periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
-                  <p>O periodo de Pedidos de Alteração de UC's terá inicio a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})</p>
+                  <h5>O periodo de Pedidos de Alteração de UC's terá inicio a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})</h5>
                 </div>
                 <div v-if="periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
-                  <p>O periodo de Pedidos de Alteração de UC's estará aberto até a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})</p>
+                  <h5>O periodo de Pedidos de Alteração de UC's estará aberto até a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})</h5>
                 </div>
                 <div v-if="periodo" style="margin-top: 35px; text-align: center;">
                   <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="inscricaoCadeiras(0)" :disabled="adicionarCadeirasForm">Confirmar Cadeiras</button><br> -->
