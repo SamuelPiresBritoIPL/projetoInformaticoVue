@@ -105,6 +105,7 @@ export default {
   data() {
     return {
       cadeirasWithTurnosPorCurso: [],
+      cadeirasWithTurnosPorCursoWebSocket: [],
       isncricoes: [],
       aberturas: [],
       arrayVmodel: [],
@@ -121,11 +122,12 @@ export default {
   },
   sockets: {
     newInscricao(response) {
-      myUCsIds.forEach(element => {
-        response.forEach(responseElement => {
-          if (element == responseElement) {
-            this.getCadeirasWithTurnos()
-            return
+      this.myUCsIds.forEach(myIdCadeira => {
+        response.forEach(responseIdCadeira => {
+          if (myIdCadeira == responseIdCadeira) {
+            this.getCadeirasWithTurnosWebSocket()
+            console.log(this.cadeirasWithTurnosPorCurso)
+            return 
           }
         })
       });
@@ -139,9 +141,6 @@ export default {
         }
       }
       return true
-    },
-    hasOneMsgToShow(){
-
     }
   },
   methods: {
@@ -187,6 +186,34 @@ export default {
           console.log(error);
         });
     },
+    getCadeirasWithTurnosWebSocket(){
+      this.$axios.get("cadeirasaluno/utilizador")
+        .then((response) => {
+          this.cadeirasWithTurnosPorCursoWebSocket = response.data.cursos
+          Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs) => {
+            inscricaoucs.forEach((cadeira) => {
+              Object.values(cadeira.cadeira.turnos).forEach((turno) => {
+                turno.forEach((turnotipo, index) => {
+                  Object.values(this.cadeirasWithTurnosPorCursoWebSocket).forEach((inscricaoucsNovo) => {
+                    inscricaoucsNovo.forEach((cadeiraNovo) => {
+                      Object.values(cadeiraNovo.cadeira.turnos).forEach((turnoNovo) => {
+                        turnoNovo.forEach((turnotipoNovo, indexNovo) => {
+                          if ((turnotipo.vagasocupadas != turnotipoNovo.vagasocupadas) && (index == indexNovo) && (turnotipo.id == turnotipoNovo.id)) {
+                            turnotipo["vagasocupadas"] = turnotipoNovo.vagasocupadas
+                          }
+                        })
+                      })
+                    });
+                  })
+                })
+              })
+            });
+          })
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
     submitInscricao(){
       this.turnosRejeitados = null
       console.log(this.arrayVmodel)
@@ -216,13 +243,11 @@ export default {
           })
         .then((response) => {
             this.$toast.success("Inscrição feita com sucesso");
-            if (response.data && response.data != 201) {
+            if (response.data.rejeitados && response.data != 201) {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data.rejeitados
-              console.log(this.turnosRejeitados)
-              console.log(response.data.idsCadeiras)
             }
-            //this.$socket.emit("newInscricao", response.data);
+            this.$socket.emit("newInscricao", response.data.idsCadeiras);
             this.allTurnosIds = []
         })
         .catch((error) => {
