@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import AdminRoot from '../components/admin/adminroot.vue'
 import Dashboard from '../components/admin/dashboard.vue'
 import GerirAlunos from '../components/admin/geriralunos.vue'
@@ -25,7 +25,7 @@ import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
 
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   //history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
