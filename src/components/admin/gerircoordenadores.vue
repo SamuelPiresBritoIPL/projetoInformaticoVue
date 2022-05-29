@@ -302,12 +302,12 @@ export default {
         this.nullCurso = "Deve selecionar um curso"
         this.nullCoordenador = "Deve selecionar um coordenador"
         this.$toast.error("Não foi possível retirar o role a este utilizador!");
-        throw "Error"
+        return
       }
-      if (coordinatorId == null) {
+      if (coordinatorId == null || coordinatorId == "null") {
         this.nullCoordenador = "Deve selecionar um coordenador"
         this.$toast.error("Não foi possível retirar o role a este utilizador!");
-        throw "Error"
+        return
       }
       if (course == null) {
         course = []
