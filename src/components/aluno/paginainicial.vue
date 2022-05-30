@@ -92,7 +92,6 @@ export default {
           this.infoInscricoes = response.data.infoInscricoes
           this.isPedidosOpen = response.data.isPedidosOpen
           this.isInscricoesOpen = response.data.isInscricoesOpen
-          
         })
         .catch((error) => {
           console.log(error.response);
@@ -101,7 +100,7 @@ export default {
           if (this.infoInscricoes.length == 0) {
             this.hasInscricoes = false
           }
-          if (Object.keys(infoPedidos).length == 0) {
+          if (Object.keys(this.infoPedidos).length == 0) {
             this.hasPedidos = false
           }
         })

@@ -23,6 +23,7 @@ import CoordenadorLogin from '../components/coordenador/coordenadorlogin.vue'
 import AlunoLogin from '../components/aluno/login.vue'
 import ProfessorLogin from '../components/professor/professorlogin.vue'
 import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
+import NotFound from '../components/not-found.vue'
 
 
 const router = createRouter({
@@ -316,7 +317,13 @@ const router = createRouter({
           meta: { title: "Inscrição nos Turnos" },
         },
       ],
-    }
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: NotFound,
+      meta: { title: "Not-found" },
+    },
   ]
 })
 
