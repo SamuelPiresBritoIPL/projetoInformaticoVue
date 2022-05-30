@@ -74,6 +74,7 @@
                           <button type="button" style="margin-right: 10px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
                           <button type="button" style="margin-right: 10px;" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
                           <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
+                          <button type="button" class="btn btn-link" style="margin-top: 10px; float: right!important" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
                         </div>
                       </div>
                     </div>
@@ -132,15 +133,13 @@ export default {
   },
   sockets: {
     newInscricao(response) {
-      this.myUCsIds.forEach(myIdCadeira => {
-        response.forEach(responseIdCadeira => {
-          if (myIdCadeira == responseIdCadeira) {
-            this.getCadeirasWithTurnosWebSocket()
-            console.log(this.cadeirasWithTurnosPorCurso)
-            return 
-          }
-        })
-      });
+      if (response.added) {
+        this.added = response.added
+      }
+      if (response.removed) {
+        this.removed = response.removed
+      }
+      this.updateVagasTurnos()
     }
   },
   computed: {
@@ -291,7 +290,7 @@ export default {
               this.removed = response.data.updatedTurnos.removed
             }
             this.updateVagasTurnos()
-            this.$socket.emit("newInscricao", response.data.idsCadeiras);
+            this.$socket.emit("newInscricao", response.data.updatedTurnos);
             this.allTurnosIds = []
         })
         .catch((error) => {
