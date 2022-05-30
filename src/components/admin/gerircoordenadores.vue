@@ -16,7 +16,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in coursesWithCoordinatores" :key="course">
+              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)" class="hoverclick">
                 <td>{{ "["+course.codigo+"] "+course.nome }}</td>
                 <td>{{ course.coordenadores.length }}</td>
                 <td scope="col">
@@ -43,7 +43,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in coursesWithCoordinatores" :key="course">
+              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)" class="hoverclick">
                 <td>{{ "["+course.codigo+"] "+course.nome }}</td>
                 <td>{{ course.coordenadores.length }}</td>
                 <td scope="col">
@@ -74,7 +74,7 @@
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId">
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId" ref="focus">
                 <option value="null">Selecione uma opção</option>
                 <option value="0">Coordenador</option>
                 <option value="1">Subcoordenador</option>
@@ -233,11 +233,11 @@ export default {
     getCoursesCoordinators(){
       this.$axios.get("cursoauth/coordenadores")
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           this.coursesWithCoordinatores = response.data;
         })
         .catch((error) => {
-          console.log(error.response);
+          //console.log(error.response);
         });
     },
     grantCoordinatorRole(course, type, login){
@@ -283,18 +283,18 @@ export default {
           if (this.grantRoleError.login2) {
             this.grantRoleError.login = this.grantRoleError.login2
           }
-          console.log(error.response)
+          //console.log(error.response)
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },
     getCoordinatorsByCourse(courseId){
       this.$axios.get("curso/coordenadores/" + courseId)
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           this.coordinatoresByCourse = response.data.coordenadores;
         })
         .catch((error) => {
-          console.log(error.response);
+          //console.log(error.response);
         });
     },
     revokeCoordinatorRole(coordinatorId, course){
@@ -330,6 +330,13 @@ export default {
           this.$toast.error("Não foi possível retirar o role a este utilizador!");
         });
     },
+    selectedCourseFunc(course){
+      let curso = {label: "[" + course.codigo + "] "+course.nome,code:course.id}
+      this.selectedCourse = curso
+      this.selectedCourseRemove = curso
+      this.getCoordinatorsByCourse(this.selectedCourseRemove.code)
+      this.$refs.focus.focus();
+    },
   },
   mounted() {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
@@ -359,5 +366,8 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+.hoverclick:hover{
+  cursor: pointer;
 }
 </style>
