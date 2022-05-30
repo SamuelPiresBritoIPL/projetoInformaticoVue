@@ -12,11 +12,11 @@
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
                   <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ cadeira.nomeCadeira }}</li>
                 </ul>
-                <div v-if="!periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
-                  <h5>O periodo de Pedidos de Alteração de UC's terá inicio a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})</h5>
+                <div v-if="!periodo && Object.keys(infoPedidos).length > 0" class="alert alert-info" role="alert" style="margin-top: 35px; text-align: center;">
+                  O periodo de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
                 </div>
-                <div v-if="periodo && Object.keys(infoPedidos).length > 0" style="margin-top: 35px; text-align: center;">
-                  <h5>O periodo de Pedidos de Alteração de UC's estará aberto até a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})</h5>
+                <div v-if="periodo && Object.keys(infoPedidos).length > 0" class="alert alert-success" role="alert" style="margin-top: 35px; text-align: center;">
+                  O periodo de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
                 </div>
                 <div v-if="periodo" style="margin-top: 35px; text-align: center;">
                   <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="inscricaoCadeiras(0)" :disabled="adicionarCadeirasForm">Confirmar Cadeiras</button><br> -->
