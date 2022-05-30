@@ -13,12 +13,12 @@
           <div class="card w-100" style="margin-bottom: 5px;">
             <div class="card-body">
               <h6 class="card-title">Página com as Unidades Currículares que o estudante pretende frequentar durante o semestre.</h6>
-              <hr>
+              <hr style="margin-bottom: 0px;">
               <small v-if="showInfoPUC" class="card-text">Nesta página é possível efetuar pedidos de adição de Unidades Curriculares à aplicação, no caso de ainda não o estarem.<br> Com o objetivo de possibilitar o estudante de se inscrever-se nos turnos sem perder a oportunidade. 
             <br>Durante o periodo definido pela coordenação de curso o aluno pode então requerir a adição da(s) UC('s) que pretender, justificando devidamente.<br> A coordenação posteriormente irá decidir justamente se aprova ou rejeita o 
             pedido.<br> </small>
               <div>
-                <button @click="showInfoPUC = !showInfoPUC" type="button" class="btn btn-link">{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}</button>
+                <button @click="showInfoPUC = !showInfoPUC" type="button" class="btn btn-link" style="margin-top: 10px;">{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}</button>
               </div>
               <div v-if="!hasPedidos" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
                 <p style="text-align: center;">Não existe nenhum periodo de pedidos de alteração de UC's definido.</p>
@@ -35,11 +35,11 @@
           <div class="card w-100">
             <div class="card-body">
               <h6 class="card-title">Página de Inscrição nos Turnos das Unidades Curriculares que pretende frequentar durante o semestre.</h6>
-              <hr>
+              <hr style="margin-bottom: 0px;">
               <small v-if="showInfoPIT" class="card-text">Nesta página é possível efetuar a inscrição nos turnos das Unidades Curriculares nas quais o estudante se encontra inscrito na aplicação, e no qual a coordenação do curso assim o definiu.
               <br>Durante o periodo definido para tal o estudante tem a liberdade de escolher os seus turnos consoante a disponibilidade das vagas e horário de cada turno.<br> </small>
               <div>
-                <button @click="showInfoPIT = !showInfoPIT" type="button" class="btn btn-link">{{ !showInfoPIT ? "Saber mais..." : "Saber menos." }}</button>
+                <button @click="showInfoPIT = !showInfoPIT" type="button" class="btn btn-link" style="margin-top: 10px;">{{ !showInfoPIT ? "Saber mais..." : "Saber menos." }}</button>
               </div>
               <div v-if="!hasInscricoes" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
                 <p style="text-align: center;">Não existe nenhum periodo de inscrições definido.</p>
