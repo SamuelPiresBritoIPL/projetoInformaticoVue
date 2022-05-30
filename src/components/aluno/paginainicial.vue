@@ -20,7 +20,7 @@
               <div>
                 <button @click="showInfoPUC = !showInfoPUC" type="button" class="btn btn-link">{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}</button>
               </div>
-              <div v-if="Object.keys(infoPedidos).length == 0" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
+              <div v-if="!hasPedidos" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
                 <p style="text-align: center;">Não existe nenhum periodo de pedidos de alteração de UC's definido.</p>
               </div>
               <div v-if="!isPedidosOpen && Object.keys(infoPedidos).length > 0" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
@@ -41,7 +41,7 @@
               <div>
                 <button @click="showInfoPIT = !showInfoPIT" type="button" class="btn btn-link">{{ !showInfoPIT ? "Saber mais..." : "Saber menos." }}</button>
               </div>
-              <div v-if="infoInscricoes.length == 0" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
+              <div v-if="!hasInscricoes" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
                 <p style="text-align: center;">Não existe nenhum periodo de inscrições definido.</p>
               </div>
               <div v-if="infoInscricoes.length > 0 && !isInscricoesOpen" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
@@ -78,7 +78,9 @@ export default {
       infoPedidos: [],
       infoInscricoes: [],
       isPedidosOpen: false,
-      isInscricoesOpen: false
+      isInscricoesOpen: false,
+      hasInscricoes: true,
+      hasPedidos: true
     };
   },
   methods: {
@@ -90,10 +92,19 @@ export default {
           this.infoInscricoes = response.data.infoInscricoes
           this.isPedidosOpen = response.data.isPedidosOpen
           this.isInscricoesOpen = response.data.isInscricoesOpen
+          
         })
         .catch((error) => {
           console.log(error.response);
-        });
+        })
+        .finally(() => {
+          if (this.infoInscricoes.length == 0) {
+            this.hasInscricoes = false
+          }
+          if (Object.keys(infoPedidos).length == 0) {
+            this.hasPedidos = false
+          }
+        })
     },
     buttonUnidadesCurriculares(){
       this.$router.push("/confirmacaoucs");
