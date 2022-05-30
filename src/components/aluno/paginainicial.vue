@@ -19,6 +19,12 @@
               <div>
                 <button @click="showInfoPUC = !showInfoPUC" type="button" class="btn btn-link">{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}</button>
               </div>
+              <div v-if="!isPedidosOpen && Object.keys(infoPedidos).length > 0" style="margin-top: 15px; text-align: center;">
+                <h5>O periodo de Pedidos de Alteração de UC's terá inicio a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})</h5>
+              </div>
+              <div v-if="isPedidosOpen && Object.keys(infoPedidos).length > 0" style="margin-top: 15px; text-align: center;">
+                <h5>O periodo de Pedidos de Alteração de UC's estará aberto até a {{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})</h5>
+              </div>
               <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;">Unidades Currículares</button>
             </div>
           </div>          
@@ -29,6 +35,17 @@
               <br>Durante o periodo definido para tal o estudante tem a liberdade de escolher os seus turnos consoante a disponibilidade das vagas e horário de cada turno.<br> </small>
               <div>
                 <button @click="showInfoPIT = !showInfoPIT" type="button" class="btn btn-link">{{ !showInfoPIT ? "Saber mais..." : "Saber menos." }}</button>
+              </div>
+              <p v-if="infoInscricoes.length == 0" style="text-align: center;">Não existe nenhum periodo de inscrições definido.</p>
+              <div v-if="infoInscricoes.length > 0 && !isInscricoesOpen">
+                <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
+                  <h5>O periodo de Inscrição nos Turnos para as UC´s {{ inscricao.ano == 0 ? "de todos os anos" : "do ano "+inscricao.ano }} terá inicio a {{ inscricao.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h ({{inscricao.menosdeumdia ? "falta "+inscricao.diasAteAbertura : (inscricao.diasAteAbertura == 1 ? "falta " + inscricao.diasAteAbertura + " dia." : "faltam " + inscricao.diasAteAbertura + " dias.") }})</h5>
+                </div>
+              </div>
+              <div v-if="infoInscricoes.length > 0 && isInscricoesOpen">
+                <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
+                  <h5>O periodo de Inscrição nos Turnos estará aberto para {{ inscricao.ano == 0 ? "todos os anos " : "o ano "+inscricao.ano }} até a {{ inscricao.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h ({{inscricao.menosdeumdiatermino ? "falta "+inscricao.diasAteTerminar : (inscricao.diasAteTerminar == 1 ? "falta " + inscricao.diasAteTerminar + " dia." : "faltam " + inscricao.diasAteTerminar + " dias.") }})</h5>
+                </div>
               </div>
               <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;">Inscrição nos Turnos</button>
             </div>
@@ -50,13 +67,32 @@ export default {
   data() {
     return {
       showInfoPUC: false,
-      showInfoPIT: false
+      showInfoPIT: false,
+      infoPedidos: [],
+      infoInscricoes: [],
+      isPedidosOpen: false,
+      isInscricoesOpen: false
     };
   },
   methods: {
+    getInfoPedidos(){
+      this.$axios.get("cadeirasaluno/infoperiodos")
+        .then((response) => {
+          console.log(response.data)
+          this.infoPedidos = response.data.infoPedidos
+          this.infoInscricoes = response.data.infoInscricoes
+          this.isPedidosOpen = response.data.isPedidosOpen
+          this.isInscricoesOpen = response.data.isInscricoesOpen
+        })
+        .catch((error) => {
+          console.log(error.response);
+        });
+    }
     
   },
-  mounted() {}
+  mounted() {
+    this.getInfoPedidos()
+  }
 }
 </script>
 
