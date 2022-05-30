@@ -17,7 +17,7 @@
                 <div v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length > 0">
                   <div v-for="aberturaCurso in aberturas" :key="aberturaCurso">
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
-                      <h6>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h6>
+                      <h4>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h4>
                       <div class="alert alert-info" role="alert" style="margin-letf: 35px; margin-top: 35px;">
                         O periodo de Inscrição nos Turnos para as UC´s <b>{{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }}</b> terá <b>início</b> a <b>{{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})
                       </div> 
@@ -31,7 +31,7 @@
                   <div v-if="this.buttonArray.length > 0" style="margin-left: 85px; margin-right: 85px;">
                     <div v-for="aberturaCurso in aberturas" :key="aberturaCurso" style="text-align: center;">
                       <div v-if="(aberturaCurso[0].idCurso == index && noButtonSelectedMsgs) || (aberturaCurso[0].idCurso == index && buttonArray[index])">
-                        <h6 style="margin-bottom: 15px;">{{ "["+aberturaCurso[0].codigo+"] "+aberturaCurso[0].nome }}</h6>
+                        <h4 style="margin-bottom: 15px;">{{ "["+aberturaCurso[0].codigo+"] "+aberturaCurso[0].nome }}</h4>
                         <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" class="alert alert-success" role="alert">
                           O periodo de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ aberturaAno.ano == 0 ? "todos os anos " : "o ano "+aberturaAno.ano }}</b> até a <b>{{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})
                         </div>
@@ -79,7 +79,7 @@
                     </div>
                   </div>
                   <div v-if="!buttonArray[index] && noButtonSelectedMsgs && filterInscricoesInscritas(index).length > 0" style="text-align: center; margin-bottom: 35px;">
-                    <h5>Turnos inscritos: </h5>
+                    <h5>Turnos atualmente inscritos: </h5>
                     <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + ": " + inscricao.tipo + inscricao.numero}}</p>
                   </div>
                 </div>
