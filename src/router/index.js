@@ -7,6 +7,7 @@ import GerirCursos from '../components/admin/gerircursos.vue'
 import AtualizarDados from '../components/admin/atualizardados.vue'
 import GerirConfirmacoes from '../components/admin/gerirconfirmacoes.vue'
 import GerirPeriodos from '../components/admin/gerirperiodos.vue'
+import GerirUtilizador from '../components/admin/gerirutilizador.vue'
 import Logs from '../components/admin/logs.vue'
 import CoordenadorRoot from '../components/coordenador/coordenadorroot.vue'
 import ProfessorRoot from '../components/professor/professorroot.vue'
@@ -163,6 +164,12 @@ const router = createRouter({
           name: "gerircadeira",
           component: GerirCadeira,
           meta: { title: "Gestão de UC's" },
+        },
+        {
+          path: "gerirutilizador",
+          name: "gerirutilizador",
+          component: GerirUtilizador,
+          meta: { title: "Gerir utilizador" },
         },
         {
           path: "logs",

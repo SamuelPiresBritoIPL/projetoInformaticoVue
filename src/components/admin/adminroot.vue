@@ -88,6 +88,15 @@
                         </li>
                         <li class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
+                            :class="{ active: $route.name === 'gerirutilizador' }"
+                            :to="{ name: 'gerirutilizador' }">
+                                <BootstrapIcon style="margin-right: 15px"
+                                icon="person"/>
+                                Gerir utilizador
+                            </router-link>
+                        </li>
+                        <li class="nav-item sidebar-navigation">
+                            <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'logs' }"
                             :to="{ name: 'logs' }">
                                 <BootstrapIcon style="margin-right: 15px"
