@@ -57,7 +57,7 @@
                               <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
                                   <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px" @click="clearRadio(cadeiraIndex, index, turnotipo.id)">
-                                  <label class="form-check-label">
+                                  <label class="form-check-label" :class="{redcolor: turnotipo.vagasocupadas >= turnotipo.vagastotal }">
                                     {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ turnotipo.vagasocupadas }}/{{ turnotipo.vagastotal }})</small>
                                   </label>
                                 </span>
@@ -74,7 +74,11 @@
                       </div>
                     </div>
                   </div>
-                </div> 
+                  <div>
+                    <h5>Turnos inscritos: </h5>
+                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + ": " + inscricao.tipo + inscricao.numero}}</p>
+                  </div>
+                </div>
                 <div v-if="showTurnosRejeitados == true" style="color: red">
                   <hr>
                   <div>Turnos Rejeitados por falta de Vagas:
@@ -148,6 +152,11 @@ export default {
       if (this.arrayVmodel[cadeiraIndex][index] == turnotipoId) {
         this.arrayVmodel[cadeiraIndex][index] = []
       }
+    },
+    filterInscricoesInscritas (idCurso) {
+      return this.inscricoes.filter( inscricao => {
+          return inscricao.idCurso = idCurso
+      })
     },
     clearRadios(){
       for (let i = 0; i < this.arrayVmodel.length; i++) {
@@ -263,5 +272,7 @@ export default {
 </script>
 
 <style>
-
+.redcolor {
+  color:red;
+}
 </style>
