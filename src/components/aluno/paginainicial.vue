@@ -51,7 +51,7 @@
               </div>
               <div v-if="infoInscricoes.length > 0 && isInscricoesOpen" class="alert alert-success" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
                 <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
-                  O periodo de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ inscricao.ano == 0 ? "todos os anos " : "o ano "+inscricao.ano }}</b> até a <b>{{ inscricao.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdiatermino ? "falta "+inscricao.diasAteTerminar : (inscricao.diasAteTerminar == 1 ? "falta " + inscricao.diasAteTerminar + " dia." : "faltam " + inscricao.diasAteTerminar + " dias.") }})
+                  <br v-if="counterStore.utilizadorLogado.codigoCurso != inscricao.codigo"><b>{{ counterStore.utilizadorLogado.codigoCurso != inscricao.codigo ? "["+inscricao.codigo+"] "+inscricao.nome+" - " : "" }}</b>O periodo de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ inscricao.ano == 0 ? "todos os anos " : "o ano "+inscricao.ano }}</b> até a <b>{{ inscricao.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdiatermino ? "falta "+inscricao.diasAteTerminar : (inscricao.diasAteTerminar == 1 ? "falta " + inscricao.diasAteTerminar + " dia." : "faltam " + inscricao.diasAteTerminar + " dias.") }})
                 </div>
               </div>
               <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonInscricaoTurnos()">Inscrição nos Turnos</button>
