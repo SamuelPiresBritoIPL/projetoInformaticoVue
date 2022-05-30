@@ -10,7 +10,7 @@
                 <hr>
                 <ul v-for="cadeiraToConfirm in cadeirasToConfirm" :key="cadeiraToConfirm.cadeira">
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
-                  <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ cadeira.nomeCadeira }}</li>
+                  <li  style="margin-bottom: 15px;" v-for="cadeira in cadeiraToConfirm" :key="cadeira.id">{{ "(" + cadeira.cadeira.ano + "º ano)" + cadeira.nomeCadeira }}</li>
                 </ul>
                 <div v-if="!periodo && Object.keys(infoPedidos).length > 0" class="alert alert-info" role="alert" style="margin-top: 35px; text-align: center;">
                   O periodo de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
