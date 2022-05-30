@@ -80,7 +80,7 @@
                   </div>
                   <div v-if="!buttonArray[index] && noButtonSelectedMsgs && filterInscricoesInscritas(index).length > 0" style="text-align: center; margin-bottom: 35px;">
                     <h5>Turnos atualmente inscritos: </h5>
-                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + ": " + inscricao.tipo + inscricao.numero}}</p>
+                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + " (" + inscricao.ano + "º ano): " + inscricao.tipo + inscricao.numero}}</p>
                   </div>
                 </div>
                 <div v-if="showTurnosRejeitados == true" style="color: red">
