@@ -3,7 +3,7 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Curso na Aplicação</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
-      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCurso(selectedCourse)">
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso(counterStore.selectedCourse)">
       </v-select>
     </div>
     <!--<button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>-->
@@ -150,12 +150,12 @@ export default {
               dataToSend.push(value.tipo)
               dataToSend2.push(value.vagas)
           });
-      this.$axios.put("curso/turnosvagas/" + this.selectedCourse.code + "/" + this.counterStore.selectedAnoletivo + "/" + this.counterStore.semestre, {
+      this.$axios.put("curso/turnosvagas/" + this.counterStore.selectedCourse.code + "/" + this.counterStore.selectedAnoletivo + "/" + this.counterStore.semestre, {
           "tipoturno": dataToSend,
           "vagas": dataToSend2
         }).then((response) => {
           this.$toast.success(response.data)
-          this.selectCurso(this.selectedCourse)
+          this.selectCurso(this.counterStore.selectedCourse)
         })
         .catch((error) => {
           this.$toast.error("Não foi possível atualizar as vagas.")
@@ -163,7 +163,7 @@ export default {
     }
   },
   mounted() {
-    this.counterStore.courseWithUCs = []
+    
   },
 };
 </script>

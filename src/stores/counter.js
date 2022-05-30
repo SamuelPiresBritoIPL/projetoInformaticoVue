@@ -5,6 +5,7 @@ export const useCounterStore = defineStore({
   id: 'counter',
   state: () => ({
     selectedAnoletivo: null,
+    selectedCourse: null,
     ano: null,
     semestre: null,
     anosletivos: [],
