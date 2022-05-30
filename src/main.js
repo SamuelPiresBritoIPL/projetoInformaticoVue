@@ -36,10 +36,10 @@ library.add(faUserSecret)
 
 const app = createApp(App)
 
-/*const socketIO = new VueSocketIO({
+const socketIO = new VueSocketIO({
   debug: true,
   connection: 'http://localhost:8080',
- })*/
+ })
 
 app.use(createPinia())
 app.use(router)
@@ -48,7 +48,7 @@ app.use(vueselect)
 app.component('BootstrapIcon', BootstrapIcon)
 app.component('v-select', vSelect)
 app.use(Toaster, toastOptions)
-//app.use(socketIO)
+app.use(socketIO)
 
 axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
