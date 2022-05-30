@@ -11,7 +11,7 @@
                 <p class="card-title" style="text-align: center;">Ano Letivo: {{ counterStore.ano }}</p>
                 <p class="card-title" style="margin-bottom: 25px; text-align: center;">Semestre: {{ counterStore.semestre }}</p>
                 <hr>
-                <div v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length == 0" class="alert alert-info" role="alert" style="margin-letf: 35px; margin-top: 35px;">
+                <div v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length == 0" class="alert alert-danger" role="alert" style="margin-letf: 35px; margin-top: 35px;">
                   <p style="text-align: center;">Não existe nenhum periodo de inscrições definido.</p>
                 </div>
                 <div v-if="this.buttonArray.length == 0 && noInscricoes && Object.keys(this.aberturas).length > 0">
