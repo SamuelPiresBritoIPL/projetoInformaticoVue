@@ -51,12 +51,12 @@
                   <div v-if="buttonArray[index]" style="margin-top: 15px; text-align: left; margin-bottom: 35px;">
                     <div v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso" :key="inscricaoucs.id">
                       <div v-if="index == index2">
-                        <label class="col-5 col-form-label"><strong>Unidade Curricular </strong>(código/nome)</label>   
+                        <label class="col-5 col-form-label"><strong>Unidade Curricular </strong>(ano/nome)</label>   
                         <label class="col-7 col-form-label"><strong>Turnos diponíveis </strong>(inscritos/vagas)</label>
                         <br>
                         <div v-for="(cadeira, cadeiraIndex) in inscricaoucs" :key="cadeira.cadeira.id">
                           <div v-if="cadeira.cadeira.turnos.length != 0">
-                            <label class="col-5 col-form-label" style="vertical-align: middle; float: left;">{{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}</label>   
+                            <label class="col-5 col-form-label" style="vertical-align: middle; float: left;">{{ "("+cadeira.cadeira.ano+"º ano) "+cadeira.cadeira.nome }}</label>   
                             <label class="col-7 col-form-label">
                               <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
@@ -81,7 +81,7 @@
                   </div>
                   <div v-if="!buttonArray[index] && noButtonSelectedMsgs && filterInscricoesInscritas(index).length > 0" style="text-align: center; margin-bottom: 35px;">
                     <h5>Turnos atualmente inscritos: </h5>
-                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + " (" + inscricao.ano + "º ano): " + inscricao.tipo + inscricao.numero}}</p>
+                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + (inscricao.ano ? " (" + inscricao.ano + "º ano): " : "") + inscricao.tipo + inscricao.numero}}</p>
                   </div>
                 </div>
                 <div v-if="showTurnosRejeitados == true" style="color: red">
