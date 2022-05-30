@@ -16,16 +16,16 @@ export default {
   },
   methods: {
     redirectToMain(){
-      if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
+      if (sessionStorage.getItem("tokenAdmin")) {
         this.$router.push({name: 'dashboard'})
       } 
-      if (localStorage.getItem("coordenadorState") && sessionStorage.getItem("tokenCoordenador")) {
+      if (sessionStorage.getItem("tokenCoordenador")) {
         this.$router.push({name: 'dashboardC'})
       }
-      if (localStorage.getItem("professorState") && sessionStorage.getItem("tokenProfessor")) {
+      if (sessionStorage.getItem("tokenProfessor")) {
         this.$router.push({name: 'vercadeiras'})
       }
-      if (localStorage.getItem("alunoState") && sessionStorage.getItem("tokenAluno")) {
+      if (sessionStorage.getItem("tokenAluno")) {
         this.$router.push({name: 'paginainicial'})
       }
     },
