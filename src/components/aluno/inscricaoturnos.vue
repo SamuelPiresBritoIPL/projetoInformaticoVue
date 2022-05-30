@@ -125,7 +125,9 @@ export default {
       buttonBlockArray: [],
       noInscricoes: false,
       myUCsIds: [],
-      noButtonSelectedMsgs: true
+      noButtonSelectedMsgs: true,
+      added: [],
+      removed: []
     };
   },
   sockets: {
@@ -227,7 +229,29 @@ export default {
           console.log(error);
         });
     },
+    updateVagasTurnos(){
+      Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs) => {
+        inscricaoucs.forEach((cadeira) => {
+          Object.values(cadeira.cadeira.turnos).forEach((turno) => {
+            turno.forEach((turnotipo, index) => {
+              this.added.forEach(turnoAdded => {
+                if (turnotipo.id == turnoAdded) {
+                  turnotipo["vagasocupadas"] += 1
+                }
+              });
+              this.removed.forEach(turnoRemoved => {
+                if (turnotipo.id == turnoRemoved) {
+                  turnotipo["vagasocupadas"] -= 1
+                }
+              });
+            })
+          })
+        });
+      })
+    },
     submitInscricao(){
+      this.added = null
+      this.removed = null
       this.turnosRejeitados = null
       console.log(this.arrayVmodel)
       this.arrayVmodel.forEach((cadeira) => {
@@ -260,6 +284,13 @@ export default {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data.rejeitados
             }
+            if (response.data.updatedTurnos.added) {
+              this.added = response.data.updatedTurnos.added
+            }
+            if (response.data.updatedTurnos.removed) {
+              this.removed = response.data.updatedTurnos.removed
+            }
+            this.updateVagasTurnos()
             this.$socket.emit("newInscricao", response.data.idsCadeiras);
             this.allTurnosIds = []
         })
