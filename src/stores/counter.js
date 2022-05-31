@@ -15,6 +15,7 @@ export const useCounterStore = defineStore({
     tipoTurnoCurso: [],
     turnoToManage: null,
     aberturasByCourse: [],
+    aberturasByCourseDeleted: [],
     yearsCourse: [],
     pedidosByCourse: [],
     aberturaConfirmacaoTodos: [],
@@ -95,7 +96,9 @@ export const useCounterStore = defineStore({
     async getAberturasByCourse(courseId){
       try {
         let response = await axios.get("curso/aberturas/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
-        this.aberturasByCourse = response.data;
+        this.aberturasByCourse = response.data.aberturasAtivas
+        this.aberturasByCourseDeleted = response.data.aberturasDeleted
+        console.log(this.aberturasByCourseDeleted)
         this.yearsCourse = []
         for (let i = 0; i <= this.aberturasByCourse.totalanos; i++) {
           this.yearsCourse.push(i)
@@ -137,8 +140,6 @@ export const useCounterStore = defineStore({
             }
           });
         }
-        console.log(this.aberturaInscricaoTodos)
-        console.log(this.aberturasByCourse)
       } catch {
         console.log(error.response);
         throw error
