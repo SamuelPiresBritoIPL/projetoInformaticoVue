@@ -4,7 +4,7 @@
         <div class="col-md-3" style="padding-left: 0px;">
             <nav>
                 <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-container" style="width: 280px; min-height: 100vh;">
-                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
+                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left: 75px;">
                         <span class="fs-4" style="text-align:center;">Professor</span>
                     </a>
                     <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
@@ -15,11 +15,6 @@
                         <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
                         {{ anoletivo.anoletivo }}
                         </option>
-                    </select>
-                    <label>Semestre:</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre">
-                        <option value="1">1</option>
-                        <option value="2">2</option>
                     </select>
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
