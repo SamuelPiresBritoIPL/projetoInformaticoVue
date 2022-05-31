@@ -178,6 +178,40 @@
         </div>
       </div>
     </div>
+    <br>
+    <div class="accordion" id="accordionExample" v-if="this.counterStore.aberturasByCourse.nome != null && this.counterStore.aberturasByCourseDeleted.length > 0">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="headingTwo">
+          <button class="accordion-button" :class="{collapsed:this.collapsed}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed" aria-controls="collapseTwo" @click="this.collapsed = (!this.collapsed)" >
+            Periodos fechados
+          </button>
+        </h2>
+        <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+          <div class="card-body">
+            <table class="table" style="text-align: left;">
+              <thead>
+                <tr>
+                  <th scope="col">Ano</th>
+                  <th scope="col">Tipo</th>
+                  <th scope="col">Data abertura</th>
+                  <th scope="col">Data Encerar</th>
+                  <th scope="col">Apagada</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tableRow" v-for="aber in this.counterStore.aberturasByCourseDeleted" :key="aber">
+                  <td>{{ aber.ano == 0 ? "Todos" : aber.ano + "º"}}</td>
+                  <td>{{ aber.tipoAbertura == 0 ? "Confirmação" : "Inscrição"}}</td>
+                  <td>{{ aber.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}</td>
+                  <td>{{ aber.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}</td>
+                  <td>{{ aber.deleted_at.replace('.000000Z', '').replace('T', ' ') }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>    
 </template>
 
@@ -206,6 +240,7 @@ export default {
       aberturaToEdit: null,
       errorIniciarPC: null,
       msgErrorTurnos: null,
+      collapsed: true,
     };
   },
   computed: {
