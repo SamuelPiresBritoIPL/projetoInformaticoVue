@@ -235,13 +235,13 @@ export default {
       }
       if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
         this.getCadeiraInfo()
-        if(this.activeTurno.length == 0){
+        //if(this.activeTurno.length == 0){
           if(this.counterStore.turnoToManage == null){
             this.getStats()
           }else{
             this.getStatsTurno()
           }
-        }
+        //}
         return true
       } 
       return false
@@ -307,7 +307,6 @@ export default {
           this.activeTurno.forEach((value, index) => {
               this.activeTurno[index] = false
           });
-          console.log(this.activeTurno)
           this.activeTurno[0] = true;
           this.counterStore.turnoToManage = null
           this.turno = null
@@ -351,12 +350,10 @@ export default {
             element.valor = null;
           });
           this.activeTurno.splice(0)
-          this.activeTurno.push(false)
+          this.activeTurno.push(true)
           this.cadeira.turnos.forEach((value, index) => {
               this.activeTurno.push(false)
           });
-          console.log(this.cadeira.turnos)
-          console.log(this.activeTurno)
         })
         .catch((error) => {
           console.log(error.response);
