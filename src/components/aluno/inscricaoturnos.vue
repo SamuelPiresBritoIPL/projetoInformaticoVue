@@ -252,6 +252,7 @@ export default {
       this.added = null
       this.removed = null
       this.turnosRejeitados = null
+      this.showTurnosRejeitados = false
       console.log(this.arrayVmodel)
       this.arrayVmodel.forEach((cadeira) => {
         if (cadeira.TP != undefined) {
