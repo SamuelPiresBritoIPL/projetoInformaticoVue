@@ -105,13 +105,11 @@ export default {
   },
   computed: {
     hasValue(){
+      if(this.activeTurno.length > 0){
+        return true
+      }
       if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
         this.getCadeiraInfo()
-        if(this.counterStore.turnoToManage == null){
-          this.getStats()
-        }else{
-          this.getStatsTurno()
-        }
         return true
       } 
       return false
@@ -176,6 +174,12 @@ export default {
         })
         .catch((error) => {
           console.log(error.response)
+        }).finally(() => {
+          if(this.counterStore.turnoToManage == null){
+            this.getStats()
+          }else{
+            this.getStatsTurno()
+          }
         });
     },
     downloadExcel(){
