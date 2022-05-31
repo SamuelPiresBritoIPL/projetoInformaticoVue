@@ -79,9 +79,11 @@
                       </div>
                     </div>
                   </div>
-                  <div v-if="!buttonArray[index] && noButtonSelectedMsgs && filterInscricoesInscritas(index).length > 0" style="text-align: center; margin-bottom: 35px;">
+                  <div v-if="!buttonArray[index] && noButtonSelectedMsgs && this.isncricoesAtuais[index] !== undefined" style="text-align: center; margin-bottom: 35px;">
                     <h5>Turnos atualmente inscritos: </h5>
-                    <p v-for="(inscricao) in filterInscricoesInscritas(index)" :key="inscricao.id">{{inscricao.nome + (inscricao.ano ? " (" + inscricao.ano + "º ano): " : "") + inscricao.tipo + inscricao.numero}}</p>
+                    <p v-for="(inscricao) in this.isncricoesAtuais[index]" :key="inscricao">{{inscricao["nome"] + (inscricao["ano"] ? " (" + inscricao["ano"] + "º ano): " : "")}}
+                      <span v-for="(ins) in inscricao['turnos']" :key="ins"> {{ins.tipo + (ins.numero == 0 ? "" : ins.numero) + "    "}}</span>
+                    </p>
                   </div>
                 </div>
                 <div v-if="showTurnosRejeitados == true" style="color: red">
@@ -116,6 +118,7 @@ export default {
       cadeirasWithTurnosPorCurso: [],
       cadeirasWithTurnosPorCursoWebSocket: [],
       isncricoes: [],
+      isncricoesAtuais: [],
       aberturas: [],
       arrayVmodel: [],
       allTurnosIds: [],
@@ -158,11 +161,6 @@ export default {
         this.arrayVmodel[cadeiraIndex][index] = []
       }
     },
-    filterInscricoesInscritas (idCurso) {
-      return this.inscricoes.filter( inscricao => {
-          return inscricao.idCurso == idCurso
-      })
-    },
     clearRadios(){
       for (let i = 0; i < this.arrayVmodel.length; i++) {
         this.arrayVmodel[i] = []
@@ -175,6 +173,7 @@ export default {
         .then((response) => {
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
+          this.isncricoesAtuais = response.data.inscricoesTurnosAtuais
           this.aberturas = response.data.aberturas
           Object.values(this.cadeirasWithTurnosPorCurso).forEach((inscricaoucs, index3) => {
             inscricaoucs.forEach((cadeira, cadeiraIndex) => {
@@ -284,6 +283,7 @@ export default {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data.rejeitados
             }
+            this.isncricoesAtuais = response.data.inscricoesTurnosAtuais
             if (response.data.updatedTurnos.added) {
               this.added = response.data.updatedTurnos.added
             }
