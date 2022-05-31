@@ -247,7 +247,7 @@ export default {
       return false
     },
     filteredArray() {
-      if(this.cadeira.turnos){
+      if(this.cadeira){
         return this.cadeira.turnos.filter(turno => turno.id != this.turno.id);
       }
       return []
@@ -307,6 +307,7 @@ export default {
           this.activeTurno.forEach((value, index) => {
               this.activeTurno[index] = false
           });
+          console.log(this.activeTurno)
           this.activeTurno[0] = true;
           this.counterStore.turnoToManage = null
           this.turno = null
@@ -324,6 +325,7 @@ export default {
           this.totalnaoinscritos = response.data.totalnaoinscritos
           this.dadosInscritos = response.data.alunos
           this.turno = response.data.turno
+          console.log(this.cadeira.turnos)
           this.cadeira.turnos.forEach((value, index) => {
             if(value.id == turnoid){
               this.nrvagasturno = value.vagastotal
@@ -353,6 +355,8 @@ export default {
           this.cadeira.turnos.forEach((value, index) => {
               this.activeTurno.push(false)
           });
+          console.log(this.cadeira.turnos)
+          console.log(this.activeTurno)
         })
         .catch((error) => {
           console.log(error.response);
