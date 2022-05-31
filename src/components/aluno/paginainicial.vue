@@ -29,7 +29,7 @@
                 O periodo de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
               </div>
               <div v-if="isPedidosOpen && Object.keys(infoPedidos).length > 0" class="alert alert-success" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 15px;">
-                O periodo de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
+                O periodo de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
               </div>
               <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonUnidadesCurriculares()">Unidades Currículares</button>
             </div>
