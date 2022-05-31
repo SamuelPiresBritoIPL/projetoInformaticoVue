@@ -283,7 +283,10 @@ export default {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data.rejeitados
             }
-            this.isncricoesAtuais = response.data.inscricoesTurnosAtuais
+            if(response.data.inscricoesTurnosAtuais){
+              this.isncricoesAtuais = response.data.inscricoesTurnosAtuais
+            }
+            
             if (response.data.updatedTurnos.added) {
               this.added = response.data.updatedTurnos.added
             }

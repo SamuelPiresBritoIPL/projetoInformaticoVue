@@ -247,7 +247,10 @@ export default {
       return false
     },
     filteredArray() {
-      return this.cadeira.turnos.filter(turno => turno.id != this.turno.id);
+      if(this.cadeira.turnos){
+        return this.cadeira.turnos.filter(turno => turno.id != this.turno.id);
+      }
+      return []
     },
     hasErroraddAlunoTurno(){
       if (this.errors != null && this.errors.addAlunoTurno != null) {
