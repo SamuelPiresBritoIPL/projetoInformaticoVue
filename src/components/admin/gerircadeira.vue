@@ -235,13 +235,6 @@ export default {
       }
       if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
         this.getCadeiraInfo()
-        //if(this.activeTurno.length == 0){
-          if(this.counterStore.turnoToManage == null){
-            this.getStats()
-          }else{
-            this.getStatsTurno()
-          }
-        //}
         return true
       } 
       return false
@@ -324,7 +317,6 @@ export default {
           this.totalnaoinscritos = response.data.totalnaoinscritos
           this.dadosInscritos = response.data.alunos
           this.turno = response.data.turno
-          console.log(this.cadeira.turnos)
           this.cadeira.turnos.forEach((value, index) => {
             if(value.id == turnoid){
               this.nrvagasturno = value.vagastotal
@@ -357,6 +349,12 @@ export default {
         })
         .catch((error) => {
           console.log(error.response);
+        }).finally(() => {
+          if(this.counterStore.turnoToManage == null){
+            this.getStats()
+          }else{
+            this.getStatsTurno()
+          }
         });
     },
     addStudentToUC(){
