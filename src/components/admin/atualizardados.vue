@@ -205,12 +205,18 @@ export default {
      updateAnoletivoAtivo(anoletivo, semestre){
       this.loading[3] = true
       this.blocked = true
+      if (anoletivo == null) {
+        this.$toast.error("Tem de selecionar o ano letivo.");
+        return
+      }
       this.$axios.put("anoletivo/" + anoletivo, {
             "semestre": semestre
           })
         .then((response) => {
           this.counterStore.getAnosLetivos()
           this.$toast.success("Dados atualizados");
+          this.counterStore.selectedAnoletivo = anoletivo
+          this.counterStore.semestre = semestre
           this.anoletivoativo = null
           this.semestreativo = 1
         })
