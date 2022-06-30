@@ -38,7 +38,7 @@ export const useCounterStore = defineStore({
       try {
         let response = await axios.get("anoletivo")
         this.anosletivos = response.data
-        return response.data;
+        return response.data; 
       } catch (error) {
         console.log(error.response)
         throw error
