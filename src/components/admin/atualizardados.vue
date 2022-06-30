@@ -144,8 +144,57 @@
         <br>
         <div class="card">
           <div class="card-body">
+            <h5 class="card-title">Atualizar horários dos turnos</h5>
+            <p class="card-text">Selecione o ano letivo, datas de início e fim de semestre e o curso para o qual pretende atualizar os horários</p>
+            <div class="card-body ">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="anoletivoativo">
+                  <option v-for="anoletivo in this.counterStore.anosletivos" :key="anoletivo.id" v-bind:value="anoletivo.id">
+                  {{anoletivo.anoletivo + (anoletivo.ativo == 1 ? " => Ativo (" + anoletivo.semestreativo + "º Semestre)" : "")}}
+                  </option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail3" class="form-label">Data de início de semestre:</label>
+                <div>
+                  <input type="date" class="form-control" v-model="dataInicioSemestre">
+                  <!-- <div v-if="hasErrorDataAbertura" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                  </div> -->
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="inputEmail3" class="form-label">Data de fim de semestre:</label>
+                <div>
+                  <input type="date" class="form-control" v-model="dataFimSemestre">
+                  <!-- <div v-if="hasErrorDataAbertura" class="errorMessages">
+                    <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                  </div> -->
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Curso</label>
+                <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                  <option value="0">Todos</option>
+                  <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                  {{ "["+course.codigo+"] "+course.nome }}
+                  </option>
+                </select>
+              </div>
+              <button :disabled='blocked' class="btn btn-primary" @click="updateHorariosTurnos(anoletivoativo, dataInicioSemestre, dataFimSemestre, selectedCourse)">
+                  <span v-if="loading[5]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <br>
+        <div class="card">
+          <div class="card-body">
             <h5 class="card-title">Alterar ano letivo/semestre em vigor</h5>
-            <p class="card-text">Selecione o ano letivo e o semestre para por os mesmo em vigor.</p>
+            <p class="card-text">Selecione o ano letivo e o semestre a colocar em vigor.</p>
             <div class="card-body ">
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
@@ -187,7 +236,7 @@ export default {
   },
   data() {
     return {
-        loading: [false,false,false,false,false],
+        loading: [false,false,false,false,false,false],
         blocked: false,
         anoletivocurso: null,
         semestrecurso: 1,
@@ -203,7 +252,10 @@ export default {
         urlcursos: "",
         urlinscricoes: "",
         urlaulas: "",
-        selectedCourse: 0
+        selectedCourse: 0,
+        dataInicioSemestre: null,
+        dataFimSemestre: null
+
     };
   },
    methods: {
@@ -323,6 +375,26 @@ export default {
           this.blocked = false
         });
     },
+    updateHorariosTurnos(anoletivoativo, dataInicioSemestre, dataFimSemestre, selectedCourse){
+      this.loading[5] = true
+      this.blocked = true
+      this.$axios.post("webservice/aulas", {
+            "dataInicio": dataInicioSemestre,
+            "dataFim": dataFimSemestre,
+            "idAnoletivo": anoletivoativo,
+            "idcurso": selectedCourse
+          })
+        .then((response) => {
+          console.log(response)
+          this.$toast.success("Dados dos horários atualizados");
+        })
+        .catch((error) => {
+          this.$toast.error(error);
+        }).finally(() => {
+          this.loading[5] = false
+          this.blocked = false
+        });
+    }
   },
   mounted() {
     this.counterStore.getAnosLetivos()
