@@ -7,15 +7,19 @@
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Atualizar os endpoints</h5>
-            <p class="card-text">Os endpoints tem de terminar com "?" de forma a serem automaticamente colocados com o ano letivo e semestre</p>
+            <p class="card-text">Os endpoints tem de terminar com "?" de forma a serem automaticamente colocados com o ano letivo, o semestre e o resto dos dados necessários</p>
             <div class="card-body ">
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Url cursos/turnos</label>
-                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url cursos (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/turnos.php? )" v-model="urlcursos">
+                <label for="exampleFormControlInpu0" class="form-label">Url cursos/turnos</label>
+                <input type="text" class="form-control" id="exampleFormControlInpu0" placeholder="Url cursos (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/turnos.php? )" v-model="urlcursos">
               </div>
               <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Url inscrições</label>
-                <input type="text" class="form-control" id="exampleFormControlInput0" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php? )" v-model="urlinscricoes">
+                <label for="exampleFormControlInpu1" class="form-label">Url inscrições</label>
+                <input type="text" class="form-control" id="exampleFormControlInpu1" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/inscricoes_cursos.php? )" v-model="urlinscricoes">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlInpu3" class="form-label">Url aulas</label>
+                <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="Url inscrições (ex: http://www.dei.estg.ipleiria.pt/intranet/horarios/ws/inscricoes/listagem_aulas_json.php? )" v-model="urlaulas">
               </div>
               <button :disabled='blocked' class="btn btn-primary" @click="updateUrls()">
                   <span aria-hidden="true"></span> Atualizar url's
@@ -198,6 +202,7 @@ export default {
         anosletivos: [],
         urlcursos: "",
         urlinscricoes: "",
+        urlaulas: "",
         selectedCourse: 0
     };
   },
@@ -272,7 +277,8 @@ export default {
     updateUrls(){
       this.$axios.put("webservice/url", {
             "urlturnos": this.urlcursos,
-            "urlinscricoes": this.urlinscricoes
+            "urlinscricoes": this.urlinscricoes,
+            "urlaulas": this.urlaulas
           })
         .then((response) => {
           this.$toast.success("Dados atualizados");
@@ -287,7 +293,7 @@ export default {
           console.log(response.data);
           this.urlcursos = response.data.urlturnos;
           this.urlinscricoes = response.data.urlinscricoes;
-          console.log(this.urlinscricoes)
+          this.urlaulas = response.data.urlaulas;
         })
         .catch((error) => {
           console.log(error.response);
