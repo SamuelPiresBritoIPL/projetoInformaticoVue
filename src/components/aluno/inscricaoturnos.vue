@@ -96,6 +96,17 @@
                     </div>
                   </div>
                   <hr>
+                </div>
+                <div v-if="showTurnosCoicidem == true" style="color: red">
+                  <hr>
+                  <div>Turnos que coicidem:
+                    <div v-for="turnoCoicide in turnosCoicidem" :key="turnoCoicide">
+                      <small>
+                        {{turnoCoicide}}
+                      </small> 
+                    </div>
+                  </div>
+                  <hr>
                 </div> 
               </div>
             </div>  
@@ -124,6 +135,8 @@ export default {
       allTurnosIds: [],
       showTurnosRejeitados: false,
       turnosRejeitados: [],
+      showTurnosCoicidem: false,
+      turnosCoicidem: [],
       showInscricaoForm: false,
       buttonArray: [],
       buttonBlockArray: [],
@@ -252,6 +265,8 @@ export default {
       this.removed = null
       this.turnosRejeitados = null
       this.showTurnosRejeitados = false
+      this.turnosCoicidem = null
+      this.showTurnosCoicidem = false
       console.log(this.arrayVmodel)
       this.arrayVmodel.forEach((cadeira) => {
         if (cadeira.TP != undefined) {
@@ -292,6 +307,10 @@ export default {
             }
             if (response.data.updatedTurnos.removed) {
               this.removed = response.data.updatedTurnos.removed
+            }
+            if (response.data.coicidem) {
+              this.showTurnosCoicidem = true
+              this.turnosCoicidem = response.data.coicidem
             }
             this.updateVagasTurnos()
             this.$socket.emit("newInscricao", response.data.updatedTurnos);
