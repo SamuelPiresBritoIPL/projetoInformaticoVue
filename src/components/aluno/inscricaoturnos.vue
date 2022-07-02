@@ -360,7 +360,7 @@ export default {
           this.allTurnosIds = this.allTurnosIds.concat(cadeira.OT)
         }   
       });
-      this.$axios.post("cadeirasaluno/inscricao", {
+      this.$axios.post("cadeirasaluno/sobreposicoes", {
             "idUtilizador": this.counterStore.utilizadorLogado.id,
             "turnosIds": this.allTurnosIds
           })
@@ -369,11 +369,9 @@ export default {
               this.showTurnosCoicidem = true
               this.turnosCoicidem = response.data.coicidem
             }
-            this.updateVagasTurnos()
             this.allTurnosIds = []
         })
         .catch((error) => {
-          this.$toast.error("Não foi possível inscrever! " + error.response.data);
           this.allTurnosIds = []
         });
     }
