@@ -76,6 +76,9 @@
                           <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
                           <button type="button" class="btn btn-link" style="margin-top: 10px; float: right!important" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
                         </div>
+                        <div style="text-align: center;">
+                          <button type="button" class="btn btn-link" style="" @click="getSobreposicoes()">Verificar sobreposição de horário</button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -100,11 +103,24 @@
                 <div v-if="showTurnosCoicidem == true" style="color: red">
                   <hr>
                   <div>Turnos que coicidem:
-                    <div v-for="turnoCoicide in turnosCoicidem" :key="turnoCoicide">
-                      <small>
-                        {{turnoCoicide}}
-                      </small> 
-                    </div>
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col-md-1">Nr de semanas</th>
+                          <th scope="col-md-2">Dia da semana</th>
+                          <th scope="col">Unidade curricular</th>
+                          <th scope="col">Unidade curricular</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for="turnoCoicide in turnosCoicidem" :key="turnoCoicide">
+                          <td scope="col-md-1">{{turnoCoicide[0]}}</td>
+                          <td scope="col-md-2">{{turnoCoicide[1]}}</td>
+                          <td>{{turnoCoicide[2]}}</td>
+                          <td>{{turnoCoicide[3]}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
                   </div>
                   <hr>
                 </div> 
@@ -308,12 +324,52 @@ export default {
             if (response.data.updatedTurnos.removed) {
               this.removed = response.data.updatedTurnos.removed
             }
-            if (response.data.coicidem) {
+            if (response.data.coicidem.length > 0) {
               this.showTurnosCoicidem = true
               this.turnosCoicidem = response.data.coicidem
             }
             this.updateVagasTurnos()
             this.$socket.emit("newInscricao", response.data.updatedTurnos);
+            this.allTurnosIds = []
+        })
+        .catch((error) => {
+          this.$toast.error("Não foi possível inscrever! " + error.response.data);
+          this.allTurnosIds = []
+        });
+    },
+    getSobreposicoes(){
+      this.turnosCoicidem = null
+      this.showTurnosCoicidem = false
+      this.arrayVmodel.forEach((cadeira) => {
+        if (cadeira.TP != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.TP)
+        }
+        if (cadeira.PL != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.PL)
+        }
+        if (cadeira.T != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.T)  
+        }
+        if (cadeira.P != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.P)
+        }
+        if (cadeira.E != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.E)
+        }
+        if (cadeira.OT != undefined) {
+          this.allTurnosIds = this.allTurnosIds.concat(cadeira.OT)
+        }   
+      });
+      this.$axios.post("cadeirasaluno/inscricao", {
+            "idUtilizador": this.counterStore.utilizadorLogado.id,
+            "turnosIds": this.allTurnosIds
+          })
+        .then((response) => {
+            if (response.data.coicidem.length > 0) {
+              this.showTurnosCoicidem = true
+              this.turnosCoicidem = response.data.coicidem
+            }
+            this.updateVagasTurnos()
             this.allTurnosIds = []
         })
         .catch((error) => {
