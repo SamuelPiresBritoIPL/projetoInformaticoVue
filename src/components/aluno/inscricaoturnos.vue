@@ -1,4 +1,19 @@
 <template>
+  <GDialog v-model="dialogState">
+    <div class="wrapper">
+      <div class="content">
+        <div style="text-align:right"><button class="btn btn--outline-gray" style="text-align:center" @click="dialogState = false"><BootstrapIcon style="margin-right: 15px" icon="x-lg"/> Fechar</button></div>
+        <div class="title" style="text-align:center">Horários todos os turnos</div>
+        <p>Horários dos turnos para as uc's que está inscrito</p>
+        <vue-cal locale="pt-br" :selected-date="dataInicialHorario" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horario">
+          <template v-slot:event="{ event }">
+            <div class="vuecal__event-title" v-html="event.title" />
+            <div class="vuecal__event-content" v-html="event.content" />
+          </template>
+        </vue-cal>
+      </div>
+    </div>
+  </GDialog>
     <div class="container-fluid">
         <div class="row">
           <div class="col-md-1">
@@ -78,6 +93,7 @@
                         </div>
                         <div style="text-align: center;">
                           <button type="button" class="btn btn-link" style="" @click="getSobreposicoes()">Verificar sobreposição de horário</button>
+                          <button type="button" class="btn btn-link" @click="dialogState = true">Ver horários disponiveis</button>
                         </div>
                       </div>
                     </div>
@@ -88,6 +104,16 @@
                       <span v-for="(ins) in inscricao['turnos']" :key="ins"> {{ins.tipo + (ins.numero == 0 ? "" : ins.numero) + "    "}}</span>
                     </p>
                   </div>
+                </div>
+                <div v-if="dataInicialHorariopessoal != null" >
+                  <hr>
+                    <vue-cal  locale="pt-br" :selected-date="dataInicialHorariopessoal" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horariopessoal">
+                      <template v-slot:event="{ event }">
+                        <div class="vuecal__event-title" v-html="event.title" />
+                        <div class="vuecal__event-content" v-html="event.content" />
+                      </template>
+                    </vue-cal>
+                  <hr>
                 </div>
                 <div v-if="showTurnosRejeitados == true" style="color: red">
                   <hr>
@@ -133,9 +159,11 @@
 
 <script>
 import { useCounterStore } from "../../stores/counter"
+import { defineComponent } from 'vue'
+
 export default {
   name: "InscricaoTurnos",
-  component: {},
+  component: {defineComponent},
   setup() {
     const counterStore = useCounterStore()
     return { counterStore }
@@ -160,7 +188,12 @@ export default {
       myUCsIds: [],
       noButtonSelectedMsgs: true,
       added: [],
-      removed: []
+      removed: [],
+      dialogState: false,
+      horario: [],
+      dataInicialHorario: null,
+      horariopessoal: [],
+      dataInicialHorariopessoal: null
     };
   },
   sockets: {
@@ -200,6 +233,14 @@ export default {
     getCadeirasWithTurnos(){
       this.$axios.get("cadeirasaluno/utilizador")
         .then((response) => {
+          if(response.data.horario.horario.length > 0){
+            this.horario = response.data.horario.horario
+            this.dataInicialHorario = response.data.horario.data
+          }
+          if(response.data.horariopessoal.horario.length > 0){
+            this.horariopessoal = response.data.horariopessoal.horario
+            this.dataInicialHorariopessoal = response.data.horariopessoal.data
+          }
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
           this.isncricoesAtuais = response.data.inscricoesTurnosAtuais
@@ -209,7 +250,6 @@ export default {
               this.buttonArray[cadeira.idCurso] = false
               this.arrayVmodel.push([])
               this.myUCsIds.push(cadeira.id)
-              console.log(this.myUCsIds)
               Object.values(cadeira.cadeira.turnos).forEach((turno, index) => {
                 turno.forEach((turnotipo, index2) => {
                   this.inscricoes.forEach((inscricao) => {
@@ -222,10 +262,8 @@ export default {
             });
           })
           this.noInscricoes = true
-          console.log(this.cadeirasWithTurnosPorCurso)
         })
         .catch((error) => {
-          console.log(error);
         });
     },
     getCadeirasWithTurnosWebSocket(){
@@ -253,7 +291,6 @@ export default {
           })
         })
         .catch((error) => {
-          console.log(error);
         });
     },
     updateVagasTurnos(){
@@ -283,7 +320,6 @@ export default {
       this.showTurnosRejeitados = false
       this.turnosCoicidem = null
       this.showTurnosCoicidem = false
-      console.log(this.arrayVmodel)
       this.arrayVmodel.forEach((cadeira) => {
         if (cadeira.TP != undefined) {
           this.allTurnosIds = this.allTurnosIds.concat(cadeira.TP)
@@ -323,6 +359,10 @@ export default {
             }
             if (response.data.updatedTurnos.removed) {
               this.removed = response.data.updatedTurnos.removed
+            }
+            if(response.data.horariopessoal.horario.length > 0){
+              this.horariopessoal = response.data.horariopessoal.horario
+              this.dataInicialHorariopessoal = response.data.horariopessoal.data
             }
             if (response.data.coicidem.length > 0) {
               this.showTurnosCoicidem = true
@@ -365,6 +405,10 @@ export default {
             "turnosIds": this.allTurnosIds
           })
         .then((response) => {
+            if(response.data.horariopessoal.horario.length > 0){
+              this.horariopessoal = response.data.horariopessoal.horario
+              this.dataInicialHorariopessoal = response.data.horariopessoal.data
+            }
             if (response.data.coicidem.length > 0) {
               this.showTurnosCoicidem = true
               this.turnosCoicidem = response.data.coicidem
@@ -386,4 +430,35 @@ export default {
 .redcolor {
   color:red;
 }
+.wrapper {
+  color: #000;
+}
+
+.content {
+  padding: 20px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.vuecal__event-title {
+  font-size: 1em;
+  font-weight: bold;
+}
+.vuecal__cell-content {
+  justify-content: flex-start;
+  height: 100%;
+  align-items: flex-end;
+}
+.vuecal__event {background-color: rgba(228,238,247, 0.7) !important;border: .5px solid rgb(50,50,255);color: #fff; border-radius: 5px 5px 5px 5px;}
+.vuecal__no-event {display: none;}
 </style>

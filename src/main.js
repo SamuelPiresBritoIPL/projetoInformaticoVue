@@ -32,6 +32,14 @@ import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 /* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+import 'gitart-vue-dialog/dist/style.css'
+import { GDialog } from 'gitart-vue-dialog'
+import { plugin as dialogPlugin } from 'gitart-vue-dialog'
+import VueCal from 'vue-cal'
+import vuecalptbr from 'vue-cal/dist/i18n/pt-br.js'
+import vuecalcss from 'vue-cal/dist/vuecal.css'
+
+
 library.add(faUserSecret)
 
 const app = createApp(App)
@@ -45,8 +53,13 @@ app.use(createPinia())
 app.use(router)
 app.use(bootstrap)
 app.use(vueselect)
+app.use(vuecalptbr)
+app.use(vuecalcss)
 app.component('BootstrapIcon', BootstrapIcon)
 app.component('v-select', vSelect)
+app.component('GDialog', GDialog)
+app.component('vue-cal', VueCal)
+app.use(dialogPlugin)
 app.use(Toaster, toastOptions)
 app.use(socketIO)
 
