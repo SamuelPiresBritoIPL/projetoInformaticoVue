@@ -7,8 +7,8 @@
         <p>Horários dos turnos para as uc's que está inscrito</p>
         <vue-cal locale="pt-br" :selected-date="dataInicialHorario" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horario">
           <template v-slot:event="{ event }">
-            <div class="vuecal__event-title" v-html="event.title" />
-            <div class="vuecal__event-content" v-html="event.content" />
+            <div class="vuecal__event-title" style="color:#666666;!important" v-html="event.title" />
+            <div class="vuecal__event-content" style="color:#666666;!important" v-html="event.content" />
           </template>
         </vue-cal>
       </div>
@@ -149,8 +149,8 @@
                   <p style="text-align: center;font-size: 0.8em;">*Este horário poderá conter algum erro ou sofrer alterações*</p>
                     <vue-cal  locale="pt-br" :selected-date="dataInicialHorariopessoal" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horariopessoal">
                       <template v-slot:event="{ event }">
-                        <div class="vuecal__event-title" v-html="event.title" />
-                        <div class="vuecal__event-content" v-html="event.content" />
+                        <div class="vuecal__event-title" style="color:#666666;!important" v-html="event.title" />
+                        <div class="vuecal__event-content" style="color:#666666;!important" v-html="event.content" />
                       </template>
                     </vue-cal>
                   <hr>
