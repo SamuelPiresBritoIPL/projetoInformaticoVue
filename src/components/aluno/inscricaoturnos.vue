@@ -108,7 +108,7 @@
                     </p>
                   </div>
                 </div>
-                 <div v-if="showTurnosRejeitados == true" style="color: red">
+                 <div v-if="showTurnosRejeitados == true && !(this.buttonArray.length > 0 && hasButtonSelected)" style="color: red">
                   <hr>
                   <div>Turnos Rejeitados por falta de Vagas:
                     <div v-for="turnoRejeitado in turnosRejeitados" :key="turnoRejeitado">
@@ -119,7 +119,7 @@
                   </div>
                   <hr>
                 </div>
-                <div v-if="showTurnosCoicidem == true" style="color: red">
+                <div v-if="showTurnosCoicidem == true && !(this.buttonArray.length > 0 && hasButtonSelected)" style="color: red">
                   <hr>
                   <div>Turnos que coincidem:
                     <table class="table">
@@ -355,6 +355,7 @@ export default {
           })
         .then((response) => {
             this.$toast.success("Inscrição feita com sucesso");
+            console.log(response);
             if (response.data.rejeitados && response.data != 201) {
               this.showTurnosRejeitados = true
               this.turnosRejeitados = response.data.rejeitados
