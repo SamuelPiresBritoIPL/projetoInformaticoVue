@@ -47,9 +47,11 @@
                     <div v-for="aberturaCurso in aberturas" :key="aberturaCurso" style="text-align: center;">
                       <div v-if="(aberturaCurso[0].idCurso == index && noButtonSelectedMsgs) || (aberturaCurso[0].idCurso == index && buttonArray[index])">
                         <h4 style="margin-bottom: 15px;">{{ "["+aberturaCurso[0].codigo+"] "+aberturaCurso[0].nome }}</h4>
-                        <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" class="alert alert-success" role="alert">
-                          O periodo de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ aberturaAno.ano == 0 ? "todos os anos " : "o ano "+aberturaAno.ano }}</b> até a <b>{{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})
-                        </div>
+                        <span v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso">
+                          <div v-if="this.buttonArray.length > 0 && hasButtonSelected" class="alert alert-success" role="alert">
+                            O periodo de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ aberturaAno.ano == 0 ? "todos os anos " : "o ano "+aberturaAno.ano }}</b> até a <b>{{ aberturaAno.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdiatermino ? "falta "+aberturaAno.diasAteTerminar : (aberturaAno.diasAteTerminar == 1 ? "falta " + aberturaAno.diasAteTerminar + " dia." : "faltam " + aberturaAno.diasAteTerminar + " dias.") }})
+                          </div>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -85,15 +87,16 @@
                             </label>
                           </div>
                         </div>
-                        <div style="margin-top: 20px; text-align: center;">
-                          <button type="button" style="margin-right: 10px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
-                          <button type="button" style="margin-right: 10px;" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
-                          <button v-if="buttonArray[index]" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
-                          <button type="button" class="btn btn-link" style="margin-top: 10px; float: right!important" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
+                        <div style="margin-top: 20px; text-align: right;">
+                          <button v-if="buttonArray[index]" style="float: left!important" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
+                          <button type="button" style="margin-right: 10px;float: right!important" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
+                          <button type="button" style="margin-right: 10px;float: right!important" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
                         </div>
-                        <div style="text-align: center;">
+                        <br>
+                        <div style="margin-top: 20px; text-align: center;">
                           <button type="button" class="btn btn-link" style="" @click="getSobreposicoes()">Verificar sobreposição de horário</button>
                           <button type="button" class="btn btn-link" @click="dialogState = true">Ver horários disponiveis</button>
+                          <button type="button" class="btn btn-link" style="float: right!important" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
                         </div>
                       </div>
                     </div>
@@ -105,17 +108,7 @@
                     </p>
                   </div>
                 </div>
-                <div v-if="dataInicialHorariopessoal != null" >
-                  <hr>
-                    <vue-cal  locale="pt-br" :selected-date="dataInicialHorariopessoal" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horariopessoal">
-                      <template v-slot:event="{ event }">
-                        <div class="vuecal__event-title" v-html="event.title" />
-                        <div class="vuecal__event-content" v-html="event.content" />
-                      </template>
-                    </vue-cal>
-                  <hr>
-                </div>
-                <div v-if="showTurnosRejeitados == true" style="color: red">
+                 <div v-if="showTurnosRejeitados == true" style="color: red">
                   <hr>
                   <div>Turnos Rejeitados por falta de Vagas:
                     <div v-for="turnoRejeitado in turnosRejeitados" :key="turnoRejeitado">
@@ -128,7 +121,7 @@
                 </div>
                 <div v-if="showTurnosCoicidem == true" style="color: red">
                   <hr>
-                  <div>Turnos que coicidem:
+                  <div>Turnos que coincidem:
                     <table class="table">
                       <thead>
                         <tr>
@@ -150,6 +143,18 @@
                   </div>
                   <hr>
                 </div> 
+                <div id="app" v-if="dataInicialHorariopessoal != null" >
+                  <hr>
+                  <h4 ref="horariopessoalref" style="text-align: center;">Horário pessoal</h4>
+                  <p style="text-align: center;font-size: 0.8em;">*Este horário poderá conter algum erro ou sofrer alterações*</p>
+                    <vue-cal  locale="pt-br" :selected-date="dataInicialHorariopessoal" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horariopessoal">
+                      <template v-slot:event="{ event }">
+                        <div class="vuecal__event-title" v-html="event.title" />
+                        <div class="vuecal__event-content" v-html="event.content" />
+                      </template>
+                    </vue-cal>
+                  <hr>
+                </div>
               </div>
             </div>  
           </div>
@@ -168,6 +173,7 @@ export default {
     const counterStore = useCounterStore()
     return { counterStore }
   },
+  el: '#calendario',
   data() {
     return {
       cadeirasWithTurnosPorCurso: [],
@@ -240,6 +246,9 @@ export default {
           if(response.data.horariopessoal.horario.length > 0){
             this.horariopessoal = response.data.horariopessoal.horario
             this.dataInicialHorariopessoal = response.data.horariopessoal.data
+          }else{
+            this.horariopessoal = []
+            this.dataInicialHorariopessoal = null
           }
           this.cadeirasWithTurnosPorCurso = response.data.cursos
           this.inscricoes = response.data.inscricoes
@@ -363,6 +372,9 @@ export default {
             if(response.data.horariopessoal.horario.length > 0){
               this.horariopessoal = response.data.horariopessoal.horario
               this.dataInicialHorariopessoal = response.data.horariopessoal.data
+            }else{
+              this.horariopessoal = []
+              this.dataInicialHorariopessoal = null
             }
             if (response.data.coicidem.length > 0) {
               this.showTurnosCoicidem = true
@@ -371,8 +383,13 @@ export default {
             this.updateVagasTurnos()
             this.$socket.emit("newInscricao", response.data.updatedTurnos);
             this.allTurnosIds = []
+
+            var element = this.$refs["horariopessoalref"];
+            var top = element.offsetTop;
+            window.scrollTo(0, top);
         })
         .catch((error) => {
+          console.log(error)
           this.$toast.error("Não foi possível inscrever! " + error.response.data);
           this.allTurnosIds = []
         });
