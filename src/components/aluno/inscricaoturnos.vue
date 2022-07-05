@@ -121,7 +121,7 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col-md-1">Nr de semanas</th>
+                          <th scope="col-md-1">Números das Semanas</th>
                           <th scope="col-md-2">Dia da semana</th>
                           <th scope="col">Unidade curricular</th>
                           <th scope="col">Unidade curricular</th>

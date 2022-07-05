@@ -176,7 +176,7 @@
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Curso</label>
                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
-                  <option value="0">Todos</option>
+                   <!--<option value="0">Todos</option>-->
                   <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
                   {{ "["+course.codigo+"] "+course.nome }}
                   </option>
@@ -325,7 +325,7 @@ export default {
           this.semestrecurso = 1
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error(error.response.data);
         })
         .finally(() => {
           this.loading[0] = false
