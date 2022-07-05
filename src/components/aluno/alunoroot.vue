@@ -14,7 +14,7 @@
             <router-link class="nav-link" 
             :class="{ active: $route.name === 'confirmacaoucs' }"
             :to="{ name: 'confirmacaoucs' }">
-                Unidades Curriculares
+                Unidades Curriculares Inscritas
             </router-link> 
           </li>
           <li class="nav-item">
