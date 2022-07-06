@@ -13,6 +13,7 @@
           Unidades Curriculares de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
         </div>
         <div class="card-body">
+          <p>Último update dos horários a <u>{{this.counterStore.courseWithUCs.ultimoupdateaula}}</u></p>
           <div class="accordion" id="accordionExample" v-if="this.counterStore.tipoTurnoCurso.length > 0">
             <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">

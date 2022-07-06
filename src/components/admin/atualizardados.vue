@@ -140,7 +140,7 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-12">
         <br>
         <div class="card">
           <div class="card-body">
@@ -176,9 +176,10 @@
               <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Curso</label>
                 <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                  <option value="" disabled selected>[Código Curso] Nome do curso (Última atualização do horário)</option>
                    <!--<option value="0">Todos</option>-->
                   <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
-                  {{ "["+course.codigo+"] "+course.nome }}
+                  {{ "["+course.codigo+"] "+course.nome + " " + course.ultimoupdateaula}}
                   </option>
                 </select>
               </div>
