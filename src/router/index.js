@@ -239,7 +239,7 @@ const router = createRouter({
           path: "gerirperiodos",
           name: "gerirperiodosC",
           component: GerirPeriodos,
-          meta: { title: "Gestão de Periodos" },
+          meta: { title: "Gestão de Períodos" },
         },
       ],
     },

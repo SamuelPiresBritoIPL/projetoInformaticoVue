@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Curso na Aplicação</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Cursos</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso()">
@@ -13,6 +13,7 @@
           Unidades Curriculares de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
         </div>
         <div class="card-body">
+          <p>Último update dos horários a <u>{{this.counterStore.courseWithUCs.ultimoupdateaula}}</u></p>
           <div class="accordion" id="accordionExample" v-if="this.counterStore.tipoTurnoCurso.length > 0">
             <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">

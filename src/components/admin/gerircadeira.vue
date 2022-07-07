@@ -133,7 +133,6 @@
             </h2>
             <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                 <h5 class="card-title" style="margin-bottom: 10px;">Alterar visibilidade</h5>
                 <button class=" btn btn-success text-right" :class="{ 'btn-danger': isVisivel == true }" @click="changeVisibility()">{{ isVisivel ? "Tornar Unidade Curricular Invisivel" : "Tornar Unidade Curricular Visivel"}}</button><br><br>
               </div>
             </div>

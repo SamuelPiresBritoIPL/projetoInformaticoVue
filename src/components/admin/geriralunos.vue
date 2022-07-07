@@ -21,13 +21,16 @@
           <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs">
               <li class="nav-item">
-                <a class="nav-link" role="button" :class="{ active: navTabs[0] == true }" @click="navTabs[0] = true;navTabs[1] = false;navTabs[2] = false">UC's Inscritas</a>
+                <a class="nav-link" role="button" :class="{ active: navTabs[0] == true }" @click="navTabs[0] = true;navTabs[1] = false;navTabs[2] = false;navTabs[3] = false;">UC's Inscritas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" role="button" :class="{ active: navTabs[1] == true }" @click="navTabs[0] = false;navTabs[1] = true;navTabs[2] = false;">UC's Aprovadas</a>
+                <a class="nav-link" role="button" :class="{ active: navTabs[1] == true }" @click="navTabs[0] = false;navTabs[1] = true;navTabs[2] = false;navTabs[3] = false;">UC's Aprovadas</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" role="button" :class="{ active: navTabs[2] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = true">Pedidos</a>
+                <a class="nav-link" role="button" :class="{ active: navTabs[2] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = true;navTabs[3] = false;">Pedidos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" role="button" :class="{ active: navTabs[3] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = false;navTabs[3] = true;">Horário</a>
               </li>
             </ul>
           </div>
@@ -120,6 +123,9 @@
                 </table>
               </div>
             </div>
+          </div>
+          <div v-if="navTabs[3] == true" class="card-body">
+            <!-- Fazer a pagina -->
           </div>
         </div>
       </div>

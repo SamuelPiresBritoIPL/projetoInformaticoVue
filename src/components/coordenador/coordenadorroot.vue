@@ -74,7 +74,7 @@
                             :to="{ name: 'gerirperiodosC' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="calendar-event"/>
-                                Gerir Periodos
+                                Gerir Períodos
                             </router-link>
                         </li>
                     </ul>

@@ -38,7 +38,7 @@
                             :to="{ name: 'gerircoordenadores' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="person-lines-fill"/>
-                                Coordenadores
+                                Gerir Coordenadores
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -47,7 +47,7 @@
                             :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="mortarboard"/>
-                                Gestão de Cursos
+                                Gerir Cursos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -65,7 +65,7 @@
                             :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="calendar-event"/>
-                                Gestão de Periodos
+                                Gerir Períodos
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
@@ -74,7 +74,7 @@
                             :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="clipboard2-check"/>
-                                Gestão de Pedidos UC
+                                Gerir Pedidos UC
                             </router-link>  
                         </li>
                         <li class="nav-item sidebar-navigation">

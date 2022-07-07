@@ -4,7 +4,8 @@
       <div class="content">
         <div style="text-align:right"><button class="btn btn--outline-gray" style="text-align:center" @click="dialogState = false"><BootstrapIcon style="margin-right: 2px" icon="x-lg"/> Fechar</button></div>
         <div class="title" style="text-align:center">Horários todos os turnos</div>
-        <p>Horários dos turnos para as uc's que está inscrito</p>
+        <p style="text-align: center;font-size: 0.8em;">*Este horário poderá conter algum erro ou sofrer alterações*</p>
+        <span>Horários dos turnos para as uc's que está inscrito</span>
         <vue-cal locale="pt-br" :selected-date="dataInicialHorario" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horario">
           <template v-slot:event="{ event }">
             <div class="vuecal__event-title" style="color:#666666;!important" v-html="event.title" />
@@ -33,7 +34,7 @@
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                       <h4>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h4>
                       <div class="alert alert-info" role="alert" style="margin-letf: 35px; margin-top: 35px;">
-                        O periodo de Inscrição nos Turnos para as UC´s <b>{{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }}</b> terá <b>início</b> a <b>{{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})
+                        O período de Inscrição nos Turnos para as UC´s <b>{{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }}</b> terá <b>início</b> a <b>{{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})
                       </div> 
                     </div>
                   </div>
@@ -102,6 +103,7 @@
                     <p v-for="(inscricao) in this.isncricoesAtuais[index]" :key="inscricao">{{inscricao["nome"] + (inscricao["ano"] ? " (" + inscricao["ano"] + "º ano): " : "")}}
                       <span v-for="(ins) in inscricao['turnos']" :key="ins"> {{ins.tipo + (ins.numero == 0 ? "" : ins.numero) + "    "}}</span>
                     </p>
+                    <span  style="text-align: center;">Turnos em que apenas existem 1 turno são automaticamente inscritos!</span>
                   </div>
                 </div>
                  <div v-if="showTurnosRejeitados == true && !(this.buttonArray.length > 0 && hasButtonSelected)" style="color: red">
@@ -121,7 +123,7 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th scope="col-md-1">Nr de semanas</th>
+                          <th scope="col-md-1">Números das Semanas</th>
                           <th scope="col-md-2">Dia da semana</th>
                           <th scope="col">Unidade curricular</th>
                           <th scope="col">Unidade curricular</th>
