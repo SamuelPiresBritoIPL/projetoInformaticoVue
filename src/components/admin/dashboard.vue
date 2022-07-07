@@ -4,7 +4,7 @@
     <div class="card text-center">
       <div v-if="hasValue" class="card-body">
         <div style="text-align: left;">
-          <small v-if="adminLogged" class="card-title">Cursos com pelo menos um periodo definido e pedidos pendentes</small>
+          <small v-if="adminLogged" class="card-title">Cursos com pelo menos um período definido e pedidos pendentes</small>
         </div>
         <div class="card w-100" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
           <div class="card-body">
@@ -28,7 +28,7 @@
                       </div>
                     </div>
                     <div v-else>
-                      <small>Não está definido o periodo de pedidos de UC's</small>
+                      <small>Não está definido o período de pedidos de UC's</small>
                     </div>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                       </div>
                     </div>
                     <div v-else>
-                      <small>Não está definido o periodo de inscrição nos turnos</small>
+                      <small>Não está definido o período de inscrição nos turnos</small>
                     </div>
                   </div>
                 </div>

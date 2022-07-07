@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Curso na Aplicação</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Cursos</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso(counterStore.selectedCourse)">

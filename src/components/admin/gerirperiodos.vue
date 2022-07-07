@@ -1,8 +1,8 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Periodos</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Períodos</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label">Curso a gerir periodos:</label>
+      <label for="exampleFormControlInput1" class="form-label">Curso a gerir períodos:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse()">
       </v-select>
     </div>
@@ -20,7 +20,7 @@
       <div class="card-body">
         <!-- GESTÃO DE ABERTURAS - CONFIRMAÇÕES -->
         <div v-if="navTabConfirmacaoUCs == true">
-          <h6 class="card-title" style="margin-bottom:25px;">Periodo de Pedidos de UC's - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
+          <h6 class="card-title" style="margin-bottom:25px;">Período de Pedidos de UC's - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formConfirmacao == false">
             <div v-if="this.counterStore.aberturaConfirmacaoTodos.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao1.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao2.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaConfirmacao3.dataEncerar > new Date().getTime().toLocaleString()" class="row" style="text-align:left;">
               <div v-if="this.counterStore.aberturaConfirmacaoTodos.length != 0" class="row">
@@ -49,7 +49,7 @@
               </div>
             </div>
             <div v-else>
-              <p style="margin-bottom:25px;">O periodo de pedidos de UC's não se encontra ativo de momento</p>
+              <p style="margin-bottom:25px;">O período de pedidos de UC's não se encontra ativo de momento</p>
             </div>
             <button v-if="this.counterStore.aberturaConfirmacaoTodos.length == 0 && (this.counterStore.aberturaConfirmacao1.length == 0 || this.counterStore.aberturaConfirmacao2.length == 0 || this.counterStore.aberturaConfirmacao3.length == 0)" type="button" class="btn btn-primary" @click="formConfirmacao = true; iniciarConfirmacao = true">Iniciar</button>
           </div>
@@ -88,7 +88,7 @@
         </div>
         <!-- GESTÃO DE ABERTURAS - INSCRIÇÕES -->
         <div v-else>
-          <h6 class="card-title" style="margin-bottom:25px;">Periodo de Inscrição nos Turnos - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
+          <h6 class="card-title" style="margin-bottom:25px;">Período de Inscrição nos Turnos - {{ "["+this.counterStore.aberturasByCourse.codigo+"] "+this.counterStore.aberturasByCourse.nome }}</h6>
           <div v-if="formInscricao == false">
             <!--{{ this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().getTime().toLocaleString() }}-->
             <div v-if="this.counterStore.aberturaInscricaoTodos.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao1.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao2.dataEncerar > new Date().getTime().toLocaleString() || this.counterStore.aberturaInscricao3.dataEncerar > new Date().getTime().toLocaleString()" class="row" style="text-align:left;">
@@ -122,7 +122,7 @@
               </div>
             </div>
             <div v-else>
-              <p style="margin-top:25px; margin-bottom:25px;">O periodo de inscrição nos turnos não se encontra ativo de momento</p>
+              <p style="margin-top:25px; margin-bottom:25px;">O período de inscrição nos turnos não se encontra ativo de momento</p>
             </div>
             <button v-if="this.counterStore.aberturaInscricaoTodos.length == 0 && (this.counterStore.aberturaInscricao1.length == 0 || this.counterStore.aberturaInscricao2.length == 0 || this.counterStore.aberturaInscricao3.length == 0)" type="button" class="btn btn-primary" @click="formInscricao = true; iniciarInscricao = true">Iniciar</button>
           </div>
@@ -183,7 +183,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
           <button class="accordion-button" :class="{collapsed:this.collapsed}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed" aria-controls="collapseTwo" @click="this.collapsed = (!this.collapsed)" >
-            Periodos fechados
+            Períodos fechados
           </button>
         </h2>
         <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
@@ -327,7 +327,7 @@ export default {
             "idAnoletivo": this.counterStore.selectedAnoletivo
           })
         .then((response) => {
-          this.$toast.success("Periodo de abertura criado com sucesso!");
+          this.$toast.success("Período de abertura criado com sucesso!");
           this.counterStore.getAberturasByCourse(courseId)
           this.cancelarEdicaoIniciacao();
         })
@@ -351,7 +351,7 @@ export default {
             "dataEncerar": dataEncerrar
           })
         .then((response) => {
-          this.$toast.success("Periodo de abertura editado com sucesso!",);
+          this.$toast.success("Período de abertura editado com sucesso!",);
           this.counterStore.getAberturasByCourse(this.counterStore.aberturasByCourse.id)
           this.cancelarEdicaoIniciacao();
         })

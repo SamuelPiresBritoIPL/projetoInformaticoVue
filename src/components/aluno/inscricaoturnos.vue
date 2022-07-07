@@ -34,7 +34,7 @@
                     <div v-for="aberturaAno in aberturaCurso" :key="aberturaAno.idCurso" style="text-align: center;">
                       <h4>{{ "["+aberturaAno.codigo+"] "+aberturaAno.nome }}</h4>
                       <div class="alert alert-info" role="alert" style="margin-letf: 35px; margin-top: 35px;">
-                        O periodo de Inscrição nos Turnos para as UC´s <b>{{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }}</b> terá <b>início</b> a <b>{{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})
+                        O período de Inscrição nos Turnos para as UC´s <b>{{ aberturaAno.ano == 0 ? "de todos os anos" : "do ano "+aberturaAno.ano }}</b> terá <b>início</b> a <b>{{ aberturaAno.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{aberturaAno.menosdeumdia ? "falta "+aberturaAno.diasAteAbertura : (aberturaAno.diasAteAbertura == 1 ? "falta " + aberturaAno.diasAteAbertura + " dia." : "faltam " + aberturaAno.diasAteAbertura + " dias.") }})
                       </div> 
                     </div>
                   </div>

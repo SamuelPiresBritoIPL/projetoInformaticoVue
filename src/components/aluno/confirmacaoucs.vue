@@ -9,10 +9,10 @@
                 <h5 class="card-title" style="margin-bottom: 5px;">Unidades Curriculares Atualmente Inscritas</h5>
                 <hr>
                 <div v-if="!periodo && Object.keys(infoPedidos).length > 0" class="alert alert-info" role="alert" style="margin-top: 5px; text-align: center;">
-                  O periodo de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
+                  O período de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
                 </div>
                 <div v-if="periodo && Object.keys(infoPedidos).length > 0" class="alert alert-success" role="alert" style="margin-top: 5px; text-align: center;">
-                  O periodo de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
+                  O período de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
                 </div>
                 <ul v-for="cadeiraToConfirm in cadeirasToConfirm" :key="cadeiraToConfirm.cadeira">
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
