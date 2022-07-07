@@ -41,7 +41,6 @@ import vuecalcss from 'vue-cal/dist/vuecal.css'
 
 
 library.add(faUserSecret)
-
 const app = createApp(App)
 
 const socketIO = new VueSocketIO({

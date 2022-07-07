@@ -3,7 +3,7 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir Curso na Aplicação</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
-      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso(counterStore.selectedCourse)">
+      <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso()">
       </v-select>
     </div>
     <!--<button type="button" class="btn btn-outline-primary" style="margin-bottom: 5px; width: 100%" @click="gerirCursoNaAplicacao = !gerirCursoNaAplicacao">{{ gerirCursoNaAplicacao ? "Adicionar Unidades Currículares à Aplicação" : "Gerir Unidades Currículares da Aplicação"}}</button>-->
@@ -136,8 +136,8 @@ export default {
         this.$router.push("/admin/gerircadeira/" + cadeira.id);
       }
     },
-    selectCurso(curso){
-      this.counterStore.getCourseWithUCs(curso.code)
+    selectCurso(){
+      this.counterStore.getCourseWithUCs(this.counterStore.selectedCourse.code)
     },
     changeCollapsed(number){
       this.collapsed[number] = (this.collapsed[number] == true ? false : true)
@@ -155,7 +155,7 @@ export default {
           "vagas": dataToSend2
         }).then((response) => {
           this.$toast.success(response.data)
-          this.selectCurso(this.counterStore.selectedCourse)
+          this.selectCurso()
         })
         .catch((error) => {
           this.$toast.error("Não foi possível atualizar as vagas.")
