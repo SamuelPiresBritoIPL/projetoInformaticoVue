@@ -4,24 +4,24 @@
         <hr style="margin-bottom: 25px;">
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="card border-info col-md-8" style="max-width: 70%; padding: 0px;">
-                <div class="card-header bg-info text-white"><h3 style="text-align: center; margin-top: 15px; margin-bottom: 15px;">Autores</h3></div>
-                <div class="card-body" style="text-align: center; font-size: 16px;">
-                    <p style="margin-top: 15px;">2191727 - Francisco Melicais</p>
+            <div class="card border-black col-md-8" style="max-width: 70%; padding: 0px;">
+                <div class="card-header bg-dark text-white"><h5 style="text-align: center; margin-top: 5px; margin-bottom: 5px;">Autores</h5></div>
+                <div class="card-body" style="text-align: center; font-size: 17px;">
+                    <p style="margin-top: 5px;">2191727 - Francisco Melícias</p>
                     <p>2191740 - Daniel Sarreira</p>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-md-2"></div>
-            <div class="card border-info col-md-8" style="max-width: 70%; padding: 0px;">
-                <div class="card-header bg-info text-white"><h4 style="text-align: center; margin-top: 15px; margin-bottom: 15px;">Manutenção e Suporte</h4></div>
-                <div class="card-body" style="text-align: center; font-size: 16px;">
-                    <p style="margin-top: 15px;">suporte@DEI</p>
+            <div class="card border-black col-md-8" style="max-width: 70%; padding: 0px;">
+                <div class="card-header bg-dark text-white"><h5 style="text-align: center; margin-top: 5px; margin-bottom: 5px;">Manutenção e Suporte</h5></div>
+                <div class="card-body" style="text-align: center; font-size: 17px;">
+                    <p style="margin-top: 5px;">suporte@DEI</p>
                 </div>
             </div>
         </div>
-        <p style="text-align: center; margin-top: 25px; font-size: 18px;">Trabalho desenvolvido no âmbito da UC de Projeto Informático, do curso de Engenharia Informática.</p>
+        <p style="text-align: center; margin-top: 25px; font-size: 17px;">Trabalho desenvolvido no âmbito da UC de Projeto Informático, do curso de Engenharia Informática.</p>
     </div> 
 </template> 
 
