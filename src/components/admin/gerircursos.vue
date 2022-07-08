@@ -82,7 +82,8 @@
         </div>
       </div>
     </div>
-  </div>    
+  </div>
+  <br><br><br>   
 </template>
 
 <script>

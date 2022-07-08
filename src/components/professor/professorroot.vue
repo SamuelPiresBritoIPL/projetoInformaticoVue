@@ -31,7 +31,7 @@
                     <hr>
                     <div>
                         <a type="button" class="d-flex align-items-center link-dark text-decoration-none" @click="logout()">
-                            <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                            <!--<img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">-->
                             <strong>Logout</strong>
                         </a>
                     </div>

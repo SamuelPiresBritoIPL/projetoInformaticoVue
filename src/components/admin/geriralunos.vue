@@ -30,7 +30,7 @@
                 <a class="nav-link" role="button" :class="{ active: navTabs[2] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = true;navTabs[3] = false;">Pedidos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" role="button" :class="{ active: navTabs[3] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = false;navTabs[3] = true;">Horário</a>
+                <a class="nav-link" role="button" :class="{ active: navTabs[3] == true }" @click="navTabs[0] = false;navTabs[1] = false;navTabs[2] = false;navTabs[3] = true;">Horário atual</a>
               </li>
             </ul>
           </div>
@@ -125,19 +125,26 @@
             </div>
           </div>
           <div v-if="navTabs[3] == true" class="card-body">
-            <!-- Fazer a pagina -->
+            <vue-cal locale="pt-br" :selected-date="dataInicialHorario" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horario">
+              <template v-slot:event="{ event }">
+                <div class="vuecal__event-title" style="color:#666666;!important" v-html="event.title" />
+                <div class="vuecal__event-content" style="color:#666666;!important" v-html="event.content" />
+              </template>
+            </vue-cal>
           </div>
         </div>
       </div>
     </div>
-  </div>    
+  </div>
+  <br><br><br>
 </template>
 
 <script>
 import { useCounterStore } from "../../stores/counter"
+import { defineComponent } from 'vue'
 export default {
   name: "GerirAlunos",
-  component: {},
+  component: {defineComponent},
   setup() {
     const counterStore = useCounterStore()
     return { counterStore }
@@ -151,7 +158,9 @@ export default {
       pedidos: [],
       alunoRequested: false,
       infoAluno: [],
-      errorMsg: null
+      errorMsg: null,
+      horario: [],
+      dataInicialHorario: null,
     };
   },
   computed: {
@@ -175,6 +184,8 @@ export default {
           this.ucsAprovadas = response.data["cadeirasAprovadas"]
           this.infoAluno = response.data["aluno"]
           this.alunoRequested = true
+          this.horario = response.data.horario.horario
+          this.dataInicialHorario = response.data.horario.data
         })
         .catch((error) => {
           console.log(error.response);
