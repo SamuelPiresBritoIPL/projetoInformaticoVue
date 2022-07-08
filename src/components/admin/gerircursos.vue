@@ -164,7 +164,9 @@ export default {
     }
   },
   mounted() {
-    
+    if (this.counterStore.courses.length == 0) {
+      this.counterStore.getCourses(1)
+    }
   },
 };
 </script>

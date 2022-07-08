@@ -11,13 +11,13 @@
                     <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
                     <hr>
                     <label >Ano letivo:</label>
-                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo">
+                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo" v-on:change="onChangeAnoSemestre">
                         <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
                         {{ anoletivo.anoletivo }}
                         </option>
                     </select>
                     <label>Semestre:</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre">
+                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre" v-on:change="onChangeAnoSemestre">
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </select>
@@ -142,6 +142,9 @@ export default {
         .catch((error) => {
             console.log(error.response);
         });
+    },
+    onChangeAnoSemestre(){
+        this.counterStore.courses = []
     }
   },
   mounted() {
