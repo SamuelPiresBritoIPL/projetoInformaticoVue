@@ -24,6 +24,13 @@
                 Inscrição nos Turnos
             </router-link> 
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" 
+            :class="{ active: $route.name === 'sobre' }"
+            :to="{ name: 'sobre' }">
+                Sobre
+            </router-link> 
+          </li>
         </ul>
         <ul class="navbar-nav" style="text-align: left;" @click="logout()">
             <li class="nav-item">

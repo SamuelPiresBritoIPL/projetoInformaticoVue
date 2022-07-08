@@ -23,6 +23,7 @@ import AlunoLogin from '../components/aluno/login.vue'
 import ProfessorLogin from '../components/professor/professorlogin.vue'
 import GerirCadeiraProf from '../components/professor/gerircadeira.vue'
 import NotFound from '../components/not-found.vue'
+import Sobre from '../components/aluno/sobre.vue'
 
 
 const router = createRouter({
@@ -315,6 +316,12 @@ const router = createRouter({
           component: InscricaoTurnos,
           meta: { title: "Inscrição nos Turnos" },
         },
+        {
+          path: "sobre",
+          name: "sobre",
+          component: Sobre,
+          meta: { title: "Sobre" },
+        }
       ],
     },
     {
