@@ -327,7 +327,6 @@ export default {
             "idcurso": this.selectedCourse
           })
         .then((response) => {
-          console.log(response)
           this.$toast.success("Dados atualizados");
           this.anoletivoaprovacoes = null
           this.semestreaprovacoes = 1
@@ -385,13 +384,12 @@ export default {
     getUrls(){
       this.$axios.get("webservice/url")
         .then((response) => {
-          console.log(response.data);
           this.urlcursos = response.data.urlturnos;
           this.urlinscricoes = response.data.urlinscricoes;
           this.urlaulas = response.data.urlaulas;
         })
         .catch((error) => {
-          console.log(error.response);
+          
         });
     },
     updateInscricoes(anoletivo, semestre){
@@ -410,7 +408,6 @@ export default {
             "semestre": semestre
           })
         .then((response) => {
-          console.log(response)
           this.$toast.success("Dados atualizados");
         })
         .catch((error) => {
@@ -421,7 +418,6 @@ export default {
         });
     },
     updateHorariosTurnos(anoletivoativo, dataInicioSemestre, dataFimSemestre, selectedCourse){
-      console.log(selectedCourse)
       if (dataInicioSemestre == null) {
         this.$toast.error("Tem de inserir uma data do inicio do semestre.");
         return
@@ -434,7 +430,7 @@ export default {
         this.$toast.error("Tem de selecionar o ano letivo.");
         return
       }
-      if (selectedCourse == null) {
+      if (selectedCourse == null || selectedCourse == 0) {
         this.$toast.error("Tem de selecionar o curso.");
         return
       }
@@ -447,7 +443,6 @@ export default {
             "idcurso": selectedCourse
           })
         .then((response) => {
-          console.log(response)
           this.$toast.success("Dados dos horários atualizados");
         })
         .catch((error) => {
