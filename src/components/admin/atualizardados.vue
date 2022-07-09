@@ -279,12 +279,12 @@ export default {
   },
    methods: {
      updateAnoletivoAtivo(anoletivo, semestre){
-      this.loading[3] = true
-      this.blocked = true
       if (!(anoletivo)) {
         this.$toast.error("Tem de selecionar o ano letivo.");
         return
       }
+      this.loading[3] = true
+      this.blocked = true
       this.$axios.put("anoletivo/" + anoletivo, {
             "semestre": semestre
           })
@@ -447,7 +447,7 @@ export default {
           this.$toast.success("Dados dos horários atualizados");
         })
         .catch((error) => {
-          this.$toast.error(error);
+          this.$toast.error(error.response.data);
         }).finally(() => {
           this.loading[5] = false
           this.blocked = false
