@@ -285,6 +285,10 @@ export default {
       this.dataEncerrar = null
       this.aberturaToEdit = null
       this.errorIniciarPC = null
+      if (this.counterStore.selectedAnoletivo == null || this.counterStore.semestre == null) {
+        this.$toast.error("Ano letivo e semestre não selecionados")
+        return
+      }
       this.counterStore.getAberturasByCourse(this.selectedCourse.code)
     },
     openEditarConfirmacao(abertura){

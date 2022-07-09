@@ -89,12 +89,15 @@ export default {
   },
   methods: {
     selectCourse(course){
-      console.log(course)
       this.pedidoForm = false
       if(this.selectedPedido.length != 0){
         this.selectedPedido = []
       }
       this.courseInfo = course
+      if (this.counterStore.selectedAnoletivo == null || this.counterStore.semestre == null) {
+        this.$toast.error("Ano letivo e semestre não selecionados")
+        return
+      }
       this.counterStore.getPedidosByCourse(course.code)
     },
     openPedido(pedido){

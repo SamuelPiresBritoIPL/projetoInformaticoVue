@@ -148,13 +148,14 @@ export default {
     getAnosLetivos(){
         this.$axios.get("anoletivo")
         .then((response) => {
+
             this.anosLetivos = response.data
             this.anosLetivos.forEach((anoLetivo) => {
                 if (anoLetivo.ativo == 1) {
                     this.counterStore.selectedAnoletivo = anoLetivo.id
-                }
-                if (anoLetivo.semestreativo != null) {
-                    this.counterStore.semestre = anoLetivo.semestreativo
+                    if (anoLetivo.semestreativo != null) {
+                        this.counterStore.semestre = anoLetivo.semestreativo
+                    }
                 }
             })
         })

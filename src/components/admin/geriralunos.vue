@@ -176,6 +176,10 @@ export default {
       this.pedidos = []
       this.ucsInscritas = []
       this.ucsAprovadas = []
+      if (this.counterStore.selectedAnoletivo == null || this.counterStore.semestre == null) {
+        this.$toast.error("Ano letivo e semestre não selecionados")
+        return
+      }
       this.$axios.get("estudante/dados/" + this.login + "/" +  this.counterStore.selectedAnoletivo + "/" + this.counterStore.semestre)
         .then((response) => {
           console.log(response.data)

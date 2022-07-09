@@ -139,7 +139,11 @@ export default {
       }
     },
     selectCurso(){
-      this.counterStore.getCourseWithUCs(this.counterStore.selectedCourse.code)
+      if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
+        this.counterStore.getCourseWithUCs(this.counterStore.selectedCourse.code)
+        return
+      } 
+      this.$toast.error("Ano letivo e semestre não selecionados")
     },
     changeCollapsed(number){
       this.collapsed[number] = (this.collapsed[number] == true ? false : true)
