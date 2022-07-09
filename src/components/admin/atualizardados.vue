@@ -41,7 +41,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
           <button class="accordion-button" :class="{collapsed:this.collapsed[2]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[2]" aria-controls="collapseThree" @click="changeCollapsed(2)">
-            2ª Atualizar inscrições alunos
+            2ª Atualizar inscrições e ucs feitas pelos alunos
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -60,13 +60,13 @@
                 </option>
               </select>
             </div>
-            <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, semestreinscricoes, 2)">
+            <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoinscricoes, 2)">
                 <span v-if="loading[1]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
             </button>
           </div>
         </div>
       </div>
-      <br>
+      <!--<br>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFour">
           <button class="accordion-button" :class="{collapsed:this.collapsed[3]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" :aria-expanded="this.collapsed[3]" aria-controls="collapseFour" @click="changeCollapsed(3)">
@@ -81,23 +81,25 @@
               <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202122)" v-model="anoletivoaprovacoes">
             </div>
             <div class="mb-3">
-              <label for="exampleFormControlInput1" class="form-label">Semestre</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreaprovacoes">
-                <option value="1">1</option>
-                <option value="2">2</option>
+              <label for="exampleFormControlInput1" class="form-label">Curso</label>
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
+                <option value="0">Todos</option>
+                <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
+                {{ "["+course.codigo+"] "+course.nome }}
+                </option>
               </select>
             </div>
-            <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, semestreaprovacoes, 3, 'webservice/inscricaoaprovados')">
+            <button :disabled='blocked' class="btn btn-primary" @click="updateInscricaoInformation(anoletivoaprovacoes, 3, 'webservice/inscricaoaprovados')">
                 <span v-if="loading[2]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Atualizar dados
             </button>
           </div>
         </div>
-      </div>
+      </div>-->
       <br>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFive">
           <button class="accordion-button" :class="{collapsed:this.collapsed[4]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" :aria-expanded="this.collapsed[4]" aria-controls="collapseFive" @click="changeCollapsed(4)">
-            4º Inscrever alunos nos turnos
+            3º Inscrever alunos nos turnos
           </button>
         </h2>
         <div id="collapseFive" class="accordion-collapse" :class="{collapse:this.collapsed[4]}" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
@@ -128,7 +130,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingSix">
           <button class="accordion-button" :class="{collapsed:this.collapsed[5]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" :aria-expanded="this.collapsed[5]" aria-controls="collapseSix" @click="changeCollapsed(5)">
-            5º Atualizar horários dos turnos
+            4º Atualizar horários dos turnos
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse" :class="{collapse:this.collapsed[5]}" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
@@ -180,7 +182,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingSeven">
           <button class="accordion-button" :class="{collapsed:this.collapsed[6]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" :aria-expanded="this.collapsed[6]" aria-controls="collapseSeven" @click="changeCollapsed(6)">
-            6º Alterar ano letivo/semestre em vigor
+            5º Alterar ano letivo/semestre em vigor
           </button>
         </h2>
         <div id="collapseSeven" class="accordion-collapse" :class="{collapse:this.collapsed[6]}" aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
@@ -279,7 +281,7 @@ export default {
      updateAnoletivoAtivo(anoletivo, semestre){
       this.loading[3] = true
       this.blocked = true
-      if (anoletivo == null) {
+      if (!(anoletivo)) {
         this.$toast.error("Tem de selecionar o ano letivo.");
         return
       }
@@ -302,13 +304,10 @@ export default {
           this.blocked = false
         });
     },
-    updateInscricaoInformation(anoletivo, semestre, numero, url="webservice/inscricao"){
-      if (anoletivo == null) {
+    //updateInscricaoInformation(anoletivo, numero, url="webservice/inscricao"){
+    updateInscricaoInformation(anoletivo, numero, url="webservice/inscricaotodas"){
+      if (!(anoletivo)) {
         this.$toast.error("Tem de selecionar o ano letivo.");
-        return
-      }
-      if (semestre == null) {
-        this.$toast.error("Tem de selecionar o semestre.");
         return
       }
       if (this.selectedCourse == null) {
@@ -323,16 +322,18 @@ export default {
       this.blocked = true
       this.$axios.post(url, {
             "anoletivo": anoletivo,
-            "semestre": semestre,
+            "semestre":1,
             "idcurso": this.selectedCourse
           })
         .then((response) => {
           this.$toast.success("Dados atualizados");
-          this.anoletivoaprovacoes = null
-          this.semestreaprovacoes = 1
         })
         .catch((error) => {
-          this.$toast.error(error.response.data);
+          if(error.response.data.anoletivo){
+            this.$toast.error(error.response.data.anoletivo);
+          }else{
+            this.$toast.error(error.response.data);
+          }
         })
         .finally(() => {
           this.loading[1] = false
@@ -341,11 +342,11 @@ export default {
         });
     },
     updateCourseInformation(anoletivo, semestre){
-      if (anoletivo == null) {
+      if (!(anoletivo)) {
         this.$toast.error("Tem de selecionar o ano letivo.");
         return
       }
-      if (semestre == null) {
+      if (!(semestre)) {
         this.$toast.error("Tem de selecionar o semestre.");
         return
       }
@@ -393,11 +394,11 @@ export default {
         });
     },
     updateInscricoes(anoletivo, semestre){
-      if (anoletivo == null) {
+      if (!(anoletivo)) {
         this.$toast.error("Tem de selecionar o ano letivo.");
         return
       }
-      if (semestre == null) {
+      if (!(semestre)) {
         this.$toast.error("Tem de selecionar o semestre.");
         return
       }
