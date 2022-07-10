@@ -3,6 +3,40 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir pedidos de inscrição nas UC's</h3>
     <v-select v-if="this.counterStore.courses.length > 1" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse(selectedCourse)">
     </v-select>
+    <br>
+    <div class="accordion-item" v-if="this.counterStore.pedidosByCourseAntigos.length >= 1">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed[0]" aria-controls="collapseTwo" @click="changeCollapsed(0)">
+            Pedidos resolvidos
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <div class="table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table" style="text-align: left;">
+              <thead>
+                <tr>
+                  <th scope="col">Aluno</th>
+                  <th scope="col">Unidades Curriculares</th>
+                  <th scope="col">Estado</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="tableRow" v-for="pedido in this.counterStore.pedidosByCourseAntigos" :key="pedido">
+                  <td>{{pedido.utilizador.login}}<br>{{pedido.utilizador.nome}}</td>
+                  <td>
+                    <p v-for="cadeira in pedido.cadeiras" :key="cadeira">
+                      {{cadeira.cadeira.nome  + (cadeira.aceite == 1 ? " (aceite)" : (cadeira.aceite == 0 ? " (rejeitada)" : ""))}}
+                    </p>
+                  </td>
+                  <td>{{(pedido.estado == 1 ? "Pendente" : ((pedido.estado == 2) ? "Aceite" : ((pedido.estado == 3) ? "Recusado" : "Parcial")))}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-5">
         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 100%; margin-top:5px;">
@@ -81,7 +115,8 @@ export default {
         selectedPedido: [],
         allRequestCaderias: [],
         approvedCadeiras: [],
-        rejectedCadeiras: []
+        rejectedCadeiras: [],
+        collapsed: [true]
     };
   },
   computed: {
@@ -148,6 +183,9 @@ export default {
         return false
       } */
       return false
+    },
+    changeCollapsed(number){
+      this.collapsed[number] = (this.collapsed[number] == true ? false : true)
     }
   },
   mounted() {
@@ -165,5 +203,13 @@ export default {
     display: flex;
     align-items: center;
   }
+}
+.my-custom-scrollbar {
+  position: relative;
+  height: 400px;
+  overflow: auto;
+}
+.table-wrapper-scroll-y {
+  display: block;
 }
 </style>

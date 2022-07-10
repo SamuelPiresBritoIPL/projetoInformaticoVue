@@ -18,6 +18,7 @@ export const useCounterStore = defineStore({
     aberturasByCourseDeleted: [],
     yearsCourse: [],
     pedidosByCourse: [],
+    pedidosByCourseAntigos: [],
     aberturaConfirmacaoTodos: [],
     aberturaConfirmacao123: [],
     aberturaConfirmacao1: [],
@@ -83,11 +84,13 @@ export const useCounterStore = defineStore({
     async getPedidosByCourse(courseId){
       if(this.courses.length > 1 && this.pedidosByCourse.length != 0){
         this.pedidosByCourse = []
+        this.pedidosByCourseAntigos = []
       }
       try {
         let response = await axios.get("curso/pedidos/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
-        this.pedidosByCourse = response.data;
-        console.log(this.pedidosByCourse)
+        this.pedidosByCourse = response.data.pedidos;
+        this.pedidosByCourseAntigos = response.data.pedidosntigos;
+        console.log(response)
       } catch {
         console.log(error.response);
         throw error
