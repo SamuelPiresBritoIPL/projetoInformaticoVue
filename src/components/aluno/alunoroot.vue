@@ -71,9 +71,9 @@ export default {
               if (anoLetivo.ativo == 1) {
                   this.counterStore.selectedAnoletivo = anoLetivo.id
                   this.counterStore.ano = anoLetivo.anoletivo
-              }
-              if (anoLetivo.semestreativo != null) {
-                  this.counterStore.semestre = anoLetivo.semestreativo
+                  if (anoLetivo.semestreativo != null) {
+                    this.counterStore.semestre = anoLetivo.semestreativo
+                }
               }
           })
       })

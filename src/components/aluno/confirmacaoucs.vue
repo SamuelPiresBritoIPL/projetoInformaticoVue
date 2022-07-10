@@ -189,7 +189,6 @@ export default {
     getCadeirasToConfirm(){
       this.$axios.get("cadeirasaluno/confirmar/utilizador")
         .then((response) => {
-          console.log("teste")
           console.log(response.data)
           this.cadeirasToConfirm = response.data.cursos
           this.pedidos = response.data.pedidos
@@ -202,6 +201,7 @@ export default {
         });
     },
     inscricaoCadeiras(state){
+      console.log(this.counterStore.anosletivos)
       this.errorMessages = null
       this.$axios.post("cadeirasaluno/pedidos", {
             "estado": state,
