@@ -10,7 +10,7 @@
           <div class="card-body text-dark">
             <div style="padding: 10px 20px">
               <div class="mb-3">
-                  <label for="formGroupExampleInput" class="form-label"><b>Password currente</b></label>
+                  <label for="formGroupExampleInput" class="form-label"><b>Password atual</b></label>
                   <input type="password" class="form-control" id="formGroupExampleInput" placeholder="Password currente" v-model="password">
                   <div v-if="errors.password != null" class="errorMessages" style="margin-bottom: 15px">
                       <small style="color: #a94442; margin-left: 5px;">{{ errors.password }}</small>
