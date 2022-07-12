@@ -28,9 +28,9 @@
         </div>
       </div>
     </div>
-    <div v-if="!adminLogged && hasMoreThanOneCursoCoordinators" class="card text-center">
+    <div v-if="!adminLogged" class="card text-center">
       <div class="card-header">
-        Coordenadores e sub coordenadores de cada curso
+        Coordenadores  {{ hasMoreThanOneCurso ? "por curso na aplicação" : "de curso na aplicação"}}
       </div>
       <div class="card-body">
         <div class="table-responsive" style="max-height: 350px;">
@@ -171,12 +171,6 @@ export default {
       }
       return false
     },
-    hasMoreThanOneCursoCoordinators(){
-      if (this.coursesWithCoordinatores.length > 1) {
-        return true
-      }
-      return false
-    },
     hasErrorCurso(){
       if (this.grantRoleError != null) {
         if (this.grantRoleError.idCurso) {
@@ -236,6 +230,7 @@ export default {
         .then((response) => {
           //console.log(response.data);
           this.coursesWithCoordinatores = response.data;
+          console.log(this.coursesWithCoordinatores)
         })
         .catch((error) => {
           //console.log(error.response);
@@ -343,9 +338,7 @@ export default {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
       this.adminLogged = true
     }
-    if (this.adminLogged) {
-      this.getCoursesCoordinators()
-    }
+    this.getCoursesCoordinators()
     this.counterStore.getCourses()
    /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
       

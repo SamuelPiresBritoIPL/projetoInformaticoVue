@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Cursos</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">{{hasMoreThanOneCurso ? "Gestão de Cursos" : "Gestão de Curso"}}</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso()">
@@ -10,30 +10,33 @@
     <div v-if="gerirCursoNaAplicacao && hasValue">
       <div v-if="this.counterStore.courseWithUCs.nome" class="card text-center">
         <div class="card-header">
-          Unidades Curriculares de: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
+          Gestão do curso: {{ "["+this.counterStore.courseWithUCs.codigo+"] "+this.counterStore.courseWithUCs.nome }}
         </div>
         <div class="card-body">
-          <p>Último update dos horários a <u>{{this.counterStore.courseWithUCs.ultimoupdateaula}}</u></p>
+          <div class="alert alert-primary" role="alert">
+            <p style="margin-bottom: 0px;">Última atualização de horários a <u>{{this.counterStore.courseWithUCs.ultimoupdateaula}}</u></p>
+          </div>
           <div class="accordion" id="accordionExample" v-if="this.counterStore.tipoTurnoCurso.length > 0">
-            <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-              <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed[0]" aria-controls="collapseTwo" @click="changeCollapsed(0)" >
-                Alterar Vagas para todos os turnos
-              </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-              <div class="card-body">
-                <h5 class="card-title">Alterar vagas turnos</h5>
-                <label for="exampleFormControlInput4" class="form-label">Alterar vagas para todos os turnos ao mesmo tempo</label>
-                <div v-for="tipoTurno in this.counterStore.tipoTurnoCurso" :key="tipoTurno" class="input-group mb-3">
-                  <label class="col-sm-1 col-form-label">{{tipoTurno.tipo}}</label>
-                  <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="número de vagas" v-model="tipoTurno.vagas">
+            <div class="accordion-item" style="margin-top: 15px; margin-bottom: 20px;">
+              <h2 class="accordion-header" id="headingTwo">
+                <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed[0]" aria-controls="collapseTwo" @click="changeCollapsed(0)" >
+                  Definir vagas para todos os turnos
+                </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div class="card-body">
+                  <label for="exampleFormControlInput4" class="form-label">Definir vagas para todos os turnos de cada tipo em simultâneo</label>
+                  <div v-for="tipoTurno in this.counterStore.tipoTurnoCurso" :key="tipoTurno" class="input-group mb-3">
+                    <label class="col-sm-1 col-form-label">{{tipoTurno.tipo}}</label>
+                    <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="0" v-model="tipoTurno.vagas">
+                  </div>
+                  <button class="float-end btn btn-primary text-right" @click="saveTurnosVagas()">Guardar</button> <br><br>  
                 </div>
-                <button class="float-end btn btn-primary text-right" @click="saveTurnosVagas()">Guardar vagas dos turnos</button> <br><br>  
               </div>
             </div>
           </div>
-          </div>
+          <p style="text-align: center; font-size: 18px; margin-bottom: 8px;">Unidades Curriculares</p>
+          <hr style="margin-top: 3px; margin-bottom: 3px;">
           <table class="table" style="text-align: left;">
             <thead>
               <tr>
@@ -179,6 +182,12 @@ export default {
 <style>
 .tableRow:hover{
   background-color: aliceblue;
+}
+
+.alert-primary {
+    color: #084298;
+    background-color: #eef3fb !important;
+    border-color: #eef3fb !important;
 }
 
 .hoverturno:hover{
