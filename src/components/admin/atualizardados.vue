@@ -1,10 +1,13 @@
 <template>
   <div class="container-fluid">
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Atualizar Base de Dados</h3>
-    <p>Todas as ações poderam demorar algum tempo (não dar refresh a página, o que implica também não sair da mesma).</p>
+    <div class="alert alert-danger" role="alert">
+      <p style="margin-bottom: 0px;">Todas as ação poderão demorar algum tempo (<b>não dê refresh à página</b>, nem saia da mesma sem terminar a ação executada).</p>
+    </div>
     <div>
-      <u>Se começar um novo ano letivo seguir a seguinte ordem</u>
-      <br>
+      <div class="alert alert-primary" role="alert">
+        A <b>primeira busca</b> de dados para cada ano letivo deve ser efetuada pela seguinte ordem!
+      </div>
       <br>
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingTwo">
@@ -27,6 +30,7 @@
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Semestre</label>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestrecurso">
+                <option value="null">Selecione o semestre</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
               </select>
@@ -41,7 +45,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
           <button class="accordion-button" :class="{collapsed:this.collapsed[2]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[2]" aria-controls="collapseThree" @click="changeCollapsed(2)">
-            2ª Atualizar inscrições e ucs feitas pelos alunos
+            2ª Atualizar inscrições e ucs aprovadas (alunos)
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
@@ -116,6 +120,7 @@
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Semestre</label>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreinscreverturnos">
+                <option value="null">Selecione o semestre</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
               </select>
@@ -199,6 +204,7 @@
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Semestre</label>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreativo">
+                <option value="null">Selecione o semestre</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
               </select>
@@ -258,15 +264,15 @@ export default {
         loading: [false,false,false,false,false,false],
         blocked: false,
         anoletivocurso: null,
-        semestrecurso: 1,
+        semestrecurso: null,
         anoletivoinscricoes: null,
-        semestreinscricoes: 1,
+        semestreinscricoes: null,
         anoletivoaprovacoes: null,
-        semestreaprovacoes: 1,
+        semestreaprovacoes: null,
         anoletivoativo: null,
-        semestreativo: 1,
+        semestreativo: null,
         anoletivoinscreverturnos: null,
-        semestreinscreverturnos: 1,
+        semestreinscreverturnos: null,
         anosletivos: [],
         urlcursos: "",
         urlinscricoes: "",

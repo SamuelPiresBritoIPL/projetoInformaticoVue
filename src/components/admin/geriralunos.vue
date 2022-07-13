@@ -3,23 +3,22 @@
     <h3 style="margin-top: 20px; margin-bottom: 25px;">Alunos</h3>
     <div class="card">
       <div class="card-header">
-        Informações do Aluno
+        Informações de Aluno
       </div>
       <div class="card-body">
-        <h6 class="card-title">Insira o número de aluno que pretende verificar</h6>
         <div class="mb-3">
-          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número aluno" v-model="login">
+          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Insira o número de aluno a pesquisar" v-model="login">
         </div>
         <div v-if="hasError" class="errorMessages" style="margin-bottom: 16px;">
           <small style="color: #a94442; margin-left: 5px;">{{ errorMsg }}</small>
         </div>
-        <button class="btn btn-primary" @click="getAlunoInfo()">Procurar</button>
+        <button class="btn btn-primary" @click="getAlunoInfo()">Pesquisar</button>
         <hr>
-        <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
+        <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title" style="margin-bottom: 15px">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
         <!-- CARD TAB -->
         <div v-if="alunoRequested" class="card text-center">
           <div class="card-header">
-            <ul class="nav nav-tabs card-header-tabs">
+            <ul class="nav nav-tabs card-header-tabs">  
               <li class="nav-item">
                 <a class="nav-link" role="button" :class="{ active: navTabs[0] == true }" @click="navTabs[0] = true;navTabs[1] = false;navTabs[2] = false;navTabs[3] = false;">UC's Inscritas</a>
               </li>
