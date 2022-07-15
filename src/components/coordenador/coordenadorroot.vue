@@ -109,7 +109,7 @@ export default {
   data() {
     return {
         utilizadorLogado: [],
-        coordenadorPrincipal: true
+        coordenadorPrincipal: true,
         anosLetivos: []
     };
   },
