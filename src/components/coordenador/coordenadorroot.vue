@@ -32,7 +32,7 @@
                                 Dashboard
                             </router-link>
                         </li>
-                        <li class="nav-item sidebar-navigation">
+                        <li v-if="this.coordenadorPrincipal" class="nav-item sidebar-navigation">
                             <router-link class="nav-link link-dark" 
                             :class="{ active: $route.name === 'gerircoordenadoresC' }"
                             :to="{ name: 'gerircoordenadoresC' }">
@@ -108,13 +108,15 @@ export default {
   },
   data() {
     return {
-        utilizadorLogado: []
+        utilizadorLogado: [],
+        coordenadorPrincipal: true
     };
   },
   methods: {
     logout(){
       sessionStorage.removeItem("tokenCoordenador");
       localStorage.removeItem("coordenadorState");
+      localStorage.removeItem("isCoordenadorPrincial");
       this.$router.push("/coordenadorlogin");
     },
     getAnosLetivos(){
@@ -148,6 +150,9 @@ export default {
     }
   },
   mounted() {
+      if(sessionStorage.getItem("tokenCoordenador") && sessionStorage.getItem('isCoordenadorPrincial') == 0){
+          this.coordenadorPrincipal  = false
+      }
       this.getAnosLetivos()
       this.getInfoUtilizadorLogado()
   },

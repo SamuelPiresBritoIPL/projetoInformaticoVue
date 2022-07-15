@@ -74,7 +74,7 @@
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId" ref="focus">
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId" ref="focus" :disabled="!adminLogged">
                 <option value="null">Selecione uma opção</option>
                 <option value="0">Coordenador</option>
                 <option value="1">Subcoordenador</option>
@@ -228,9 +228,11 @@ export default {
     getCoursesCoordinators(){
       this.$axios.get("cursoauth/coordenadores")
         .then((response) => {
-          //console.log(response.data);
           this.coursesWithCoordinatores = response.data;
-          console.log(this.coursesWithCoordinatores)
+          this.counterStore.coursesToVSelect = []
+          this.coursesWithCoordinatores.forEach(curso => {
+            this.counterStore.coursesToVSelect.push({label: "["+curso.codigo+"] "+curso.nome, code: curso.id})
+          });
         })
         .catch((error) => {
           //console.log(error.response);
@@ -337,9 +339,11 @@ export default {
   mounted() {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
       this.adminLogged = true
+    }else{
+      this.roleId = 1
     }
-    this.getCoursesCoordinators()
     this.counterStore.getCourses()
+    this.getCoursesCoordinators()
    /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
       
       console.log(this.coordinatoresByCourse)
