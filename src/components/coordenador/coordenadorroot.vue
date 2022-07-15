@@ -108,7 +108,8 @@ export default {
   },
   data() {
     return {
-        utilizadorLogado: []
+        utilizadorLogado: [],
+        anosLetivos: []
     };
   },
   methods: {

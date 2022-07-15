@@ -4,7 +4,7 @@
     <div class="card text-center">
       <div v-if="hasValue" class="card-body">
         <div style="text-align: left;">
-          <small v-if="adminLogged" class="card-title">Cursos com pelo menos um período definido e pedidos pendentes</small>
+          <small v-if="adminLogged" class="card-title">Cursos com pelo menos um período definido e número de pedidos de alunos pendentes por responder</small>
         </div>
         <div class="card w-100" style="margin-top: 10px;" v-for="course in coursesWithAberturas" :key="course">
           <div class="card-body">
