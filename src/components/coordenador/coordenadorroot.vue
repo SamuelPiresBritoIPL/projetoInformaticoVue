@@ -110,6 +110,7 @@ export default {
     return {
         utilizadorLogado: [],
         coordenadorPrincipal: true
+        anosLetivos: []
     };
   },
   methods: {

@@ -260,6 +260,7 @@ export default {
           }
           if (!this.adminLogged) {
             this.getCoordinatorsByCourse(course.code)
+            this.getCoursesCoordinators()
           }
           this.login = null
           this.grantRoleError = null
