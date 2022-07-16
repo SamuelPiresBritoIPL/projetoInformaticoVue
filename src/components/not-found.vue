@@ -28,6 +28,9 @@ export default {
       if (sessionStorage.getItem("tokenAluno")) {
         this.$router.push({name: 'paginainicial'})
       }
+      if (!sessionStorage.getItem("tokenAdmin") && !sessionStorage.getItem("tokenCoordenador") && !sessionStorage.getItem("tokenProfessor") && !sessionStorage.getItem("tokenAluno")) {
+        this.$router.push({name: 'alunologin'})
+      }
     },
   },
 }
