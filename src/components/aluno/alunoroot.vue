@@ -14,14 +14,14 @@
             <router-link class="nav-link" 
             :class="{ active: $route.name === 'confirmacaoucs' }"
             :to="{ name: 'confirmacaoucs' }">
-                Unidades Curriculares Inscritas
+                UC's Inscritas
             </router-link> 
           </li>
           <li class="nav-item">
             <router-link class="nav-link" 
             :class="{ active: $route.name === 'inscricaoturnos' }"
             :to="{ name: 'inscricaoturnos' }">
-                Inscrição nos Turnos
+                Inscrição Turnos
             </router-link> 
           </li>
           <li class="nav-item">

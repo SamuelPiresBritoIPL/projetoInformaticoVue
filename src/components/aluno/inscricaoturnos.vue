@@ -84,17 +84,19 @@
                             </label>
                           </div>
                         </div>
-                        <div style="margin-top: 20px; text-align: right;">
-                          <button v-if="buttonArray[index]" style="float: left!important" type="button" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
-                          <button type="button" style="margin-right: 10px;float: right!important" class="btn btn-primary" @click="submitInscricao()">Submeter</button>
-                          <button type="button" style="margin-right: 10px;float: right!important" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
+                        <div style="margin-top: 15px; text-align: center;">
+                          <button type="button" class="btn btn-link" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
                         </div>
+                        <div style="margin-top: 15px; text-align: center;">
+                          <button type="button" class="btn btn-secondary" style="margin-right: 5px;" @click="dialogState = true">Ver horários disponíveis</button>
+                          <button type="button" class="btn btn-secondary" style="margin-right: 5px;" @click="getSobreposicoes()">Verificar sobreposições do meu horário</button>
+                        </div>
+                        <div style="margin-top: 15px; text-align: center;">
+                          <button v-if="buttonArray[index]" type="button" style="margin-right: 5px;" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
+                          <button type="button" style="margin-right: 5px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
+                          <button type="button" class="btn btn-success" @click="submitInscricao()">Submeter</button>
+                        </div>  
                         <br>
-                        <div style="margin-top: 20px; text-align: center;">
-                          <button type="button" class="btn btn-link" style="" @click="getSobreposicoes()">Verificar sobreposição de horário</button>
-                          <button type="button" class="btn btn-link" @click="dialogState = true">Ver horários disponiveis</button>
-                          <button type="button" class="btn btn-link" style="float: right!important" @click="getCadeirasWithTurnosWebSocket()">Atualizar Vagas</button>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -103,7 +105,7 @@
                     <p v-for="(inscricao) in this.isncricoesAtuais[index]" :key="inscricao">{{inscricao["nome"] + (inscricao["ano"] ? " (" + inscricao["ano"] + "º ano): " : "")}}
                       <span v-for="(ins) in inscricao['turnos']" :key="ins"> {{ins.tipo + (ins.numero == 0 ? "" : ins.numero) + "    "}}</span>
                     </p>
-                    <span  style="text-align: center;">Turnos em que apenas existem 1 turno são automaticamente inscritos!</span>
+                    <span  style="text-align: center;">Componentes de UC's com apenas 1 turno são inscritos automaticamente!</span>
                   </div>
                 </div>
                  <div v-if="showTurnosRejeitados == true && !(this.buttonArray.length > 0 && hasButtonSelected)" style="color: red">
@@ -444,6 +446,11 @@ export default {
 </script>
 
 <style>
+.btn-secondary {
+    color: #fff;
+    background-color: #8b9196 !important;
+    border-color: #8b9196 !important;
+}
 .redcolor {
   color:red;
 }

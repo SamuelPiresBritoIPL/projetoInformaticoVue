@@ -11,7 +11,7 @@
         <div class="col-8">
           <div class="card w-100" style="margin-bottom: 5px;">
             <div class="card-body">
-              <h6 class="card-title">Unidades Curriculares</h6>
+              <h6 class="card-title">UC's Inscritas</h6>
               <hr style="margin-bottom: 0px;">
               <div v-if="!hasPedidos" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
                 <span style="text-align: center;">Não existe nenhum período de pedidos de alteração de UC's definido.</span>
@@ -30,13 +30,13 @@
               <div>
                 <button @click="showInfoPUC = !showInfoPUC" type="button" class="btn btn-link" style="margin-top: 2px;">{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}</button>
               </div>
-              <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonUnidadesCurriculares()">Unidades Curriculares</button>
+              <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonUnidadesCurriculares()">UC's Inscritas</button>
             </div>
           </div>          
           <br>
           <div class="card w-100">
             <div class="card-body">
-              <h6 class="card-title">Inscrição nos Turnos</h6>
+              <h6 class="card-title">Inscrição Turnos</h6>
               <hr style="margin-bottom: 0px;">
               <div v-if="!hasInscricoes" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
                 <span style="text-align: center;">Não existe nenhum período de inscrições definido.</span>
@@ -58,7 +58,7 @@
               <div>
                 <button @click="showInfoPIT = !showInfoPIT" type="button" class="btn btn-link" style="margin-top: 2px;">{{ !showInfoPIT ? "Saber mais..." : "Saber menos." }}</button>
               </div>
-              <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonInscricaoTurnos()">Inscrição nos Turnos</button>
+              <button type="button" class="btn btn-primary" style="width: 200px; margin-top: 10px;" @click="buttonInscricaoTurnos()">Inscrição Turnos</button>
             </div>
           </div>
         </div> 

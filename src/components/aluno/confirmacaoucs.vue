@@ -6,13 +6,13 @@
           <div class="col-md-5" :class="{ 'col-md-6': adicionarCadeirasForm == false}">
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title" style="margin-bottom: 5px;">Unidades Curriculares Atualmente Inscritas</h5>
+                <h5 class="card-title" style="margin-bottom: 5px;">Unidades Curriculares Inscritas</h5>
                 <hr>
                 <div v-if="!periodo && Object.keys(infoPedidos).length > 0" class="alert alert-info" role="alert" style="margin-top: 5px; text-align: center;">
-                  O período de Pedidos de Alteração de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
+                  O período de Pedidos de Inscrição de UC's <b>terá inicio</b> a <b>{{ infoPedidos.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdia ? "falta "+infoPedidos.diasAteAbertura : (infoPedidos.diasAteAbertura == 1 ? "falta " + infoPedidos.diasAteAbertura + " dia." : "faltam " + infoPedidos.diasAteAbertura + " dias.") }})
                 </div>
                 <div v-if="periodo && Object.keys(infoPedidos).length > 0" class="alert alert-success" role="alert" style="margin-top: 5px; text-align: center;">
-                  O período de Pedidos de Alteração de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
+                  O período de Pedidos de Inscrição de UC's <b>estará aberto</b> até a <b>{{ infoPedidos.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{infoPedidos.menosdeumdiatermino ? "falta "+infoPedidos.diasAteTerminar : (infoPedidos.diasAteTerminar == 1 ? "falta " + infoPedidos.diasAteTerminar + " dia." : "faltam " + infoPedidos.diasAteTerminar + " dias.") }})
                 </div>
                 <ul v-for="cadeiraToConfirm in cadeirasToConfirm" :key="cadeiraToConfirm.cadeira">
                   <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
@@ -20,7 +20,7 @@
                 </ul>
                 <div v-if="periodo" style="margin-top: 35px; text-align: center;">
                   <!-- <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="inscricaoCadeiras(0)" :disabled="adicionarCadeirasForm">Confirmar Cadeiras</button><br> -->
-                  <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="adicionarCadeiras()" :disabled="adicionarCadeirasForm">Fazer Pedido de Alteração</button><br>     
+                  <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 50%" @click="adicionarCadeiras()" :disabled="adicionarCadeirasForm">Efetuar Pedido de Inscrição</button><br>     
                 </div>  
               </div>
             </div>  
@@ -98,7 +98,7 @@
                   <div class="accordion-item">
                     <h2 class="accordion-header" id="headingThree">
                       <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[0]" aria-controls="collapseThree" @click="changeCollapsed(0)">
-                        Histórico dos meus Pedidos de Alteração
+                        Histórico dos meus Pedidos de Inscrição
                       </button>
                     </h2>
                     <div id="collapseThree" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
