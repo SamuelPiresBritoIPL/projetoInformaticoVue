@@ -16,7 +16,7 @@
             <table class="table" style="text-align: left;">
               <thead>
                 <tr>
-                  <th scope="col">Aluno</th>
+                  <th scope="col">Estudante</th>
                   <th scope="col">Unidades Curriculares</th>
                   <th scope="col">Estado</th>
                 </tr>

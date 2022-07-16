@@ -52,14 +52,14 @@
           <div class="accordion-item" >
             <h2 class="accordion-header" id="headingOne">
               <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" :aria-expanded="this.collapsed[0]" aria-controls="collapseOne" @click="changeCollapsed(0)">
-                Adicionar aluno à UC/Turno
+                Adicionar estudante à UC/Turno
               </button>
             </h2>
             <div id="collapseOne" :class="{collapse:this.collapsed[0]}" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
-                <label for="exampleFormControlInput1" class="form-label">Adicionar aluno à UC</label>
+                <label for="exampleFormControlInput1" class="form-label">Adicionar estudante à UC</label>
                 <div class="input-group mb-3">
-                  <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="insira o número de aluno" v-model="numeroadicionar">
+                  <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="insira o número de estudante" v-model="numeroadicionar">
                   <div class="input-group-append">
                     <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
                   </div>
@@ -70,9 +70,9 @@
                 <div v-if="hasErroraddAluno"  class="errorMessages">
                   <small style="color: #a94442; margin-left: 5px;">{{ errors.addAluno }}</small>
                 </div>
-                <label for="exampleFormControlInput1" class="form-label">Adicionar aluno a um turno</label>
+                <label for="exampleFormControlInput1" class="form-label">Adicionar estudante a um turno</label>
                 <div class="input-group mb-3">
-                  <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="insira o número de aluno" v-model="numeroadicionarTurno">
+                  <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="insira o número de estudante" v-model="numeroadicionarTurno">
                   <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
                     <option value="null">Selecione um turno.</option>
                     <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
@@ -118,7 +118,7 @@
                 <div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
                   <label class="col-sm-1 col-form-label">{{info.turno + " (" + info.numeroturnos + ")  "}}</label>
                   <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="0" v-model="info.valor">
-                  <span class="col-form-label">&nbsp;&nbsp;{{"Média de alunos por turno: " + info.mediavagas}}</span>
+                  <span class="col-form-label">&nbsp;&nbsp;{{"Média de estudantes por turno: " + info.mediavagas}}</span>
                 </div>
                 <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar</button> <br><br>  
               </div>
@@ -138,7 +138,7 @@
           </div>
         </div>
         <br>
-        <h6 v-if="this.turno != null" class="card-title">Mover alunos selecionados do turno atual para o selecionado</h6>
+        <h6 v-if="this.turno != null" class="card-title">Mover estudantes selecionados do turno atual para o selecionado</h6>
         <select v-if="this.turno != null" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoSelected">
           <option value="null">Selecione um turno.</option>
           <option v-for="(turno) in filteredArray" :key="turno.id" v-bind:value="turno.id">
@@ -152,14 +152,14 @@
           <button v-if="this.turno != null" class="btn btn-primary text-right" style="width: 20%; margin-top: 1px;" @click="moverEstudantes()">Mover</button>
         </div>
         <br>
-        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
-        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
+        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista estudantes (.xls)</button>
+        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista estudantes (.xls)</button>
         <br>
         <table class="table" style="text-align:left;">
           <thead>
             <tr>
               <th scope="col">Número</th>
-              <th scope="col">Nome do Aluno</th>
+              <th scope="col">Nome do Estudante</th>
               <th scope="col">Email</th>
               <th scope="col">Repetente </th>
               <th scope="col">{{this.counterStore.turnoToManage == null ? "Inscrito Turno" : "Remover"}}</th>
@@ -362,7 +362,7 @@ export default {
         }
       }
       if(this.numeroadicionar == null){
-        this.errors = {addAluno: "Deve escrever o número do aluno que pretende adicionar"}
+        this.errors = {addAluno: "Deve escrever o número do estudante que pretende adicionar"}
         console.log(this.errors)
         return;
       }
@@ -379,7 +379,7 @@ export default {
           this.numeroadicionar = null
         })
         .catch((error) => {
-          this.$toast.error("Não foi possível adicionar o aluno indicado à UC");
+          this.$toast.error("Não foi possível adicionar o estudante indicado à UC");
           if (error.response.data.login) {
             this.errorLoginAddToUC = error.response.data
           }
@@ -392,12 +392,12 @@ export default {
         }
       }
       if(numeroadicionarTurno == null && (turnoescolhido == null || turnoescolhido == "null")){
-        this.errors = {addAlunoTurno: "Deve escrever um número de um aluno e selecionar um Turno!"}
+        this.errors = {addAlunoTurno: "Deve escrever um número de um estudante e selecionar um Turno!"}
         console.log(this.errors)
         throw "Erro";
       }
       if(numeroadicionarTurno == null){
-        this.errors = {addAlunoTurno: "Deve escrever um número de um aluno!"}
+        this.errors = {addAlunoTurno: "Deve escrever um número de um estudante!"}
         console.log(this.errors)
         throw "Erro";
       }
@@ -543,7 +543,7 @@ export default {
           this.getStatsTurno(this.turno.id)
         })
         .catch((error) => {
-          this.$toast.error("Não foram alunos movidos.");
+          this.$toast.error("Não foram movidos estudantes.");
           if (error.response.data.inscricaoIds != null) {
             this.errorMoverAlunos = error.response.data 
           }

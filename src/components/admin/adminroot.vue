@@ -56,7 +56,7 @@
                             :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon style="margin-right: 15px"
                                 icon="people"/>
-                                Alunos
+                                Estudantes
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">

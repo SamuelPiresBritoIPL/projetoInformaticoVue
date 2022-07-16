@@ -49,8 +49,8 @@
             </div>
         </div>
         <br>
-        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista alunos (.xls)</button>
-        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista alunos (.xls)</button>
+        <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista estudantes (.xls)</button>
+        <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista estudantes (.xls)</button>
         <br>
         <table class="table" style="text-align:left;">
           <thead>

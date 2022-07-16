@@ -125,10 +125,10 @@ const router = createRouter({
           meta: { title: "Dashboard" },
         },
         {
-          path: "geriralunos",
+          path: "estudantes",
           name: "geriralunos",
           component: GerirAlunos,
-          meta: { title: "Alunos" },
+          meta: { title: "Estudantes" },
         },
         {
           path: "gerircoordenadores",
@@ -207,10 +207,10 @@ const router = createRouter({
           meta: { title: "Dashboard" },
         },
         {
-          path: "geriralunos",
+          path: "estudantes",
           name: "geriralunosC",
           component: GerirAlunos,
-          meta: { title: "Alunos" },
+          meta: { title: "Estudantes" },
         },
         {
           path: "gerircoordenadores",

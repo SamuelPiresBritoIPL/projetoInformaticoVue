@@ -45,12 +45,12 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingThree">
           <button class="accordion-button" :class="{collapsed:this.collapsed[2]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" :aria-expanded="this.collapsed[2]" aria-controls="collapseThree" @click="changeCollapsed(2)">
-            2ª Atualizar inscrições e ucs aprovadas (alunos)
+            2ª Atualizar inscrições e ucs aprovadas (estudantes)
           </button>
         </h2>
         <div id="collapseOne" class="accordion-collapse" :class="{collapse:this.collapsed[2]}" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo e o curso de forma a buscar os dados dos alunos e das suas respetivas inscrições em UC's.</p>
+            <p class="card-text">Selecione o ano letivo e o curso de forma a buscar os dados dos estudantes e das suas respetivas inscrições em UC's.</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
               <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202122)" v-model="anoletivoinscricoes">
@@ -103,7 +103,7 @@
       <div class="accordion-item">
         <h2 class="accordion-header" id="headingFive">
           <button class="accordion-button" :class="{collapsed:this.collapsed[4]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" :aria-expanded="this.collapsed[4]" aria-controls="collapseFive" @click="changeCollapsed(4)">
-            3º Inscrever alunos nos turnos
+            3º Inscrever estudantes nos turnos
           </button>
         </h2>
         <div id="collapseFive" class="accordion-collapse" :class="{collapse:this.collapsed[4]}" aria-labelledby="headingFive" data-bs-parent="#accordionExample">

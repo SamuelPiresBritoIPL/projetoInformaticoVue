@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Alunos</h3>
+    <h3 style="margin-top: 20px; margin-bottom: 25px;">Estudantes</h3>
     <div class="card">
       <div class="card-header">
-        Informações de Aluno
+        Informações de Estudante
       </div>
       <div class="card-body">
         <div class="mb-3">
-          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Insira o número de aluno a pesquisar" v-model="login">
+          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Insira o número do estudante a pesquisar" v-model="login">
         </div>
         <div v-if="hasError" class="errorMessages" style="margin-bottom: 16px;">
           <small style="color: #a94442; margin-left: 5px;">{{ errorMsg }}</small>
@@ -36,7 +36,7 @@
           <div v-if="navTabs[0] == true" class="card-body">
             <div v-if="this.ucsInscritas.length == 0">
               <h6 class="card-title" style="margin-bottom:25px;">Unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O aluno não esta inscrito em nenhuma unidade curricular</p>
+              <p style="margin-bottom:25px;">O estudante não esta inscrito em nenhuma unidade curricular</p>
             </div>
             <div v-else>
               <div v-for="curso in this.ucsInscritas" :key="curso">
@@ -67,7 +67,7 @@
           <div v-if="navTabs[1] == true" class="card-body">
             <div v-if="this.ucsAprovadas.length == 0">
               <h6 class="card-title" style="margin-bottom:25px;">Unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O aluno não foi aprovado em nenhuma unidade curricular até ao momento</p>
+              <p style="margin-bottom:25px;">O estudante não foi aprovado em nenhuma unidade curricular até ao momento</p>
             </div>
             <div v-else>
               <div v-for="curso in this.ucsAprovadas" :key="curso">
@@ -94,7 +94,7 @@
           <div v-if="navTabs[2] == true" class="card-body">
             <div v-if="this.pedidos.length == 0">
               <h6 class="card-title" style="margin-bottom:25px;">Pedidos de confirmação de unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O aluno não tem nenhum pedido de confirmação de unidades curriculares</p>
+              <p style="margin-bottom:25px;">O estudante não tem nenhum pedido de confirmação de unidades curriculares</p>
             </div>
             <div v-else>
               <div>

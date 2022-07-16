@@ -24,7 +24,7 @@
               </div>
               <div v-if="showInfoPUC" style="margin-top: 2px;">
                 <small class="card-text">Nesta página é possível efetuar pedidos de adição de Unidades Curriculares à aplicação, no caso de ainda não o estarem.<br> Com o objetivo de possibilitar o estudante de se inscrever-se nos turnos sem perder a oportunidade. 
-                <br>Durante o período definido pela coordenação de curso o aluno pode então requerir a adição da(s) UC('s) que pretender, justificando devidamente.<br> A coordenação posteriormente irá decidir justamente se aprova ou rejeita o 
+                <br>Durante o período definido pela coordenação de curso o estudante pode então requerir a adição da(s) UC('s) que pretender, justificando devidamente.<br> A coordenação posteriormente irá decidir justamente se aprova ou rejeita o 
                 pedido.<br> </small>
               </div>
               <div>
