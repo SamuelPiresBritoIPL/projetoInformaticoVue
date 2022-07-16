@@ -4,7 +4,7 @@
         <div style="margin-top: 65px">
             <div class="card mb-3" style="width: 30%">
                 <div class="card-header bg-transparent" style="text-align: center">
-                    <label style="margin-top: 10px;">Aplicação de Gestão/Inscrição nos Turnos</label>
+                    <label style="margin-top: 10px;">AGIT - Aplicação de Gestão de Inscrição nos Turnos</label>
                     <h5>Login - Professor</h5>
                 </div>
                 <div class="card-body text-dark">
