@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
       <div style="text-align: center;">
-        <h3 style="margin-top: 35px; margin-bottom: 15px;">Aplicação de Gestão de Inscrições nos Turnos</h3>
+        <h3 style="margin-top: 35px; margin-bottom: 15px;">AGIT - Aplicação de Gestão de Inscrições nos Turnos</h3>
         <h5 v-if="counterStore.utilizadorLogado.length != 0">{{ "["+counterStore.utilizadorLogado.codigoCurso+"] "+counterStore.utilizadorLogado.curso }}</h5>
         <p class="card-title" style="text-align: center;">Ano Letivo: <b>{{ counterStore.ano }}</b> | Semestre: <b>{{ counterStore.semestre }}</b></p>
       </div>
