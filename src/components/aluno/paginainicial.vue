@@ -41,14 +41,18 @@
               <div v-if="!hasInscricoes" class="alert alert-danger" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
                 <span style="text-align: center;">Não existe nenhum período de inscrições definido.</span>
               </div>
-              <div v-if="infoInscricoes.length > 0 && !isInscricoesOpen" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
-                <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
-                  O período de Inscrição nos Turnos para as UC´s <b>{{ inscricao.ano == 0 ? "de todos os anos" : "do ano "+inscricao.ano }}</b> terá <b>inicio</b> a <b>{{ inscricao.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdia ? "falta "+inscricao.diasAteAbertura : (inscricao.diasAteAbertura == 1 ? "falta " + inscricao.diasAteAbertura + " dia." : "faltam " + inscricao.diasAteAbertura + " dias.") }})
-                </div>
-              </div>
               <div v-if="infoInscricoes.length > 0 && isInscricoesOpen" class="alert alert-success" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
                 <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
-                  <br v-if="counterStore.utilizadorLogado.codigoCurso != inscricao.codigo"><b>{{ counterStore.utilizadorLogado.codigoCurso != inscricao.codigo ? "["+inscricao.codigo+"] "+inscricao.nome+" - " : "" }}</b>O período de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ inscricao.ano == 0 ? "todos os anos " : "o ano "+inscricao.ano }}</b> até a <b>{{ inscricao.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdiatermino ? "falta "+inscricao.diasAteTerminar : (inscricao.diasAteTerminar == 1 ? "falta " + inscricao.diasAteTerminar + " dia." : "faltam " + inscricao.diasAteTerminar + " dias.") }})
+                  <div v-if="inscricao.isAberto == true">
+                    <b>{{ counterStore.utilizadorLogado.codigoCurso != inscricao.codigo ? "["+inscricao.codigo+"] "+inscricao.nome+" - " : "" }}</b>O período de Inscrição nos Turnos <b>estará aberto</b> para <b>{{ inscricao.ano == 0 ? "todos os anos " : "o ano "+inscricao.ano }}</b> até a <b>{{ inscricao.dataEncerar.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdiatermino ? "falta "+inscricao.diasAteTerminar : (inscricao.diasAteTerminar == 1 ? "falta " + inscricao.diasAteTerminar + " dia." : "faltam " + inscricao.diasAteTerminar + " dias.") }})
+                  </div>
+                </div>
+              </div>
+              <div v-if="infoInscricoes.length > 0" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
+                <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
+                  <div v-if="inscricao.isAberto == false">
+                    O período de Inscrição nos Turnos para as UC´s <b>{{ inscricao.ano == 0 ? "de todos os anos" : "do ano "+inscricao.ano }}</b> terá <b>inicio</b> a <b>{{ inscricao.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdia ? "falta "+inscricao.diasAteAbertura : (inscricao.diasAteAbertura == 1 ? "falta " + inscricao.diasAteAbertura + " dia." : "faltam " + inscricao.diasAteAbertura + " dias.") }})
+                  </div>
                 </div>
               </div>
               <div v-if="showInfoPIT" style="margin-top: 10px;">
