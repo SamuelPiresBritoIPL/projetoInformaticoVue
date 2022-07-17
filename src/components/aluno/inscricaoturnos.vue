@@ -15,6 +15,19 @@
       </div>
     </div>
   </GDialog>
+  <GDialog v-model="popUpConfirmation" max-width="500">
+    <div class="wrapper">
+      <div class="content">
+        <div style="text-align:right"><button class="btn btn--outline-gray" style="text-align:center" @click="popUpConfirmation = false"><BootstrapIcon style="margin-right: 2px" icon="x-lg"/> Fechar</button></div>
+        <div style="text-align: center"><h5>Tem a certeza que pretende avançar com a submissão?</h5></div>
+        <p style="text-align: center;font-size: 0.8em;">*Certifique-se que selecionou as opções que pretende!*</p>
+        <div style="text-align: center;">
+          <button type="button" class="btn btn-danger" style="width: 30%; margin-right: 5px;" @click="popUpConfirmation = false">Não</button>
+          <button type="button" class="btn btn-success" style="width: 30%;" @click="submitInscricao()">Sim</button>
+        </div>
+      </div>
+    </div>
+  </GDialog>
     <div class="container-fluid">
         <div class="row">
           <div class="col-md-1">
@@ -94,7 +107,8 @@
                         <div style="margin-top: 15px; text-align: center;">
                           <button v-if="buttonArray[index]" type="button" style="margin-right: 5px;" class="btn btn-primary" @click="buttonArray[index] = !buttonArray[index]; noButtonSelectedMsgs = true">Voltar</button>
                           <button type="button" style="margin-right: 5px;" class="btn btn-warning" @click="clearRadios()">Limpar escolhas</button>
-                          <button type="button" class="btn btn-success" @click="submitInscricao()">Submeter</button>
+                          <!-- <button type="button" class="btn btn-success" @click="submitInscricao()">Submeter</button> -->
+                          <button type="button" class="btn btn-success" @click="popUpConfirmation = true">Submeter</button>
                         </div>  
                         <br>
                       </div>
@@ -200,7 +214,8 @@ export default {
       horario: [],
       dataInicialHorario: null,
       horariopessoal: [],
-      dataInicialHorariopessoal: null
+      dataInicialHorariopessoal: null,
+      popUpConfirmation: false
     };
   },
   sockets: {
@@ -350,6 +365,7 @@ export default {
           this.allTurnosIds = this.allTurnosIds.concat(cadeira.OT)
         }   
       });
+      this.popUpConfirmation = false
       this.$axios.post("cadeirasaluno/inscricao", {
             "idUtilizador": this.counterStore.utilizadorLogado.id,
             "turnosIds": this.allTurnosIds
