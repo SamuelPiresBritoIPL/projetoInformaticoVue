@@ -48,9 +48,9 @@
                   </div>
                 </div>
               </div>
-              <div v-if="infoInscricoes.length > 0" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
+              <div v-if="infoInscricoes.length > 0">
                 <div v-for="inscricao in infoInscricoes" :key="inscricao" style="text-align: center;">
-                  <div v-if="inscricao.isAberto == false">
+                  <div v-if="inscricao.isAberto == false" class="alert alert-info" role="alert" style="margin-left: 25px; margin-right: 25px; margin-top: 5px;">
                     O período de Inscrição nos Turnos para as UC´s <b>{{ inscricao.ano == 0 ? "de todos os anos" : "do ano "+inscricao.ano }}</b> terá <b>inicio</b> a <b>{{ inscricao.dataAbertura.replace(':00.000000Z', '').replace('T', ' ') }}h</b> ({{inscricao.menosdeumdia ? "falta "+inscricao.diasAteAbertura : (inscricao.diasAteAbertura == 1 ? "falta " + inscricao.diasAteAbertura + " dia." : "faltam " + inscricao.diasAteAbertura + " dias.") }})
                   </div>
                 </div>
