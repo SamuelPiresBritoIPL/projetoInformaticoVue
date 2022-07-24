@@ -81,7 +81,7 @@
                 >Confifmar Edição</button>
               <button v-if="iniciarConfirmacao == true" type="button" class="btn btn-primary" style="margin-right: 5px;" 
                 @click="createAbertura(this.counterStore.aberturasByCourse.id, 0, 0, dataAbertura, dataEncerrar)"
-                >Confirmar Iniciação</button>
+                >Confirmar</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
             </form>
           </div>
