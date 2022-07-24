@@ -168,7 +168,7 @@
               <button v-if="editarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
               @click="updateAbertura(selectedYear, dataAbertura, dataEncerrar)">Confirmar Edição</button>
               <button v-if="iniciarInscricao == true" type="button" class="btn btn-primary" style="margin-right: 5px;"
-              @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 1, dataAbertura, dataEncerrar)">Confirmar Iniciação</button>
+              @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 1, dataAbertura, dataEncerrar)">Confirmar</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()">Cancelar</button>
               <br>
               <span v-if="this.msgErrorTurnos != null" style="white-space: pre-line;color: red;">{{this.msgErrorTurnos}}</span>
