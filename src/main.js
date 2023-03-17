@@ -36,7 +36,7 @@ import 'gitart-vue-dialog/dist/style.css'
 import { GDialog } from 'gitart-vue-dialog'
 import { plugin as dialogPlugin } from 'gitart-vue-dialog'
 import VueCal from 'vue-cal'
-import vuecalptbr from 'vue-cal/dist/i18n/pt-br.js'
+import vuecalptbr from 'vue-cal/dist/i18n/pt-br.es.js'
 import vuecalcss from 'vue-cal/dist/vuecal.css'
 
 
@@ -63,8 +63,8 @@ app.use(dialogPlugin)
 app.use(Toaster, toastOptions)
 app.use(socketIO)
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
+axios.defaults.baseURL = "http://projetoinformaticolaravel.test/api";
+app.config.globalProperties.$serverUrl = "http://projetoinformaticolaravel.test/";
 axios.defaults.headers.common["Authorization"] = `Bearer ${
     sessionStorage.tokenAluno ? sessionStorage.tokenAluno : (sessionStorage.tokenAdmin ? sessionStorage.tokenAdmin : (sessionStorage.tokenCoordenador ? sessionStorage.tokenCoordenador : (sessionStorage.tokenProfessor ? sessionStorage.tokenProfessor : "")))
 }`;
