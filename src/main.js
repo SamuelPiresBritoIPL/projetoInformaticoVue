@@ -63,8 +63,8 @@ app.use(dialogPlugin)
 app.use(Toaster, toastOptions)
 app.use(socketIO)
 
-axios.defaults.baseURL = "http://projetoinformaticolaravel.test/api";
-app.config.globalProperties.$serverUrl = "http://projetoinformaticolaravel.test/";
+axios.defaults.baseURL = "http://127.0.0.1:8000/api";
+app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
 axios.defaults.headers.common["Authorization"] = `Bearer ${
     sessionStorage.tokenAluno ? sessionStorage.tokenAluno : (sessionStorage.tokenAdmin ? sessionStorage.tokenAdmin : (sessionStorage.tokenCoordenador ? sessionStorage.tokenCoordenador : (sessionStorage.tokenProfessor ? sessionStorage.tokenProfessor : "")))
 }`;
