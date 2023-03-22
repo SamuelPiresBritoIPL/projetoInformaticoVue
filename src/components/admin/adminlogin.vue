@@ -7,7 +7,7 @@
                     <label style="margin-top: 10px;">AGIT - Aplicação de Gestão de Inscrição nos Turnos</label>
                     <h5>Login - Administração</h5>
                 </div>
-                <div class="card-body text-dark">
+                <div class="card-body">
                     <div style="padding: 10px 20px">
                         <div class="mb-3">
                             <label for="formGroupExampleInput" class="form-label"><b>Utilizador</b></label>

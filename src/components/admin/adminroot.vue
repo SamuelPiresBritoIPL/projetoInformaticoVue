@@ -24,7 +24,7 @@
                     <hr>
                     <ul class="nav nav-pills flex-column mb-auto">
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link" 
                             :class="{ active: $route.name === 'dashboard' }"    
                             :to="{ name: 'dashboard' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -33,7 +33,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'gerircoordenadores' }"
                             :to="{ name: 'gerircoordenadores' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -42,7 +42,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'gerircursos' || $route.name === 'gerircadeira' }"
                             :to="{ name: 'gerircursos' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -51,7 +51,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'geriralunos' }"
                             :to="{ name: 'geriralunos' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -60,7 +60,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'gerirperiodos' }"
                             :to="{ name: 'gerirperiodos' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -69,7 +69,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'gerirconfirmacoes' }"
                             :to="{ name: 'gerirconfirmacoes' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -78,7 +78,7 @@
                             </router-link>  
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'atualizardados' }"
                             :to="{ name: 'atualizardados' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -87,7 +87,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'gerirutilizador' }"
                             :to="{ name: 'gerirutilizador' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -96,7 +96,7 @@
                             </router-link>
                         </li>
                         <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link link-dark" 
+                            <router-link class="nav-link " 
                             :class="{ active: $route.name === 'logs' }"
                             :to="{ name: 'logs' }">
                                 <BootstrapIcon style="margin-right: 15px"
@@ -196,6 +196,10 @@ export default {
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+.nav, .nav-link {
+    --bs-nav-link-color : #000;
 }
 
 .nav-link {
