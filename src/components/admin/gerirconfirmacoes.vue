@@ -4,6 +4,7 @@
     <v-select v-if="this.counterStore.courses.length > 1" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse(selectedCourse)">
     </v-select>
     <br>
+    <div class="accordion" id="accordionExample">
     <div class="accordion-item" v-if="this.counterStore.pedidosByCourseAntigos.length >= 1">
       <h2 class="accordion-header" id="headingTwo">
         <button class="accordion-button" :class="{collapsed:this.collapsed[0]}" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" :aria-expanded="this.collapsed[0]" aria-controls="collapseTwo" @click="changeCollapsed(0)">
@@ -37,6 +38,7 @@
         </div>
       </div>
     </div>
+  </div>
     <div class="row">
       <div class="col-md-5">
         <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 100%; margin-top:5px;">
