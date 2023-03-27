@@ -1,13 +1,15 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Atualizar Base de Dados</h3>
-    <div class="alert alert-danger" style="text-align: center;" role="alert">
-      <p style="margin-bottom: 0px;">Todas as ações poderão demorar algum tempo (<b>não dê refresh à página</b>, nem saia
-        da mesma sem que ação executada termine, caso contrário os dados não ficarão atualizados de forma correta).</p>
+    <h3 class="mt-3 mb-4">Atualizar Base de Dados</h3>
+    <div class="alert alert-danger text-center" role="alert"><i class="align-baseline bi bi-exclamation-octagon-fill"></i> 
+      Todas as ações poderão demorar algum tempo <i class="align-baseline  bi bi-exclamation-octagon-fill"></i><br><b>Não dê refresh à página</b>, nem saia
+        da mesma sem que ação executada termine, caso contrário os dados não ficarão atualizados de forma correta! 
     </div>
     <div>
-      <div class="alert alert-primary" style="margin-bottom: 0px; text-align: center;" role="alert">
-        A <b>primeira busca</b> de dados de um determinado ano letivo deve ser efetuada pela seguinte ordem!
+      <div class="alert alert-primary mb-0 text-center" role="alert">
+        <i class="align-baseline  bi bi-info-square-fill"></i> 
+        A <b>primeira busca</b> de dados de um determinado ano letivo deve ser efetuada pela seguinte ordem! 
+        <i class="align-baseline bi bi-info-square-fill"></i>
       </div>
       <br>
       <div class="accordion" id="accordionExample">
@@ -22,12 +24,12 @@
         <div id="collapseTwo" class="accordion-collapse" :class="{ collapse: this.collapsed[1] }"
           aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo e o semestre de forma a buscar os dados dos cursos e professores
+            <p class="card-text">Selecione o <b>ano letivo</b> e o <b>semestre</b> de forma a buscar os dados dos cursos e professores
               mais atualizados.</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
               <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1"
-                placeholder="Anoletivo (ex: 202122)" v-model="anoletivocurso">
+                placeholder="Anoletivo (ex: 202223)" v-model="anoletivocurso">
               <datalist id="anosletivos">
                 <option v-for="anoletivo in this.counterStore.anosletivos" :key="anoletivo.id"
                   v-bind:value="anoletivo.anoletivo">
@@ -45,9 +47,7 @@
             </div>
             <button :disabled='blocked' class="btn btn-primary"
               @click="updateCourseInformation(anoletivocurso, semestrecurso)">
-              <span v-if="loading[0]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Atualizar dados
-            </button>
+              <span v-if="loading[0]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>Atualizar turnos/cursos/professores</button>
           </div>
         </div>
       </div>
@@ -60,15 +60,15 @@
             2ª Atualizar inscrições e ucs aprovadas (estudantes)
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse" :class="{ collapse: this.collapsed[2] }"
+        <div id="collapseThree" class="accordion-collapse" :class="{ collapse: this.collapsed[2] }"
           aria-labelledby="headingThree" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo e o curso de forma a buscar os dados dos estudantes e das suas
+            <p class="card-text">Selecione o <b>ano letivo</b> e o <b>curso</b> de forma a buscar os dados dos estudantes e das suas
               respetivas inscrições em UC's.</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
               <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1"
-                placeholder="Anoletivo (ex: 202122)" v-model="anoletivoinscricoes">
+                placeholder="Anoletivo (ex: 202223)" v-model="anoletivoinscricoes">
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso</label>
@@ -82,7 +82,7 @@
             <button :disabled='blocked' class="btn btn-primary"
               @click="updateInscricaoInformation(anoletivoinscricoes, 2)">
               <span v-if="loading[1]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Atualizar dados
+              Atualizar inscrições e ucs aprovadas (estudantes)
             </button>
           </div>
         </div>
@@ -99,7 +99,7 @@
             <p class="card-text">Selecione o ano letivo e o semestre para ir buscar os novos dados dos alunos e das ucs já feitas pelo mesmo.</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
-              <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202122)" v-model="anoletivoaprovacoes">
+              <input type="number" class="form-control" list="anosletivos" id="exampleFormControlInput1" placeholder="Anoletivo (ex: 202223)" v-model="anoletivoaprovacoes">
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso</label>
@@ -128,7 +128,7 @@
         <div id="collapseFive" class="accordion-collapse" :class="{ collapse: this.collapsed[4] }"
           aria-labelledby="headingFive" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo e o semestre para efetuar a inscrição nos turnos únicos (Turnos no
+            <p class="card-text">Selecione o <b>ano letivo</b> e o <b>semestre</b> para efetuar a inscrição nos turnos únicos (Turnos no
               qual são únicos para um determinado tipo de aulas de uma UC. Ex: Turno único de uma UC para a componente
               teórica).</p>
             <div class="mb-3">
@@ -155,7 +155,7 @@
             <button :disabled='blocked' class="btn btn-primary"
               @click="updateInscricoes(anoletivoinscreverturnos, semestreinscreverturnos)">
               <span v-if="loading[4]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Atualizar dados
+              Inscrever estudantes nos turnos
             </button>
           </div>
         </div>
@@ -169,10 +169,10 @@
             4º Atualizar horários dos turnos
           </button>
         </h2>
-        <div id="collapseOne" class="accordion-collapse" :class="{ collapse: this.collapsed[5] }"
+        <div id="collapseSix" class="accordion-collapse" :class="{ collapse: this.collapsed[5] }"
           aria-labelledby="headingSix" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo, datas de início e fim de semestre e o curso para o qual pretende
+            <p class="card-text">Selecione o <b>ano letivo</b>, <b>datas de início e de fim de semestre</b> e o <b>curso</b> para o qual pretende
               atualizar os horários</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
@@ -207,7 +207,7 @@
               <label for="exampleFormControlInput1" class="form-label">Curso</label>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCourse">
                 <option value="" disabled selected>[Código Curso] Nome do curso (Última atualização do horário)</option>
-                <!--<option value="0">Todos</option>-->
+                <!-- <option value="0">Todos</option> -->
                 <option v-for="course in this.counterStore.courses" :key="course.id" v-bind:value="course.id">
                   {{ "[" + course.codigo + "] " + course.nome + " " + course.ultimoupdateaula }}
                 </option>
@@ -216,7 +216,7 @@
             <button :disabled='blocked' class="btn btn-primary"
               @click="updateHorariosTurnos(anoletivoativo, dataInicioSemestre, dataFimSemestre, selectedCourse)">
               <span v-if="loading[5]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Atualizar dados
+              Atualizar horários dos turnos
             </button>
           </div>
         </div>
@@ -233,7 +233,7 @@
         <div id="collapseSeven" class="accordion-collapse" :class="{ collapse: this.collapsed[6] }"
           aria-labelledby="headingSeven" data-bs-parent="#accordionExample">
           <div class="accordion-body">
-            <p class="card-text">Selecione o ano letivo e o semestre de forma a os gerir.</p>
+            <p class="card-text">Selecione o <b>ano letivo</b> e o <b>semestre</b> de forma a os gerir.</p>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
               <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="anoletivoativo">
@@ -256,7 +256,7 @@
             <button :disabled='blocked' class="btn btn-primary"
               @click="updateAnoletivoAtivo(anoletivoativo, semestreativo)">
               <span v-if="loading[3]" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-              Atualizar dados
+              Alterar ano letivo/semestre a gerir
             </button>
           </div>
         </div>
@@ -294,7 +294,7 @@
                 v-model="urlaulas">
             </div>
             <button :disabled='blocked' class="btn btn-primary" @click="updateUrls()">
-              <span aria-hidden="true"></span> Atualizar url's
+              <span aria-hidden="true"></span> Atualizar endpoints de busca às API's
             </button>
           </div>
         </div>
@@ -520,20 +520,45 @@ export default {
     },
     changeCollapsed(number) {
       this.collapsed[number] = (this.collapsed[number] == true ? false : true)
-    }
+    },
+    //confirm before leaving page
+    confirmLeaving(event) {
+      if (this.blocked) {
+        if (!window.confirm("Os dados estão a ser carregados, tem a certeza que quer sair?")) {
+          event.preventDefault();
+          event.returnValue = "";
+        }
+      }
+    },
+    preventNav(event) {
+      if (!this.blocked) return
+      event.preventDefault()
+      event.returnValue = ""
+    },
   },
   mounted() {
     this.counterStore.getAnosLetivos()
     this.counterStore.getCourses()
     this.getUrls()
   },
+  beforeMount() {
+    window.addEventListener("beforeunload", this.preventNav)
+  },
+  beforeRouteLeave(to, from, next) {
+    if (this.blocked) {
+      if (!window.confirm("Os dados estão a ser carregados, tem a certeza que quer sair?")) {
+        window.removeEventListener("beforeunload", this.preventNav);
+        return;
+      }
+    }
+    next();
+  },
+  onClose(event) {
+    this.preventNav(event);
+  }
+
 };
 </script>
 
-<style>@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}</style>
+<style scoped>
+</style>

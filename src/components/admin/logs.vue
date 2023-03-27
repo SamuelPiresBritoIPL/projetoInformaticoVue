@@ -1,9 +1,9 @@
 <template>
   <div class="container-fluid">
-    <div class="card w-100" style="margin-top: 10px;">
+    <div class="card w-100 mt-2">
       <div class="card-body">
         <h5 class="card-title">Tabela de logs da aplicação</h5>
-        <div class="table-responsive" style="max-height: 500px;">
+        <div class="table-responsive" style="max-height: 750px;">
           <table class="table table-responsive" >
             <thead>
               <tr>
@@ -59,12 +59,12 @@ export default {
 };
 </script>
 
-<style>
-@media (min-width: 1024px) {
+<style scoped>
+/* @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

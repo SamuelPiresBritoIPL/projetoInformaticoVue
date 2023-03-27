@@ -1,124 +1,76 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-3" style="padding-left: 0px;">
-            <nav>
-                <div class="d-flex flex-column flex-shrink-0 p-3 bg-light sidebar-container" style="width: 280px; min-height: 100vh;">
-                    <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" style="margin-left:50px;">
-                        <span class="fs-4" style="text-align:center;">Administrador</span>
-                    </a>
-                    <span style="text-align:center;">{{ utilizadorLogado.login }}</span>
-                    <span style="text-align:center;">{{ utilizadorLogado.nome ? utilizadorLogado.nome.replace(/([a-z]+) .* ([a-z]+)/i, "$1 $2") : " " }}</span>
-                    <hr>
-                    <label >Ano letivo:</label>
-                    <select id="asd" class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.selectedAnoletivo" v-on:change="onChangeAnoSemestre">
+    <nav class="navbar navbar-expand-xl">
+  <div class="container-fluid">
+    <a class="navbar-brand">Administração</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarScroll">
+      <ul class="navbar-nav nav-underline me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 150px;">
+        <li class="nav-item">
+            
+            <router-link class="nav-link" :class="{ active: $route.name === 'dashboard' }" :to="{ name: 'dashboard' }"><i class="align-baseline bi bi-display"></i> Dashboard</router-link>
+        </li>
+        <li class="nav-item ">
+            <router-link class="nav-link " :class="{ active: $route.name === 'atualizardados' }" :to="{ name: 'atualizardados' }"><i class="align-baseline bi bi-database-fill-gear"></i> Atualizar Base de Dados</router-link>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="align-baseline bi bi-diagram-3-fill"></i> Gestão
+          </a>
+          <ul class="dropdown-menu">
+            <li><router-link :to="{name: 'gerircoordenadores'}" :class="{ active: $route.name === 'gerircoordenadores' }" class="dropdown-item"><i class="align-baseline bi bi-person-fill-gear"></i> Coordenadores</router-link></li>
+            <li><router-link :to="{name: 'gerircursos'}" :class="{ active: $route.name === 'gerircursos' || $route.name === 'gerircadeira' }" class="dropdown-item"><i class="align-baseline bi bi-mortarboard-fill"></i> Cursos</router-link></li>
+            <li><router-link :to="{name: 'gerirperiodos'}" :class="{ active: $route.name === 'gerirperiodos' }" class="dropdown-item"><i class="align-baseline bi bi-calendar-week-fill"></i> Períodos</router-link></li>
+            <li><router-link :to="{name: 'gerirconfirmacoes'}" :class="{ active: $route.name === 'gerirconfirmacoes' }" class="dropdown-item"><i class="align-baseline bi bi-ui-checks"></i> Pedidos UC's</router-link></li>
+            <!-- <li><hr class="dropdown-divider"></li> -->
+            <!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
+          </ul>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{name: 'geriralunos'}" :class="{ active: $route.name === 'geriralunos' }" class="nav-link"><i class="align-baseline bi bi-people-fill"></i> Estudantes</router-link>
+        </li>
+
+        <li class="nav-item">
+          <router-link :to="{name: 'logs'}" :class="{ active: $route.name === 'logs' }" class="nav-link"><i class="align-baseline bi bi-body-text"></i> Logs</router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{name: 'gerirutilizador'}" :class="{ active: $route.name === 'gerirutilizador' }" class="nav-link"><i class="align-baseline bi bi-person-square"></i> Perfil</router-link>
+        </li>
+       
+      </ul>
+      <div class="d-flex justify form">
+                    <select class="form-select mx-1" aria-label=".form-select" v-model="this.counterStore.selectedAnoletivo" v-on:change="onChangeAnoSemestre">
+                        <option>Selecione um Ano Letivo</option>
                         <option  v-for="anoletivo in anosLetivos" :key="anoletivo" v-bind:value="anoletivo.id">
                         {{ anoletivo.anoletivo }}
                         </option>
                     </select>
-                    <label>Semestre:</label>
-                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="this.counterStore.semestre" v-on:change="onChangeAnoSemestre">
+                    <select class="form-select mx-1" aria-label=".form-select" v-model="this.counterStore.semestre" v-on:change="onChangeAnoSemestre">
+                        <option>Selecione um Semestre</option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                     </select>
-                    <hr>
-                    <ul class="nav nav-pills flex-column mb-auto">
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link" 
-                            :class="{ active: $route.name === 'dashboard' }"    
-                            :to="{ name: 'dashboard' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="display"/>
-                                Dashboard
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'gerircoordenadores' }"
-                            :to="{ name: 'gerircoordenadores' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="person-lines-fill"/>
-                                Gerir Coordenadores
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'gerircursos' || $route.name === 'gerircadeira' }"
-                            :to="{ name: 'gerircursos' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="mortarboard"/>
-                                Gerir Cursos
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'geriralunos' }"
-                            :to="{ name: 'geriralunos' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="people"/>
-                                Estudantes
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'gerirperiodos' }"
-                            :to="{ name: 'gerirperiodos' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="calendar-event"/>
-                                Gerir Períodos
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'gerirconfirmacoes' }"
-                            :to="{ name: 'gerirconfirmacoes' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="clipboard2-check"/>
-                                Gerir Pedidos UC
-                            </router-link>  
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'atualizardados' }"
-                            :to="{ name: 'atualizardados' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="arrow-clockwise"/>
-                                Atualizar Base Dados
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'gerirutilizador' }"
-                            :to="{ name: 'gerirutilizador' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="person"/>
-                                Gerir utilizador
-                            </router-link>
-                        </li>
-                        <li class="nav-item sidebar-navigation">
-                            <router-link class="nav-link " 
-                            :class="{ active: $route.name === 'logs' }"
-                            :to="{ name: 'logs' }">
-                                <BootstrapIcon style="margin-right: 15px"
-                                icon="list-columns-reverse"/>
-                                Logs
-                            </router-link>
-                        </li>
-                    </ul>
-                    <hr>
-                    <div>
-                        <a type="button" class="d-flex align-items-center link-dark text-decoration-none" @click="logout()">
-                            <strong>Logout</strong>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-        </div>  
-        <div class="col-md-8">
+        <button class="mx-1 btn btn-outline-secondary" type="button"  @click="logout()">Logout</button>
+      </div>
+    </div>
+  </div>
+    </nav>
+    <div class="row">
+        <div class="col-lg-2">
+
+        </div>
+
+
+        <div class="col-12 col-lg-8">
             <main>
                 <router-view></router-view>
             </main>
         </div>
+        <div class="col-lg-2">
+
+</div>
     </div>
   </div>    
 </template>
@@ -188,7 +140,26 @@ export default {
 
 <style>
 
-.sidebar-container {
+[data-bs-theme=dark] .vs__selected {
+  color: var(--bs-light-text);
+}
+
+[data-bs-theme=dark] .vs__dropdown-menu {
+  background: var(--bs-dark-bg-subtle);
+}
+
+[data-bs-theme=dark] .vs__open-indicator {
+  fill: var(--vs-selected-bg);
+  transform: scale(var(--vs-controls-size));
+  transition: transform var(--vs-transition-duration) var(--vs-transition-timing-function);
+  transition-timing-function: var(--vs-transition-timing-function)
+}
+
+[data-bs-theme=dark] .vs__clear {
+    fill: var(--vs-selected-bg)
+}
+
+/* .sidebar-container {
   position: fixed;
   text-align: left;
   width: 220px;
@@ -196,13 +167,13 @@ export default {
   left: 0;
   overflow-x: hidden;
   overflow-y: auto;
-}
+} */
 
-.nav, .nav-link {
+/* .nav, .nav-link {
     --bs-nav-link-color : #000;
-}
+} */
 
-.nav-link {
+/* .nav-link {
   border-radius: 0;
 }
 
@@ -223,13 +194,13 @@ export default {
 }
 
 .fw-semibold { font-weight: 600; }
-.lh-tight { line-height: 1.25; }
+.lh-tight { line-height: 1.25; } */
 
 /* .nav-link.active{
     background-color: aqua !important;
 } */
 
-.sidebar-navigation:hover{ 
+/* .sidebar-navigation:hover{ 
     background-color: aliceblue;
 }
 @media (min-width: 1024px) {
@@ -238,5 +209,5 @@ export default {
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

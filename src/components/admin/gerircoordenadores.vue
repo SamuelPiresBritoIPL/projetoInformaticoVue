@@ -1,26 +1,27 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão de Coordenadores</h3>
+    <h3 class="mt-3 mb-4">Gestão de Coordenadores</h3>
     <div v-if="adminLogged" class="card text-center">
       <div class="card-header">
         Coordenadores de Cada Curso na Aplicação
       </div>
       <div class="card-body">
         <div class="table-responsive" style="max-height: 350px;">
-          <table class="table" style="text-align: left;">
-            <thead style="position: sticky; top: 0; z-index: 1; background-color:white;">
-              <tr >
+          <table class="table table-hover text-start">
+            <thead class="sticky-top table-info">
+              <tr>
                 <th scope="col">Curso</th>
-                <th scope="col">Nº de Coordenadores</th>
+                <th class="text-nowrap" scope="col">Nº de Coordenadores</th>
                 <th scope="col">Login </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)" class="hoverclick">
-                <td>{{ "["+course.codigo+"] "+course.nome }}</td>
+              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)"
+                role="button">
+                <td>{{ "[" + course.codigo + "] " + course.nome }}</td>
                 <td>{{ course.coordenadores.length }}</td>
                 <td scope="col">
-                  <p v-for="coordenador in course.coordenadores" :key="coordenador">{{ coordenador.utilizador.login }}</p> 
+                  <p v-for="coordenador in course.coordenadores" :key="coordenador">{{ coordenador.utilizador.login }}</p>
                 </td>
               </tr>
             </tbody>
@@ -30,24 +31,25 @@
     </div>
     <div v-if="!adminLogged" class="card text-center">
       <div class="card-header">
-        Coordenadores  {{ hasMoreThanOneCurso ? "por curso na aplicação" : "de curso na aplicação"}}
+        Coordenadores {{ hasMoreThanOneCurso ? "por curso na aplicação" : "de curso na aplicação" }}
       </div>
       <div class="card-body">
         <div class="table-responsive" style="max-height: 350px;">
           <table class="table" style="text-align: left;">
             <thead style="position: sticky; top: 0; z-index: 1; background-color:white;">
-              <tr >
+              <tr>
                 <th scope="col">Curso</th>
                 <th scope="col">Nº de Coordenadores</th>
                 <th scope="col">Login </th>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)" class="hoverclick">
-                <td>{{ "["+course.codigo+"] "+course.nome }}</td>
+              <tr v-for="course in coursesWithCoordinatores" :key="course" @click="selectedCourseFunc(course)"
+                class="hoverclick">
+                <td>{{ "[" + course.codigo + "] " + course.nome }}</td>
                 <td>{{ course.coordenadores.length }}</td>
                 <td scope="col">
-                  <p v-for="coordenador in course.coordenadores" :key="coordenador">{{ coordenador.utilizador.login }}</p> 
+                  <p v-for="coordenador in course.coordenadores" :key="coordenador">{{ coordenador.utilizador.login }}</p>
                 </td>
               </tr>
             </tbody>
@@ -57,8 +59,8 @@
     </div>
     <br>
     <div class="row">
-      <div class="col-sm-6">
-        <div class="card border-light mb-3" style="max-width: 32rem;">
+      <div class="col-12 col-lg-6">
+        <div class="card mb-3" >
           <div class="card-header">Adicionar Coordenador</div>
           <div class="card-body">
             <div class="mb-3">
@@ -66,73 +68,81 @@
               <span v-if="this.counterStore.courses[0]">
                 <label v-if="!hasMoreThanOneCurso">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
               </span>
-              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse">
+              <v-select v-if="hasMoreThanOneCurso" code="code" :options="this.counterStore.coursesToVSelect" single-line
+                v-model="selectedCourse">
               </v-select>
               <div v-if="hasErrorCurso" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.idCurso }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.idCurso }}</small>
               </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Tipo de Coordenador:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId" ref="focus" :disabled="!adminLogged">
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="roleId" ref="focus"
+                :disabled="!adminLogged">
                 <option value="null">Selecione uma opção</option>
                 <option value="0">Coordenador</option>
                 <option value="1">Subcoordenador</option>
               </select>
-              <div v-if="hasErrorTipo"  class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.tipo }}</small>
+              <div v-if="hasErrorTipo" class="errorMessages">
+                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.tipo }}</small>
               </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Login/Email:</label>
-              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Login/Email" v-model="login">
+              <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Login/Email"
+                v-model="login">
               <div v-if="hasErrorLogin" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
-            <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)">Submeter</button>
+            <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)"><i class="align-baseline bi bi-plus-circle"></i> Adicionar</button>
           </div>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="card border-light mb-3" style="max-width: 32rem;">
+      <div class="col-12 col-lg-6">
+        <div class="card mb-3">
           <div class="card-header">Remover Coordenador</div>
           <div class="card-body">
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Curso:</label>
-              <label v-if="!hasMoreThanOneCurso && this.counterStore.courses[0]">&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label>
-              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourseRemove" @option:selected="getCoordinatorsByCourse(selectedCourseRemove.code)">
+              <label v-if="!hasMoreThanOneCurso && this.counterStore.courses[0]">&nbsp;&nbsp;{{
+                this.counterStore.courses[0].nome }}</label>
+              <v-select v-if="hasMoreThanOneCurso" aria-label=".form-select-sm example" code="code"
+                :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourseRemove"
+                @option:selected="getCoordinatorsByCourse(selectedCourseRemove.code)">
               </v-select>
               <div v-if="hasErrorCursoNullRemover" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ nullCurso }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ nullCurso }}</small>
               </div>
               <div v-if="hasErrorCursoRemover" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
             <div class="mb-3">
               <label for="exampleFormControlInput1" class="form-label">Coordenador:</label>
-              <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="selectedCoordinator">
+              <select class="form-select form-select-sm" aria-label=".form-select-sm example"
+                v-model="selectedCoordinator">
                 <option value="null">Selecione um coordenador</option>
                 <option v-for="coordenador in coordinatoresByCourse" :key="coordenador" v-bind:value="coordenador.id">
-                {{ coordenador.utilizador.login }}
+                  {{ coordenador.utilizador.login }}
                 </option>
               </select>
               <div v-if="hasErrorLoginNullRemover" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ nullCoordenador }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ nullCoordenador }}</small>
               </div>
               <div v-if="hasErrorLoginRemover" class="errorMessages">
-                <small style="color: #a94442; margin-left: 5px;">{{ grantRoleError.login }}</small>
+                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
             <small></small>
-            <button class="btn btn-danger" @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)">Remover</button>
+            <button class="btn btn-danger"
+              @click="revokeCoordinatorRole(selectedCoordinator, selectedCourseRemove)"><i class="align-baseline bi bi-dash-circle"></i> Remover</button>
           </div>
         </div>
       </div>
     </div>
     <br><br><br>
-  </div>    
+  </div>
 </template>
 
 <script>
@@ -146,23 +156,23 @@ export default {
   },
   data() {
     return {
-        coursesWithCoordinatores: [],
-        coordinatoresByCourse: [],
-        selectedCourseRemove: null,
-        selectedCourse: null,
-        roleId: null,
-        login: null,
-        selectedCoordinator: null,
-        adminLogged: false,
-        coordenadorLogged: false,
-        grantRoleError: null,
-        revokeRoleError: null,
-        nullCoordenador: null,
-        nullCurso: null
+      coursesWithCoordinatores: [],
+      coordinatoresByCourse: [],
+      selectedCourseRemove: null,
+      selectedCourse: null,
+      roleId: null,
+      login: null,
+      selectedCoordinator: null,
+      adminLogged: false,
+      coordenadorLogged: false,
+      grantRoleError: null,
+      revokeRoleError: null,
+      nullCoordenador: null,
+      nullCurso: null
     };
   },
   computed: {
-    hasMoreThanOneCurso(){
+    hasMoreThanOneCurso() {
       if (this.counterStore.courses.length > 1) {
         return true
       }
@@ -171,15 +181,15 @@ export default {
       }
       return false
     },
-    hasErrorCurso(){
+    hasErrorCurso() {
       if (this.grantRoleError != null) {
         if (this.grantRoleError.idCurso) {
           return true
-        }  
+        }
       }
       return false
     },
-    hasErrorTipo(){
+    hasErrorTipo() {
       if (this.grantRoleError != null) {
         if (this.grantRoleError.tipo) {
           return true
@@ -187,7 +197,7 @@ export default {
       }
       return false
     },
-    hasErrorLogin(){
+    hasErrorLogin() {
       if (this.grantRoleError != null) {
         if (this.grantRoleError.login) {
           return true
@@ -195,7 +205,7 @@ export default {
       }
       return false
     },
-    hasErrorCursoRemover(){
+    hasErrorCursoRemover() {
       if (this.revokeRoleError != null) {
         if (this.revokeRoleError.idCurso) {
           return true
@@ -203,19 +213,19 @@ export default {
       }
       return false
     },
-    hasErrorCursoNullRemover(){
+    hasErrorCursoNullRemover() {
       if (this.nullCurso != null) {
         return true
       }
       return false
     },
-    hasErrorLoginNullRemover(){
+    hasErrorLoginNullRemover() {
       if (this.nullCoordenador != null) {
         return true
       }
       return false
     },
-    hasErrorLoginRemover(){
+    hasErrorLoginRemover() {
       if (this.revokeRoleError != null) {
         if (this.revokeRoleError.login) {
           return true
@@ -225,20 +235,20 @@ export default {
     }
   },
   methods: {
-    getCoursesCoordinators(){
+    getCoursesCoordinators() {
       this.$axios.get("cursoauth/coordenadores")
         .then((response) => {
           this.coursesWithCoordinatores = response.data;
           this.counterStore.coursesToVSelect = []
           this.coursesWithCoordinatores.forEach(curso => {
-            this.counterStore.coursesToVSelect.push({label: "["+curso.codigo+"] "+curso.nome, code: curso.id})
+            this.counterStore.coursesToVSelect.push({ label: "[" + curso.codigo + "] " + curso.nome, code: curso.id })
           });
         })
         .catch((error) => {
           //console.log(error.response);
         });
     },
-    grantCoordinatorRole(course, type, login){
+    grantCoordinatorRole(course, type, login) {
       if (course == null && this.adminLogged) {
         this.grantRoleError = []
         this.grantRoleError['idCurso'] = "Deve selecionar um curso."
@@ -249,10 +259,10 @@ export default {
         course["code"] = this.counterStore.courses[0].id
       }
       this.$axios.post("coordenador", {
-            "login": login,
-            "idCurso": course.code,
-            "tipo": parseInt(type)
-          })
+        "login": login,
+        "idCurso": course.code,
+        "tipo": parseInt(type)
+      })
         .then((response) => {
           this.$toast.success("Role concedido a " + login + "!",);
           if (this.adminLogged) {
@@ -286,7 +296,7 @@ export default {
           this.$toast.error("Não foi possível conceder o role a este utilizador!");
         });
     },
-    getCoordinatorsByCourse(courseId){
+    getCoordinatorsByCourse(courseId) {
       this.$axios.get("curso/coordenadores/" + courseId)
         .then((response) => {
           //console.log(response.data);
@@ -296,7 +306,7 @@ export default {
           //console.log(error.response);
         });
     },
-    revokeCoordinatorRole(coordinatorId, course){
+    revokeCoordinatorRole(coordinatorId, course) {
       if (course == null && coordinatorId == null && this.adminLogged) {
         this.nullCurso = "Deve selecionar um curso"
         this.nullCoordenador = "Deve selecionar um coordenador"
@@ -329,8 +339,8 @@ export default {
           this.$toast.error("Não foi possível retirar o role a este utilizador!");
         });
     },
-    selectedCourseFunc(course){
-      let curso = {label: "[" + course.codigo + "] "+course.nome,code:course.id}
+    selectedCourseFunc(course) {
+      let curso = { label: "[" + course.codigo + "] " + course.nome, code: course.id }
       this.selectedCourse = curso
       this.selectedCourseRemove = curso
       this.getCoordinatorsByCourse(this.selectedCourseRemove.code)
@@ -340,21 +350,22 @@ export default {
   mounted() {
     if (localStorage.getItem("adminState") && sessionStorage.getItem("tokenAdmin")) {
       this.adminLogged = true
-    }else{
+    } else {
       this.roleId = 1
     }
     this.counterStore.getCourses()
     this.getCoursesCoordinators()
-   /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
-      
-      console.log(this.coordinatoresByCourse)
-    } */
+    /*  if (!this.hasMoreThanOneCurso && this.counterStore.courses[0]) {
+       
+       console.log(this.coordinatoresByCourse)
+     } */
   },
 };
 </script>
 
-<style>
-.errorMessages{
+<style scoped>
+
+/* .errorMessages{
   background-color: #f2dede; 
   border-radius: 3px;
   text-align: center
@@ -368,5 +379,4 @@ export default {
 }
 .hoverclick:hover{
   cursor: pointer;
-}
-</style>
+} */</style>

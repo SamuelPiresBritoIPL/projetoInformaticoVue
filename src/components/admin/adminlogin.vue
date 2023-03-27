@@ -1,32 +1,34 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-        <div style="margin-top: 65px">
-            <div class="card mb-3" style="width: 30%">
-                <div class="card-header bg-transparent" style="text-align: center">
-                    <label style="margin-top: 10px;">AGIT - Aplicação de Gestão de Inscrição nos Turnos</label>
+    <div class="row justify-content-center">
+        <div class="mt-5 col-12 col-xl-4">
+            <div class="card mb-3">
+                <div class="card-header bg-transparent text-center">
+                    <label class="mt-2">AGIT - Aplicação de Gestão de Inscrição nos Turnos</label>
                     <h5>Login - Administração</h5>
                 </div>
                 <div class="card-body">
-                    <div style="padding: 10px 20px">
+                    <div class="py-2 px-3">
                         <div class="mb-3">
-                            <label for="formGroupExampleInput" class="form-label"><b>Utilizador</b></label>
-                            <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Nome de Utilizador" v-model="credentials.login">
-                            <div v-if="hasNullLogin" class="errorMessages" style="margin-bottom: 15px">
-                                <small style="color: #a94442; margin-left: 5px;">{{ nullLogin }}</small>
+                            <label for="formGroupExampleInput" class="form-label fw-bold"><i class="align-baseline bi bi-person"></i> Utilizador</label>
+                            <input @keyup.enter="login()" type="text" class="form-control" id="formGroupExampleInput" placeholder="Nome de Utilizador" v-model="credentials.login">
+                            <div v-if="hasNullLogin" class="errorMessages">
+                                <small class="badge text-bg-danger">{{ nullLogin }}</small>
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="formGroupExampleInput2" class="form-label"><b>Password</b></label>
-                            <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" v-model="credentials.password">
-                            <div v-if="hasNullPassword" class="errorMessages" style="margin-bottom: 15px">
-                                <small style="color: #a94442; margin-left: 5px;">{{ nullPassword }}</small>
+                            <label for="formGroupExampleInput2" class="form-label fw-bolder"><i class="align-baseline bi bi-lock"></i> Password</label>
+                            <input @keyup.enter="login()" type="password" class="form-control" id="formGroupExampleInput2" placeholder="Password" v-model="credentials.password">
+                            <div v-if="hasNullPassword" class="errorMessages">
+                                <small class="badge text-bg-danger">{{ nullPassword }}</small>
                             </div>
-                            <div v-if="hasError" class="errorMessages" style="margin-bottom: 15px">
-                                <small style="color: #a94442; margin-left: 5px;">{{ messageError.message }}</small>
+                            <div v-if="hasError" class="errorMessages">
+                                <small class="badge text-bg-danger">{{ messageError.message }}</small>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 100%" @click="login()">Login</button>
+                        <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary" @click="login()">Login</button>
+                      </div>
                     </div>
                 </div>
             </div>
@@ -124,10 +126,10 @@ export default {
 </script>
 
 <style scoped>
-.card {
+/* .card {
     margin: 0 auto;
     float: none;
     margin-bottom: 10px;
-}
+} */
 
 </style>

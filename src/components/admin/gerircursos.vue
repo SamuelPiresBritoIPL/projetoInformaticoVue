@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">{{hasMoreThanOneCurso ? "Gestão de Cursos" : "Gestão de Curso"}}</h3>
+    <h3 class="mt-3 mb-4">{{hasMoreThanOneCurso ? "Gestão de Cursos" : "Gestão de Curso"}}</h3>
     <div v-if="hasMoreThanOneCurso" class="mb-3">
       <label for="exampleFormControlInput1" class="form-label">Curso a gerir:</label>
       <v-select aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="counterStore.selectedCourse" @option:selected="selectCurso()">
@@ -30,14 +30,14 @@
                     <label class="col-sm-1 col-form-label">{{tipoTurno.tipo}}</label>
                     <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="0" v-model="tipoTurno.vagas">
                   </div>
-                  <button class="float-end btn btn-primary text-right" @click="saveTurnosVagas()">Guardar</button> <br><br>  
+                  <button class="float-end btn btn-primary text-right" @click="saveTurnosVagas()">Definir vagas para todos os turnos</button> <br><br>  
                 </div>
               </div>
             </div>
           </div>
           <p style="text-align: center; font-size: 18px; margin-bottom: 8px;">Unidades Curriculares</p>
           <hr style="margin-top: 3px; margin-bottom: 3px;">
-          <table class="table" style="text-align: left;">
+          <table class="table table-hover" style="text-align: left;">
             <thead>
               <tr>
                 <th scope="col">Unidade Curricular</th>
@@ -46,13 +46,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="tableRow" v-for="cadeira in this.counterStore.courseWithUCs.cadeiras" :key="cadeira" @click="selectCadeiraToManage(cadeira)">
+              <tr role="button" class="tableRow" v-for="cadeira in this.counterStore.courseWithUCs.cadeiras" :key="cadeira" @click="selectCadeiraToManage(cadeira)">
                 <td>{{ "["+cadeira.codigo+"] "+cadeira.nome }}</td>
                 <td>{{ cadeira.nrInscritos }}/{{ cadeira.nrInscricoes }}</td>
                 <td>
-                  <p v-for="turno in cadeira.turnos" :key="turno">
+                  <p  v-for="turno in cadeira.turnos" :key="turno">
                     <span v-for="turnotipo in turno" :key="turnotipo"> 
-                      <a class="hoverturno" @click.stop="selectTurnoToManage(cadeira,turnotipo)" style="text-decoration:none">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}</a>{{"(" + turnotipo.vagasocupadas + "/" + (turnotipo.vagastotal == null ? "-" : turnotipo.vagastotal) + ")"}}&nbsp;&nbsp;
+                      <a class="link-primary link-underline-opacity-0 link-underline-opacity-100-hover " @click.stop="selectTurnoToManage(cadeira,turnotipo)">{{ turnotipo.numero != 0 ? turnotipo.tipo+turnotipo.numero :  turnotipo.tipo }}<small class="link-secondary">{{"(" + turnotipo.vagasocupadas + "/" + (turnotipo.vagastotal == null ? "-" : turnotipo.vagastotal) + ")"}}</small></a>&nbsp;&nbsp;
                      
                     </span> 
                   </p>
@@ -179,18 +179,18 @@ export default {
 };
 </script>
 
-<style>
-.tableRow:hover{
+<style scoped>
+/* .tableRow:hover{
   background-color: aliceblue;
-}
+} */
 
-.alert-primary {
+/* .alert-primary {
     color: #084298;
     background-color: #eef3fb !important;
     border-color: #eef3fb !important;
-}
+} */
 
-.hoverturno:hover{
+/* .hoverturno:hover{
   cursor: pointer;
   font-weight: 500;
 }
@@ -200,5 +200,5 @@ export default {
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

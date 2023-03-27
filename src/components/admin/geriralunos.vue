@@ -1,20 +1,20 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Estudantes</h3>
+    <h3 class="mt-3 mb-4">Estudantes</h3>
     <div class="card">
       <div class="card-header">
         Informações de Estudante
       </div>
       <div class="card-body">
-        <div class="mb-3">
-          <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Insira o número do estudante a pesquisar" v-model="login">
+        <div class="mb-0">
+            <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número do estudante" v-model="login" @keyup.enter="getAlunoInfo()">
         </div>
-        <div v-if="hasError" class="errorMessages" style="margin-bottom: 16px;">
-          <small style="color: #a94442; margin-left: 5px;">{{ errorMsg }}</small>
+        <div v-if="hasError" class="errorMessages mb-2">
+          <small class="badge text-bg-danger ms-1">{{ errorMsg }}</small>
         </div>
-        <button class="btn btn-primary" @click="getAlunoInfo()">Pesquisar</button>
+        <button class="btn btn-primary mt-2" @click="getAlunoInfo()"><i class="align-baseline bi bi-search"></i> Pesquisar</button>
         <hr>
-        <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title" style="margin-bottom: 15px">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
+        <h5 v-if="alunoRequested && infoAluno.length != 0" class="card-title mb-3">{{ infoAluno[0].nome + " (" + infoAluno[0].login + ")" }}</h5>
         <!-- CARD TAB -->
         <div v-if="alunoRequested" class="card text-center">
           <div class="card-header">
@@ -35,13 +35,13 @@
           </div>
           <div v-if="navTabs[0] == true" class="card-body">
             <div v-if="this.ucsInscritas.length == 0">
-              <h6 class="card-title" style="margin-bottom:25px;">Unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O estudante não esta inscrito em nenhuma unidade curricular</p>
+              <h6 class="card-title mb-4">Unidades curriculares</h6>
+              <p class="mb-4">O estudante não esta inscrito em nenhuma unidade curricular</p>
             </div>
             <div v-else>
               <div v-for="curso in this.ucsInscritas" :key="curso">
                 <h6>{{"["+ curso.codigo +"] "+curso.nome}}</h6>
-                <table class="table" style="text-align: left;">
+                <table class="table text-start">
                   <thead>
                     <tr>
                       <th scope="col">Unidade Curricular</th>
@@ -66,13 +66,13 @@
           </div>
           <div v-if="navTabs[1] == true" class="card-body">
             <div v-if="this.ucsAprovadas.length == 0">
-              <h6 class="card-title" style="margin-bottom:25px;">Unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O estudante não foi aprovado em nenhuma unidade curricular até ao momento</p>
+              <h6 class="card-title mb-4">Unidades curriculares</h6>
+              <p class="mb-4">O estudante não foi aprovado em nenhuma unidade curricular até ao momento</p>
             </div>
             <div v-else>
               <div v-for="curso in this.ucsAprovadas" :key="curso">
                 <h6>{{curso.nome}}</h6>
-                <table class="table" style="text-align: left;">
+                <table class="table text-start">
                   <thead>
                     <tr>
                       <th scope="col">Unidade Curricular</th>
@@ -93,12 +93,12 @@
           </div>
           <div v-if="navTabs[2] == true" class="card-body">
             <div v-if="this.pedidos.length == 0">
-              <h6 class="card-title" style="margin-bottom:25px;">Pedidos de confirmação de unidades curriculares</h6>
-              <p style="margin-bottom:25px;">O estudante não tem nenhum pedido de confirmação de unidades curriculares</p>
+              <h6 class="card-title mb-4" >Pedidos de confirmação de unidades curriculares</h6>
+              <p class="mb-4" >O estudante não tem nenhum pedido de confirmação de unidades curriculares</p>
             </div>
             <div v-else>
               <div>
-                <table class="table" style="text-align: left;">
+                <table class="table text-start">
                   <thead>
                     <tr>
                       <th scope="col">Curso</th>
@@ -126,8 +126,8 @@
           <div v-if="navTabs[3] == true" class="card-body">
             <vue-cal locale="pt-br" :selected-date="dataInicialHorario" hide-view-selector :time-cell-height="30" :time-from="8 * 60" :time-to="24 * 60" :time-step="30" :disable-views="['years', 'year', 'month','day']" :hide-weekdays="[7]" :events="horario">
               <template v-slot:event="{ event }">
-                <div class="vuecal__event-title" style="color:#666666;!important" v-html="event.title" />
-                <div class="vuecal__event-content" style="color:#666666;!important" v-html="event.content" />
+                <div class="vuecal__event-title" v-html="event.title" />
+                <div class="vuecal__event-content" v-html="event.content" />
               </template>
             </vue-cal>
           </div>
@@ -201,12 +201,12 @@ export default {
 };
 </script>
 
-<style>
-@media (min-width: 1024px) {
+<style scoped>
+/* @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

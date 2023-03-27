@@ -1,16 +1,16 @@
 <template>
   <div class="container-fluid">
-    <h3 v-if="this.cadeira != null" style="margin-top: 20px; margin-bottom: 25px;">Gestão da UC: {{ this.cadeira.nome}}</h3>
+    <h3 v-if="this.cadeira != null" class="mt-3 mb-4">Gestão da UC: {{ this.cadeira.nome}}</h3>
     <h5 v-if="this.cadeira != null">{{ this.cadeira.curso.nome}}</h5>
     <div v-if="hasValue" class="card">
       <div class="card-body">
-        <div v-if="this.cadeira != null" style="margin-bottom:20px;" class="text-center">
-            <span style="margin-right: 35px; font-size: 20px;" class="hoverclick" v-bind:class="{ 'turnoactive': activeTurno[0]}" @click="getStats()">Todos</span>
-            <span style="margin-right: 35px; font-size: 20px;" class="hoverclick" v-for="(turno,index) in this.cadeira.turnos" :key="turno" @click="getStatsTurno(turno.id)" v-bind:class="{ 'turnoactive': activeTurno[(index+1)]}">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</span>
+        <div v-if="this.cadeira != null" class="mb-4 text-center">
+            <span role="button" class="fs-5 me-4 link-body-emphasis" v-bind:class="{ 'text-decoration-underline fw-bolder': activeTurno[0]}" @click="getStats()">Todos</span>
+            <span role="button" class="fs-5 me-4 link-body-emphasis" v-for="(turno,index) in this.cadeira.turnos" :key="turno" @click="getStatsTurno(turno.id)" v-bind:class="{ 'text-decoration-underline fw-bolder': activeTurno[(index+1)]}">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</span>
           </div>
         <div class="row text-center">
             <div class="col">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card mb-3" style="max-width: 18rem;">
                     <div class="card-header card-title"><h6>Total de Inscritos</h6></div>
                     <div class="card-body">
                         {{this.totalinscritos}}
@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card mb-3" style="max-width: 18rem;">
                     <div class="card-header"><h6>Não Repetentes</h6></div>
                     <div class="card-body">
                         {{this.totalnaorepetentes}}
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="col">
-                <div class="card bg-light mb-3" style="max-width: 18rem;">
+                <div class="card mb-3" style="max-width: 18rem;">
                     <div class="card-header"><h6>Repetentes</h6></div>
                     <div class="card-body">
                         {{this.totalrepetentes}}
@@ -34,13 +34,13 @@
                 </div>
             </div>
             <div class="col">
-                <div v-if="this.totalnaoinscritos != null" class="card bg-light mb-3" style="max-width: 18rem;">
+                <div v-if="this.totalnaoinscritos != null" class="card mb-3" style="max-width: 18rem;">
                     <div class="card-header"><h6>Não Inscritos</h6></div>
                     <div class="card-body">
                         {{this.totalnaoinscritos}}
                     </div>
                 </div>
-                <div v-else class="card bg-light mb-3" style="max-width: 18rem;">
+                <div v-else class="card mb-3" style="max-width: 18rem;">
                     <div class="card-header"><h6>Número de vagas</h6></div>
                     <div class="card-body">
                         {{this.totalinscritos + "/" + (this.nrvagasturno == null ? "-" : this.nrvagasturno)}}
@@ -58,35 +58,33 @@
             <div id="collapseOne" :class="{collapse:this.collapsed[0]}" class="accordion-collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <div class="accordion-body">
                 <label for="exampleFormControlInput1" class="form-label">Adicionar estudante à UC</label>
-                <div class="input-group mb-3">
-                  <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="insira o número de estudante" v-model="numeroadicionar">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar</button>
-                  </div>
+                <div class="input-group mb-0">
+                  <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Número de estudante" v-model="numeroadicionar">
+                  <button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar à UC</button>
                 </div>
-                <div v-if="hasErrorLoginAddToUC"  class="errorMessages" style="margin-bottom: 16px;">
-                  <small style="color: #a94442; margin-left: 5px;">{{ errorLoginAddToUC.login[0] }}</small>
+                <div v-if="hasErrorLoginAddToUC"  class="errorMessages">
+                  <small class="badge text-bg-danger ms-1">{{ errorLoginAddToUC.login[0] }}</small>
                 </div>
                 <div v-if="hasErroraddAluno"  class="errorMessages">
-                  <small style="color: #a94442; margin-left: 5px;">{{ errors.addAluno }}</small>
+                  <small class="badge text-bg-danger ms-1">{{ errors.addAluno }}</small>
                 </div>
+                <br>
                 <label for="exampleFormControlInput1" class="form-label">Adicionar estudante a um turno</label>
-                <div class="input-group mb-3">
-                  <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="insira o número de estudante" v-model="numeroadicionarTurno">
+                <div class="input-group mb-0">
+                  <input type="name" class="form-control" id="exampleFormControlInput2" placeholder="Número de estudante" v-model="numeroadicionarTurno">
                   <select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="turnoescolhido">
                     <option value="null">Selecione um turno.</option>
                     <option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">{{ turno.numero != 0 ? turno.tipo+turno.numero : turno.tipo }}</option>
                   </select>
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar</button>
-                  </div>
+                  <button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno,turnoescolhido)">Adicionar ao turno</button>
                 </div> 
                 <div v-if="hasErrorLoginAddToTurno"  class="errorMessages">
-                  <small style="color: #a94442; margin-left: 5px;">{{ errorLoginAddToTurno.login[0] }}</small>
+                  <small class="badge text-bg-danger ms-1">{{ errorLoginAddToTurno.login[0] }}</small>
                 </div> 
                 <div v-if="hasErroraddAlunoTurno"  class="errorMessages">
-                  <small style="color: #a94442; margin-left: 5px;">{{ errors.addAlunoTurno }}</small>
+                  <small class="badge text-bg-danger ms-1">{{ errors.addAlunoTurno }}</small>
                 </div>
+                <br>
               </div>
             </div>
           </div>
@@ -99,28 +97,29 @@
             <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[1]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
               <div class="accordion-body" v-if="this.turno != null">
                 <label for="exampleFormControlInput3" class="form-label">Número de vagas</label>
-                <div class="input-group mb-3">
+                <div class="input-group mb-0">
                   <input type="number" min="1" class="form-control" id="exampleFormControlInput3" placeholder="número de vagas" v-model="turno.vagastotal">
                 </div>
                 <div v-if="hasErrorAlterarVagas"  class="errorMessages">
-                  <small style="color: #a94442; margin-left: 5px;">{{ errors.alterarVagas }}</small>
+                  <small class="badge text-bg-danger ms-1">{{ errors.alterarVagas }}</small>
                 </div>
+                <br>
                 <input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0">
-                <label style="margin-left: 5px;" for="checkboxvisivel">Turno visivel</label>
+                <label class="ms-1" for="checkboxvisivel">Turno visivel</label>
                 <br>
                 <input type="checkbox" id="checkboxrepetentes" v-model="turno.repetentes" true-value="1" false-value="0">
-                <label style="margin-left: 5px;" for="checkboxrepetentes">Turno aceita repetentes</label>
-                <br>
-                <button class="btn btn-primary text-right" style="margin-top: 5px;" @click="changeTurnoData()">Guardar Alterações</button>  
+                <label class="ms-1" for="checkboxrepetentes">Turno aceita repetentes</label>
+                <p></p>
+                <button class="btn btn-primary text-right mt-1" @click="changeTurnoData()">Atualizar dados do Turno</button>  
               </div>
               <div class="card-body" v-if="this.turno == null">
-                <label for="exampleFormControlInput4" class="form-label">Definir vagas para todos os turnos de cada tipo em simultâneo</label>
+                <label for="exampleFormControlInput4" class="form-label">Definir vagas para <b>todos os turnos de cada tipo em simultâneo</b></label>
                 <div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
                   <label class="col-sm-1 col-form-label">{{info.turno + " (" + info.numeroturnos + ")  "}}</label>
-                  <input type="number" class="form-control" id="exampleFormControlInput4" placeholder="0" v-model="info.valor">
+                  <input type="number" min="1" class="form-control" id="exampleFormControlInput4" placeholder="0" v-model="info.valor">
                   <span class="col-form-label">&nbsp;&nbsp;{{"Média de estudantes por turno: " + info.mediavagas}}</span>
                 </div>
-                <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Guardar</button> <br><br>  
+                <button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">Definir vagas para <b>todos</b> os turnos</button> <br><br>  
               </div>
             </div>
           </div>
@@ -145,17 +144,17 @@
           {{ turno.tipo + (turno.numero == 0 ? "" : turno.numero) }}
           </option>
         </select>
-        <div v-if="hasErrorMoverAlunos"  class="errorMessages" style="margin-bottom: 15px;">
-          <small style="color: #a94442; margin-left: 5px;">{{ errorMoverAlunos.inscricaoIds[0] }}</small>
+        <div v-if="hasErrorMoverAlunos"  class="errorMessages mb-3">
+          <small class="badge text-bg-danger ms-1">{{ errorMoverAlunos.inscricaoIds[0] }}</small>
         </div>
-        <div style="text-align: left; margin-top: 5px;">
-          <button v-if="this.turno != null" class="btn btn-primary text-right" style="width: 20%; margin-top: 1px;" @click="moverEstudantes()">Mover</button>
+        <div class="d-grid gap-2 col-12 col-xl-4 mt-1">
+          <button v-if="this.turno != null" class="btn btn-primary" @click="moverEstudantes()">Mover Estudantes Selecionados</button>
         </div>
         <br>
         <button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">Download lista estudantes (.xls)</button>
         <button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">Download lista estudantes (.xls)</button>
         <br>
-        <table class="table" style="text-align:left;">
+        <table class="table text-start">
           <thead>
             <tr>
               <th scope="col">Número</th>
@@ -172,14 +171,14 @@
               <td>{{ aluno.nome }}</td>
               <td></td>
               <td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim"}}</td>
-              <td v-if="this.turno != null"> 
+              <td v-if="this.turno != null" class="align-middle text-center"> 
                 <button class="btn btn-xs btn-danger" @click="deleteInscricao(aluno.id,index)">
-                  <BootstrapIcon style="" icon="dash-circle"/>
+                  <i class="align-baseline bi bi-dash-circle"></i>
                 </button>
               </td>
               <td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
-              <td v-if="this.counterStore.turnoToManage != null">
-                <input type="checkbox" :value="aluno.id" v-model="estudantesSelected">
+              <td class="align-middle text-center" v-if="this.counterStore.turnoToManage != null">
+                <input class="form-check-input" type="checkbox" :value="aluno.id" v-model="estudantesSelected">
               </td>
             </tr>
           </tbody>
@@ -218,7 +217,7 @@ export default {
         turnorepetentes:0,
         estudantesSelected: [],
         turnoSelected: null,
-        collapsed:[false,true,true],
+        collapsed:[true,true,true],
         errors: null,
         errorLoginAddToUC: null,
         errorLoginAddToTurno: null,
@@ -574,8 +573,8 @@ export default {
 };
 </script>
 
-<style>
-.centered {
+<style scoped>
+/* .centered {
   position: absolute;
   left: 50%;
   margin-left: -100px;
@@ -593,5 +592,5 @@ export default {
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

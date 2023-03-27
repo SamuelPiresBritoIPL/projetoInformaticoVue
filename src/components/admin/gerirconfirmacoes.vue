@@ -1,6 +1,6 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gerir pedidos de inscrição nas UC's</h3>
+    <h3 class="mt-3 mb-4">Gerir pedidos de inscrição nas UC's</h3>
     <v-select v-if="this.counterStore.courses.length > 1" aria-label=".form-select-sm example" code="code" :options="this.counterStore.coursesToVSelect" single-line v-model="selectedCourse" @option:selected="selectCourse(selectedCourse)">
     </v-select>
     <br>
@@ -14,7 +14,7 @@
       <div id="collapseTwo" class="accordion-collapse" :class="{collapse:this.collapsed[0]}" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
         <div class="accordion-body">
           <div class="table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table" style="text-align: left;">
+            <table class="table text-start">
               <thead>
                 <tr>
                   <th scope="col">Estudante</th>
@@ -41,10 +41,10 @@
   </div>
     <div class="row">
       <div class="col-md-5">
-        <div class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white" style="width: 100%; margin-top:5px;">
-          <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+        <div class="d-flex flex-column align-items-stretch flex-shrink-0 mt-1">
+          <span class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Lista de pedidos</span>
-          </a>
+          </span>
           <div class="list-group list-group-flush border-bottom scrollarea">
             <a type="button" v-for="pedido in this.counterStore.pedidosByCourse" :key="pedido.id" class="list-group-item list-group-item-action py-3 lh-tight" :class="{ active: selectedPedido.id == pedido.id }" @click="openPedido(pedido)">
               <div class="d-flex w-100 align-items-center justify-content-between">
@@ -58,15 +58,15 @@
             </a>
           </div>
           <div v-if="this.counterStore.pedidosByCourse.length == 0">
-            <p style="margin-left: 16px; margin-top: 15px;">Não existem pedidos pendentes.</p>
+            <p class="ms-3 mt-3">Não existem pedidos pendentes.</p>
           </div>
         </div>
       </div>
       <div class="col-md-7">
-          <a class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom" style="margin-top:5px;">
+          <span class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom mt-1">
             <span class="fs-5 fw-semibold">Detalhes do pedido</span>
-          </a>
-          <div v-if="pedidoForm == true" style="margin-left: 16px;">
+          </span>
+          <div v-if="pedidoForm == true">
             <div v-if="courseInfo">
               <label v-if="courseInfo.code != selectedPedido.utilizador.idCurso" for="inputEmail3" class="col-sm-2 col-form-label">Curso:</label>
               <label v-if="courseInfo.code != selectedPedido.utilizador.idCurso" class="col-sm-10 col-form-label">{{ "["+selectedPedido.utilizador.codigoCurso+"] "+selectedPedido.utilizador.curso }}</label>
@@ -77,22 +77,22 @@
             <label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.nome }}</label>
             <label for="inputEmail3" class="col-sm-2 col-form-label">Data:</label>
             <label class="col-sm-10 col-form-label">{{ selectedPedido.data.replace('.000000Z', '').replace('T', ' ') }}</label>
-            <label for="inputEmail3" class="col-sm-4 col-form-label" style="margin-top: 10px; margin-bottom: 10px;">UC's requeridas:</label>
-            <div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" style="margin-left: 30px;">
-              <input class="form-check-input" style="margin-right: 10px" type="checkbox" :value="cadeira.id" v-model="approvedCadeiras">
-              <label class="form-check-label">
+            <label for="inputEmail3" class="col-sm-4 col-form-label mt-2 mb-2">UC's requeridas:</label>
+            <div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" class="ms-4">
+              <input class="form-check-input me-2" type="checkbox" :value="cadeira.id" :id="cadeira.id" v-model="approvedCadeiras">
+              <label class="form-check-label" :for="cadeira.id">
                 {{ "["+cadeira.cadeira.codigo+"] "+cadeira.cadeira.nome }}
               </label>
             </div>
-            <label class="col-sm-2 col-form-label" style="margin-top: 15px;">Justificação:</label>
-            <p style="margin-left: 30px;">{{ selectedPedido.descricao }}</p>
-            <div style="text-align: center;">
-              <button type="button" class="btn btn-primary" style="margin-right: 5px;" @click="handleRequest(selectedPedido, 0)">Aprovar Selecionadas</button>
-              <button type="button" class="btn btn-danger" @click="handleRequest(selectedPedido, 1)">Rejeitar Pedido</button> 
+            <label class="col-sm-2 col-form-label mt-3">Justificação:</label>
+            <p class="ms-4">{{ selectedPedido.descricao }}</p>
+            <div class="text-center">
+              <button type="button" class="btn btn-primary me-1" @click="handleRequest(selectedPedido, 0)"><i class="align-baseline bi bi-check-circle"></i> Aprovar Selecionadas</button>
+              <button type="button" class="btn btn-danger" @click="handleRequest(selectedPedido, 1)"><i class="align-baseline bi bi-x-circle"></i> Rejeitar Pedido</button> 
             </div> 
           </div>
           <div v-else>
-            <p style="margin-left: 16px; margin-top: 15px;">Selecione um pedido.</p>
+            <p class="ms-3 mt-3">Selecione um pedido.</p>
           </div>
       </div>
     </div>
@@ -198,8 +198,8 @@ export default {
 };
 </script>
 
-<style>
-@media (min-width: 1024px) {
+<style scoped>
+/* @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
     display: flex;
@@ -213,5 +213,5 @@ export default {
 }
 .table-wrapper-scroll-y {
   display: block;
-}
+} */
 </style>

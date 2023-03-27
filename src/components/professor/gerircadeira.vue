@@ -233,7 +233,7 @@ export default {
 </script>
 
 <style>
-.centered {
+/* .centered {
   position: absolute;
   left: 50%;
   margin-left: -100px;
@@ -251,5 +251,5 @@ export default {
     display: flex;
     align-items: center;
   }
-}
+} */
 </style>

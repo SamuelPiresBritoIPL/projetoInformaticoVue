@@ -1,36 +1,36 @@
 <template>
   <div class="container-fluid">
-    <h3 style="margin-top: 20px; margin-bottom: 25px;">Gestão Utilizador</h3>
+    <h3 class="mt-3 mb-4">Gestão Utilizador</h3>
     <div class="card text-center">
       <div class="card-body">
         <form>
-          <div class="card-header bg-transparent" style="text-align: center">
+          <div class="card-header bg-transparent text-center">
               <h5>Mudar password</h5>
           </div>
-          <div class="card-body text-dark">
-            <div style="padding: 10px 20px">
+          <div class="card-body">
+            <div class="pt-2 pe-4">
               <div class="mb-3">
                   <label for="formGroupExampleInput" class="form-label"><b>Password atual</b></label>
-                  <input type="password" class="form-control" id="formGroupExampleInput" placeholder="Password currente" v-model="password">
-                  <div v-if="errors.password != null" class="errorMessages" style="margin-bottom: 15px">
-                      <small style="color: #a94442; margin-left: 5px;">{{ errors.password }}</small>
+                  <input type="password" class="form-control" id="formGroupExampleInput" placeholder="Password atual" v-model="password">
+                  <div v-if="errors.password != null" class="mb-3">
+                      <small class="badge text-bg-danger ms-1">{{ errors.password }}</small>
                   </div>
               </div>
               <div class="mb-3">
                   <label for="formGroupExampleInput2" class="form-label"><b>Nova Password</b></label>
                   <input type="password" class="form-control" id="formGroupExampleInput2" placeholder="Nova Password" v-model="newpassword">
-                  <div v-if="errors.newpassword != null" class="errorMessages" style="margin-bottom: 15px">
-                      <small style="color: #a94442; margin-left: 5px;">{{ errors.newpassword }}</small>
+                  <div v-if="errors.newpassword != null" class="errorMessages mb-3" >
+                      <small class="badge text-bg-danger ms-1">{{ errors.newpassword }}</small>
                   </div>
               </div>
-              <button type="button" class="btn btn-primary" style="margin-bottom: 5px; width: 100%" @click="changePassword()">Alterar Password</button>
+              <div class="d-grid gap-2">
+              <button type="button" class="btn btn-primary mb-1" @click="changePassword()"><i class="align-baseline bi bi-pencil-square"></i> Alterar Password</button>
+            </div>
             </div>
           </div>
         </form>
       </div>
     </div>
-    <br>
-    <br>
   </div>
 </template>
 
@@ -89,8 +89,8 @@ export default {
 };
 </script>
 
-<style>
-@media (min-width: 1024px) {
+<style scoped>
+/* @media (min-width: 1024px) {
   .about {
     min-height: 100vh;
     display: flex;
@@ -101,5 +101,5 @@ export default {
   background-color: #f2dede; 
   border-radius: 3px;
   text-align: center
-}
+} */
 </style>
