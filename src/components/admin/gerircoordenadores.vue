@@ -72,7 +72,7 @@
                 v-model="selectedCourse">
               </v-select>
               <div v-if="hasErrorCurso" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.idCurso }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ grantRoleError.idCurso }}</small>
               </div>
             </div>
             <div class="mb-3">
@@ -84,7 +84,7 @@
                 <option value="1">Subcoordenador</option>
               </select>
               <div v-if="hasErrorTipo" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.tipo }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ grantRoleError.tipo }}</small>
               </div>
             </div>
             <div class="mb-3">
@@ -92,7 +92,7 @@
               <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Login/Email"
                 v-model="login">
               <div v-if="hasErrorLogin" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
             <button class="btn btn-primary" @click="grantCoordinatorRole(selectedCourse, roleId, login)"><i class="align-baseline bi bi-plus-circle"></i> Adicionar</button>
@@ -112,10 +112,10 @@
                 @option:selected="getCoordinatorsByCourse(selectedCourseRemove.code)">
               </v-select>
               <div v-if="hasErrorCursoNullRemover" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ nullCurso }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ nullCurso }}</small>
               </div>
               <div v-if="hasErrorCursoRemover" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
             <div class="mb-3">
@@ -128,10 +128,10 @@
                 </option>
               </select>
               <div v-if="hasErrorLoginNullRemover" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ nullCoordenador }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ nullCoordenador }}</small>
               </div>
               <div v-if="hasErrorLoginRemover" class="errorMessages">
-                <small class="text-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
+                <small class="badge text-bg-danger ms-1 fw-bold">{{ grantRoleError.login }}</small>
               </div>
             </div>
             <small></small>

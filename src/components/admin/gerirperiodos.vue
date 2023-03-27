@@ -63,7 +63,7 @@
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataAbertura">
                   <div v-if="hasErrorDataAbertura" class="errorMessages">
-                    <small class="text-danger ms-1">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                    <small class="badge text-bg-danger ms-1">{{ errorIniciarPC.dataAbertura[0] }}</small>
                   </div>
                 </div>
               </div>
@@ -72,7 +72,7 @@
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataEncerrar">
                   <div v-if="hasErrorDataEncerrar" class="errorMessages">
-                    <small class="text-danger ms-1">{{ errorIniciarPC.dataEncerar[0] }}</small>
+                    <small class="badge text-bg-danger ms-1">{{ errorIniciarPC.dataEncerar[0] }}</small>
                   </div>
                 </div>
               </div>
@@ -143,7 +143,7 @@
                     <option value="1">1</option>
                   </select>
                   <div v-if="hasErrorAno" class="errorMessages">
-                    <small class="text-danger ms-1">{{ errorIniciarPC.ano[0] }}</small>
+                    <small class="badge text-bg-danger ms-1">{{ errorIniciarPC.ano[0] }}</small>
                   </div>
                 </div>
               </div>
@@ -152,7 +152,7 @@
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataAbertura">
                   <div v-if="hasErrorDataAbertura" class="errorMessages">
-                    <small class="text-danger ms-1">{{ errorIniciarPC.dataAbertura[0] }}</small>
+                    <small class="badge text-bg-danger ms-1">{{ errorIniciarPC.dataAbertura[0] }}</small>
                   </div>
                 </div>
               </div>
@@ -161,7 +161,7 @@
                 <div class="col-sm-10">
                   <input type="datetime-local" class="form-control" v-model="dataEncerrar">
                   <div v-if="hasErrorDataEncerrar" class="errorMessages">
-                    <small class="text-danger ms-1">{{ errorIniciarPC.dataEncerar[0] }}</small>
+                    <small class="badge text-bg-danger ms-1">{{ errorIniciarPC.dataEncerar[0] }}</small>
                   </div>
                 </div>
               </div>
@@ -171,7 +171,7 @@
               @click="createAbertura(this.counterStore.aberturasByCourse.id, selectedYear, 1, dataAbertura, dataEncerrar)"><i class="align-baseline bi bi-check-lg"></i> Confirmar</button>
               <button type="button" class="btn btn-warning" @click="cancelarEdicaoIniciacao()"><i class="align-baseline bi bi-x-lg"></i> Cancelar</button>
               <br>
-              <span v-if="this.msgErrorTurnos != null" class="text-danger">{{this.msgErrorTurnos}}</span>
+              <span v-if="this.msgErrorTurnos != null" class="badge text-bg-danger">{{this.msgErrorTurnos}}</span>
             </form>
           </div>
           <!-- EDITAR ABERTURAS - INSCRIÇÕES -->
