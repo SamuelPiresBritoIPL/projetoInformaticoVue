@@ -47,9 +47,26 @@ library.add(faUserSecret)
 
 const app = createApp(App)
 
+
+//O que é para usar localmente
+const apiDomain="http://127.0.0.1:8000"
+const wsConnection="http://localhost:8080"
+
+/*
+//O que está no servidor
+const apiDomain="http://172.22.21.128"
+const wsConnection="http://172.22.21.128"
+*/
+
+/*
+//Ver se conseguimos usar o .env
+const apiDomain = process.env.VUE_APP_API_DOMAIN
+const wsConnection = process.env.VUE_APP_WS_CONNECTION
+*/
+
 const socketIO = new VueSocketIO({
   debug: true,
-  connection: 'http://localhost:8080',
+  connection: wsConnection,
 })
 
 app.use(createPinia())
@@ -68,8 +85,8 @@ app.use(dialogPlugin)
 app.use(Toaster, toastOptions)
 app.use(socketIO)
 
-axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-app.config.globalProperties.$serverUrl = "http://127.0.0.1:8000/";
+axios.defaults.baseURL = `${apiDomain}/api`;
+app.config.globalProperties.$serverUrl = apiDomain;
 axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.tokenAluno ? sessionStorage.tokenAluno : (sessionStorage.tokenAdmin ? sessionStorage.tokenAdmin : (sessionStorage.tokenCoordenador ? sessionStorage.tokenCoordenador : (sessionStorage.tokenProfessor ? sessionStorage.tokenProfessor : "")))
   }`;
 app.config.globalProperties.$axios = axios;

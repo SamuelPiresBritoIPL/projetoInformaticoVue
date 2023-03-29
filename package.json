@@ -7,26 +7,27 @@
     "preview": "vite preview --port 5050"
   },
   "dependencies": {
-    "@dvuckovic/vue3-bootstrap-icons": "1.0.6",
-    "@fortawesome/fontawesome-svg-core": "6.3.0",
-    "@fortawesome/free-regular-svg-icons": "6.3.0",
-    "@fortawesome/free-solid-svg-icons": "6.3.0",
+    "@dvuckovic/vue3-bootstrap-icons": "1.0.5",
+    "@fortawesome/fontawesome-svg-core": "6.1.1",
+    "@fortawesome/free-regular-svg-icons": "6.1.1",
+    "@fortawesome/free-solid-svg-icons": "6.1.1",
     "@fortawesome/vue-fontawesome": "3.0.3",
     "@meforma/vue-toaster": "1.3.0",
     "@popperjs/core": "2.11.6",
-    "axios": "1.3.4",
+    "@vue/cli-service": "5.0.4",
+    "axios": "0.26.1",
     "bootstrap": "5.3.0-alpha2",
     "bootstrap-icons": "1.10.3",
     "gitart-vue-dialog": "2.4.1",
-    "pinia": "2.0.33",
-    "vue": "3.2.47",
+    "pinia": "2.0.11",
+    "vue": "3.2.31",
     "vue-3-socket.io": "1.0.5",
     "vue-cal": "4.8.1",
-    "vue-router": "4.1.6",
-    "vue-select": "4.0.0-beta.6"
+    "vue-router": "4.0.12",
+    "vue-select": "4.0.0-beta.3"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "3.2.0",
-    "vite": "3.2.5"
+    "@vitejs/plugin-vue": "2.2.2",
+    "vite": "2.8.4"
   }
 }
