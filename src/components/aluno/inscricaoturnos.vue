@@ -1,14 +1,14 @@
 <template>
-	<GDialog content-class="border border-light-subtle" v-model="dialogState">
+	<GDialog
+		content-class="border border-light-subtle"
+		v-model="dialogState">
 		<div class="wrapper">
 			<div class="content">
 				<div class="text-end">
 					<button
 						class="btn text-center"
 						@click="dialogState = false">
-						<BootstrapIcon
-							style="margin-right: 2px"
-							icon="x-lg" />
+						<i class="align-baseline bi bi-x-lg"></i>
 						Fechar
 					</button>
 				</div>
@@ -16,7 +16,9 @@
 				<p class="text-center fw-light">
 					*Este horário poderá conter algum erro ou sofrer alterações*
 				</p>
-				<p class="text-center">Horários dos turnos para as uc's que está inscrito</p>
+				<p class="text-center">
+					Horários dos turnos para as uc's que está inscrito
+				</p>
 				<vue-cal
 					locale="pt-br"
 					:selected-date="dataInicialHorario"
@@ -43,35 +45,41 @@
 	<GDialog
 		v-model="popUpConfirmation"
 		max-width="500">
-		<div class="wrapper">
+		<div class="wrapper my-2">
 			<div class="content">
 				<div class="text-end">
 					<button
-						class="btn text-center"
+						class="btn btn-outline-link"
 						@click="popUpConfirmation = false">
-						<BootstrapIcon icon="x-lg" />
+						<i class="align-baseline bi bi-x-lg"></i>
 						Fechar
 					</button>
 				</div>
-				<div class="text-center">
-					<h5>Tem a certeza que pretende avançar com a submissão?</h5>
-				</div>
-				<p class="text-center">
-					*Certifique-se que selecionou as opções que pretende!*
-				</p>
-				<div class="text-center">
-					<button
-						type="button"
-						class="btn btn-danger"
-						@click="popUpConfirmation = false">
-						Não
-					</button>
-					<button
-						type="button"
-						class="btn btn-success"
-						@click="submitInscricao()">
-						Sim
-					</button>
+				<div class="mx-3">
+					<div class="text-center">
+						<h5>Tem a certeza que pretende avançar com a submissão?</h5>
+					</div>
+					<p class="text-center text-warning text-decoration-underline fw-bold"><i class="align-baseline bi bi-exclamation-diamond-fill"></i>
+						Certifique-se que selecionou as opções que pretende!
+						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
+					</p>
+					<div class="text-center mb-2">
+						<button
+							type="button"
+							class="btn btn-success"
+							@click="submitInscricao()">
+							<i class="align-baseline bi bi-check-circle-fill"></i>
+							Confirmar
+						</button>
+						<span class="mx-1"></span>
+						<button
+							type="button"
+							class="btn btn-danger"
+							@click="popUpConfirmation = false">
+							<i class="align-baseline bi bi-x-circle-fill"></i>
+							Cancelar
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -207,7 +215,7 @@
 											buttonArray[index] = !buttonArray[index];
 											noInscricoes = false;
 											noButtonSelectedMsgs = false;
-										">
+										"><i class="align-baseline bi bi-calendar-week"></i>
 										Inscrever nos Turnos
 									</button>
 								</div>
@@ -313,17 +321,17 @@
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="dialogState = true">
+												@click="dialogState = true"><i class="align-baseline bi bi-calendar-check-fill"></i>
 												Ver horários disponíveis
 											</button>
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="getSobreposicoes()">
+												@click="getSobreposicoes()"><i class="align-baseline bi bi-search"></i>
 												Verificar sobreposições do meu horário
 											</button>
 										</div>
-										<div class="text-center mt-3" >
+										<div class="text-center mt-3">
 											<button
 												v-if="buttonArray[index]"
 												type="button"
@@ -331,20 +339,20 @@
 												@click="
 													buttonArray[index] = !buttonArray[index];
 													noButtonSelectedMsgs = true;
-												">
+												"><i class="align-baseline bi bi-arrow-return-left"></i>
 												Voltar
 											</button>
 											<button
 												type="button"
 												class="btn btn-warning me-1"
-												@click="clearRadios()">
+												@click="clearRadios()"><i class="align-baseline bi bi-x"></i>
 												Limpar escolhas
 											</button>
 											<!-- <button type="button" class="btn btn-success" @click="submitInscricao()">Submeter</button> -->
 											<button
 												type="button"
 												class="btn btn-success"
-												@click="popUpConfirmation = true">
+												@click="popUpConfirmation = true"><i class="align-baseline bi bi-caret-right-fill"></i>
 												Submeter
 											</button>
 										</div>
@@ -358,7 +366,7 @@
 									noButtonSelectedMsgs &&
 									this.isncricoesAtuais[index] !== undefined
 								"
-                class="text-center mb-4">
+								class="text-center mb-4">
 								<h5>Turnos atualmente inscritos:</h5>
 								<p
 									v-for="inscricao in this.isncricoesAtuais[index]"
@@ -388,7 +396,7 @@
 								showTurnosRejeitados == true &&
 								!(this.buttonArray.length > 0 && hasButtonSelected)
 							"
-              class="text-danger">
+							class="text-danger">
 							<hr />
 							<div>
 								Turnos Rejeitados por falta de Vagas:
@@ -409,7 +417,7 @@
 								showTurnosCoicidem == true &&
 								!(this.buttonArray.length > 0 && hasButtonSelected)
 							"
-              class="text-danger">
+							class="text-danger">
 							<hr />
 							<div>
 								Turnos que coincidem:

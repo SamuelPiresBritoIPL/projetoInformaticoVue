@@ -97,11 +97,11 @@
 								{{ !showInfoPUC ? "Saber mais..." : "Saber menos." }}
 							</button>
 						</div>
-						<div class="d-grid gap-2 mx-5">
+						<div class="d-grid gap-5 mx-5">
 							<button
 								type="button"
 								class="btn btn-primary mt-2"
-								@click="buttonUnidadesCurriculares()">
+								@click="buttonUnidadesCurriculares()"><i class="align-baseline bi bi-ui-checks"></i>
 								Inscrição UC's
 							</button>
 						</div>
@@ -213,7 +213,7 @@
 						<button
 							type="button"
 							class="btn btn-primary mt-2"
-							@click="buttonInscricaoTurnos()">
+							@click="buttonInscricaoTurnos()"><i class="align-baseline bi bi-calendar-week-fill"></i>
 							Inscrição Turnos
 						</button>
           </div>
