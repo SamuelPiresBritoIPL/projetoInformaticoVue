@@ -11,7 +11,7 @@ import bootstrap from "bootstrap/dist/css/bootstrap.css";
 import bootstrapJS from "bootstrap/dist/js/bootstrap.js";
 import boostrapIcons from "bootstrap-icons/font/bootstrap-icons.css";
 import vueselect from "vue-select/dist/vue-select.css";
-import BootstrapIcon from "@dvuckovic/vue3-bootstrap-icons";
+// import BootstrapIcon from "@dvuckovic/vue3-bootstrap-icons";
 
 import Toaster from "@meforma/vue-toaster";
 
@@ -26,13 +26,13 @@ let toastOptions = {
 };
 
 /* import the fontawesome core */
-import { library } from "@fortawesome/fontawesome-svg-core";
+// import { library } from "@fortawesome/fontawesome-svg-core";
 
 /* import specific icons */
-import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
+// import { faUserSecret } from "@fortawesome/free-solid-svg-icons";
 
 /* import font awesome icon component */
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 import "gitart-vue-dialog/dist/style.css";
 import { GDialog } from "gitart-vue-dialog";
@@ -41,9 +41,10 @@ import VueCal from "vue-cal";
 import vuecalptbr from "vue-cal/dist/i18n/pt-br.es.js";
 import vuecalcss from "vue-cal/dist/vuecal.css";
 
-library.add(faUserSecret);
+// library.add(faUserSecret);
 
 const app = createApp(App);
+
 
 //O que é para usar localmente
 const apiDomain = "http://127.0.0.1:8000";
@@ -74,7 +75,7 @@ app.use(boostrapIcons);
 app.use(vueselect);
 app.use(vuecalptbr);
 app.use(vuecalcss);
-app.component("BootstrapIcon", BootstrapIcon);
+// app.component("BootstrapIcon", BootstrapIcon);
 app.component("v-select", vSelect);
 app.component("GDialog", GDialog);
 app.component("vue-cal", VueCal);
