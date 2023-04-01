@@ -36,7 +36,7 @@
 								aria-expanded="false">
 								<i class="align-baseline bi bi-diagram-3-fill"></i> Gestão
 							</a>
-							<ul class="dropdown-menu">
+							<ul class="dropdown-menu m-0">
 								<li>
 									<router-link
 										:to="{ name: 'gerircoordenadoresC' }"

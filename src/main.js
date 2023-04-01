@@ -8,10 +8,13 @@ import App from "./App.vue";
 import router from "./router";
 
 
+
 //Bootstrap support
 import "bootstrap";
-import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/scss/bootstrap.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
+// Old way
+//import "bootstrap/dist/css/bootstrap.css";
 
 
 import "vue-select/dist/vue-select.css";
