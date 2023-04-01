@@ -3,6 +3,11 @@
 </template>
 
 <style>
+
+.alwaysOnTop {
+  z-index: 9999;
+}
+
 [data-bs-theme="dark"] .vs__selected {
 	color: var(--bs-light-text);
 }
@@ -22,6 +27,12 @@
 [data-bs-theme="dark"] .vs__clear {
 	fill: var(--vs-selected-bg);
 }
+
+[data-bs-theme="dark"] .g-dialog-content {
+	--content-bg: var(--bs-dark-bg-subtle);
+}
+
+
 
 /* .btn-secondary {
     color: #fff;
