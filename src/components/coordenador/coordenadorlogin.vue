@@ -56,13 +56,14 @@
 									}}</small>
 								</div>
 							</div>
-							<button
-								type="button"
-								class="btn btn-primary"
-								style="margin-bottom: 5px; width: 100%"
-								@click="login()">
-								Login
-							</button>
+							<div class="d-grid gap-2">
+								<button
+									type="button"
+									class="btn btn-primary mb-1"
+									@click="login()">
+									Login
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

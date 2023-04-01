@@ -58,24 +58,22 @@
 					class="table-responsive"
 					style="max-height: 350px">
 					<table
-						class="table"
-						style="text-align: left">
-						<thead
-							style="
-								position: sticky;
-								top: 0;
-								z-index: 1;
-								background-color: white;
-							">
+						class="table table-hover text-start">
+						<thead class="sticky-top table-info">
 							<tr>
 								<th scope="col">Curso</th>
-								<th scope="col">Nº de Coordenadores</th>
+								<th
+									class="text-nowrap"
+									scope="col">
+									Nº de Coordenadores
+								</th>
 								<th scope="col">Login</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr
 								v-for="course in coursesWithCoordinatores"
+								role="button"
 								:key="course"
 								@click="selectedCourseFunc(course)"
 								class="hoverclick">

@@ -38,7 +38,7 @@
 					<div
 						class="alert alert-primary"
 						role="alert">
-						<p style="margin-bottom: 0px">
+						<p class="mb-0">
 							Última atualização de horários a
 							<u>{{ this.counterStore.courseWithUCs.ultimoupdateaula }}</u>
 						</p>
@@ -48,8 +48,7 @@
 						id="accordionExample"
 						v-if="this.counterStore.tipoTurnoCurso.length > 0">
 						<div
-							class="accordion-item"
-							style="margin-top: 15px; margin-bottom: 20px">
+							class="accordion-item mt-3 mb-4">
 							<h2
 								class="accordion-header"
 								id="headingTwo">
@@ -102,10 +101,10 @@
 							</div>
 						</div>
 					</div>
-					<p style="text-align: center; font-size: 18px; margin-bottom: 8px">
+					<p class="text-center fw-bold mb-2">
 						Unidades Curriculares
 					</p>
-					<hr style="margin-top: 3px; margin-bottom: 3px" />
+					<hr class="my-1" />
 					<table
 						class="table table-hover text-start">
 						<thead>
@@ -161,7 +160,7 @@
 			v-if="!gerirCursoNaAplicacao"
 			class="card">
 			<div class="card-body">
-				<div style="text-align: center">
+				<div class="text-center">
 					<h5 class="card-title">
 						{{
 							"[" +
@@ -172,8 +171,8 @@
 					</h5>
 				</div>
 				<div>
-					<div style="overflow-y: auto">
-						<div style="margin-top: 10px; margin-bottom: 10px">
+					<div class="overflow-y-auto">
+						<div class="my-2">
 							<small
 								>Seleciona as unidades curriculares que pretende adicionar à
 								aplicação de gestão/inscrição nos turnos.</small
@@ -182,11 +181,10 @@
 						<div
 							v-for="cadeira in this.counterStore.courseWithUCs.cadeiras"
 							:key="cadeira.id"
-							style="margin-left: 20px">
+							class="ms-3">
 							<p>
 								<input
-									class="form-check-input"
-									style="margin-right: 15px"
+									class="form-check-input me-2"
 									type="checkbox"
 									:value="cadeira.id"
 									v-model="cadeirasToGerir" />

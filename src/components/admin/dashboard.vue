@@ -5,7 +5,7 @@
 			<div
 				v-if="hasValue"
 				class="card-body">
-				<div style="text-align: left">
+				<div class="text-start">
 					<small
 						v-if="adminLogged"
 						class="card-title"
@@ -39,7 +39,7 @@
 											<div
 												v-for="abertura in course.aberturas"
 												:key="abertura.id">
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 0 ? "Ano: " : ""
@@ -53,7 +53,7 @@
 															: ""
 													}}
 												</p>
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 0 ? "Início: " : ""
@@ -67,7 +67,7 @@
 															: ""
 													}}
 												</p>
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 0 ? "Fim: " : ""
@@ -106,7 +106,7 @@
 											<div
 												v-for="abertura in course.aberturas"
 												:key="abertura.id">
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 1 ? "Ano: " : ""
@@ -120,7 +120,7 @@
 															: ""
 													}}
 												</p>
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 1 ? "Início: " : ""
@@ -134,7 +134,7 @@
 															: ""
 													}}
 												</p>
-												<p style="margin-bottom: 2px">
+												<p class="mb-1">
 													<small
 														><b>{{
 															abertura.tipoAbertura == 1 ? "Fim: " : ""
