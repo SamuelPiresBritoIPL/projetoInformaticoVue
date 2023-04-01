@@ -85,11 +85,11 @@
                         <div v-for="(cadeira, cadeiraIndex) in inscricaoucs" :key="cadeira.cadeira.id">
                           <div v-if="cadeira.cadeira.turnos.length != 0">
                             <label class="col-5 col-form-label" style="vertical-align: middle; float: left;">{{ "("+cadeira.cadeira.ano+"º ano) "+cadeira.cadeira.nome }}</label>   
-                            <label class="col-7 col-form-label">
+                            <label class="col-7 col-form-label" for="nothingAtAll">
                               <span v-for="(turno, index) in cadeira.cadeira.turnos" :key="turno" style="margin-right: 20px;">
                                 <span style="margin-left: 10px;" v-for="(turnotipo) in turno" :key="turnotipo.id">
-                                  <input class="form-check-input" type="radio" :value="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px" @click="clearRadio(cadeiraIndex, index, turnotipo.id)">
-                                  <label class="form-check-label" :class="{redcolor: turnotipo.vagasocupadas >= turnotipo.vagastotal }">
+                                  <input role="button" class="form-check-input" type="radio" :value="turnotipo.id" :id="turnotipo.id" v-model="arrayVmodel[cadeiraIndex][index]" style="margin-right: 3px" @click="clearRadio(cadeiraIndex, index, turnotipo.id)">
+                                  <label role="button" class="form-check-label" :for="turnotipo.id" :class="{redcolor: turnotipo.vagasocupadas >= turnotipo.vagastotal }">
                                     {{ turnotipo.numero == 0 ? turnotipo.tipo : turnotipo.tipo+turnotipo.numero }}<small> ({{ turnotipo.vagasocupadas }}/{{ turnotipo.vagastotal }})</small>
                                   </label>
                                 </span>
@@ -463,43 +463,5 @@ export default {
 </script>
 
 <style>
-.btn-secondary {
-    color: #fff;
-    background-color: #8b9196 !important;
-    border-color: #8b9196 !important;
-}
-.redcolor {
-  color:red;
-}
-.wrapper {
-  color: #000;
-}
 
-.content {
-  padding: 20px;
-}
-
-.title {
-  font-size: 30px;
-  font-weight: 700;
-  margin-bottom: 20px;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  padding: 10px 20px;
-  border-top: 1px solid rgba(0, 0, 0, 0.12);
-}
-.vuecal__event-title {
-  font-size: 1em;
-  font-weight: bold;
-}
-.vuecal__cell-content {
-  justify-content: flex-start;
-  height: 100%;
-  align-items: flex-end;
-}
-.vuecal__event {background-color: rgba(228,238,247, 0.7) !important;border: .5px solid rgb(50,50,255);color: #fff; border-radius: 5px 5px 5px 5px;}
-.vuecal__no-event {display: none;}
 </style>
