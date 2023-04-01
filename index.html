@@ -1,40 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<link
+			rel="icon"
+			href="/src/assets/favicons/favicon.svg" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0" />
+		<title>Vite App</title>
+	</head>
 
-<head>
-  <meta charset="UTF-8" />
-  <link rel="icon" href="/src/assets/favicons/favicon.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vite App</title>
-</head>
+	<body>
+		<div id="app"></div>
+		<button
+			id="btnSwitch"
+			class="btn btn-outline-secondary btn-floating btn-sm position-fixed bottom-0 end-0 mb-3 me-3"
+			@click="toggleTheme()">
+			<i class="align-baseline bi bi-circle-half"></i>
+		</button>
+		<script
+			type="module"
+			src="/src/main.js"></script>
+		<script>
+			if (localStorage.getItem("theme") == "dark") {
+				document.documentElement.setAttribute("data-bs-theme", "dark");
+			} else {
+				document.documentElement.setAttribute("data-bs-theme", "light");
+			}
 
-<body>
-  <div id="app"></div>
-  <button id="btnSwitch" style="position: fixed; bottom: 20px; right: 20px" type="button"
-    class="btn btn-outline-secondary btn-floating btn-sm" @click="toggleTheme()">
-    <i class="align-baseline bi bi-circle-half"></i>
-  </button>
-  <script type="module" src="/src/main.js"></script>
-  <script>
-
-    if (localStorage.getItem('theme') == 'dark') {
-      document.documentElement.setAttribute('data-bs-theme', 'dark')
-    }
-    else {
-      document.documentElement.setAttribute('data-bs-theme', 'light')
-    }
-
-    document.getElementById('btnSwitch').addEventListener('click', () => {
-      if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
-        localStorage.setItem('theme', 'light')
-        document.documentElement.setAttribute('data-bs-theme', 'light')
-      }
-      else {
-        localStorage.setItem('theme', 'dark')
-        document.documentElement.setAttribute('data-bs-theme', 'dark')
-      }
-    })
-  </script>
-</body>
-
+			document.getElementById("btnSwitch").addEventListener("click", () => {
+				if (document.documentElement.getAttribute("data-bs-theme") == "dark") {
+					localStorage.setItem("theme", "light");
+					document.documentElement.setAttribute("data-bs-theme", "light");
+				} else {
+					localStorage.setItem("theme", "dark");
+					document.documentElement.setAttribute("data-bs-theme", "dark");
+				}
+			});
+		</script>
+	</body>
 </html>

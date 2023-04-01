@@ -27,8 +27,10 @@
 				<h5 class="text-center">Manutenção e Suporte Atual</h5>
 			</div>
 			<div class="card-body text-center">
-        <p class="mt-1"></p>
-				<span>suporte@DEI</span>
+				<address class="mt-1">
+					<strong>Suporte DEI</strong><br />
+					<a href="mailto:suporte.dei.estg@ipleiria.pt">suporte.dei.estg@ipleiria.pt</a>
+				</address>
 			</div>
 		</div>
 	</div>
