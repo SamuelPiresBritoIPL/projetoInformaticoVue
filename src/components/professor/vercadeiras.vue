@@ -100,7 +100,7 @@ export default {
 				)
 				.then((response) => {
 					this.turnos = response.data;
-					console.log(this.turnos);
+					//console.log(this.turnos);
 				})
 				.catch((error) => {
 					console.log(error.response);

@@ -211,7 +211,7 @@ export default {
 				});
 		},
 		getStatsTurno(turnoid = this.counterStore.turnoToManage) {
-			console.log(turnoid);
+			//console.log(turnoid);
 			this.$axios
 				.get("turnosprofessor/stats/" + turnoid)
 				.then((response) => {
@@ -220,7 +220,7 @@ export default {
 					this.totalnaorepetentes = response.data.totalnaorepetentes;
 					this.totalnaoinscritos = response.data.totalnaoinscritos;
 					this.dadosInscritos = response.data.alunos;
-					console.log(response.data.alunos);
+					//console.log(response.data.alunos);
 					this.turno = response.data.turno;
 					this.cadeira.turnos.forEach((value, index) => {
 						if (value.id == turnoid) {
@@ -247,7 +247,7 @@ export default {
 				)
 				.then((response) => {
 					this.cadeira = response.data.cadeira;
-					console.log(this.cadeira);
+					//console.log(this.cadeira);
 					this.activeTurno.splice(0);
 					this.activeTurno.push(false);
 					this.cadeira.turnos.forEach((value, index) => {
@@ -280,7 +280,7 @@ export default {
 					);
 					const link = document.createElement("a");
 					link.href = url;
-					console.log(this.turno);
+					//console.log(this.turno);
 					link.setAttribute(
 						"download",
 						"turnos_" +
@@ -298,7 +298,7 @@ export default {
 				});
 		},
 		downloadExcelCadeira() {
-			console.log(this.cadeira);
+			//console.log(this.cadeira);
 			this.$axios
 				.get("cadeirasprofessor/export/" + this.cadeira.id, {
 					headers: { Accept: "application/vnd.ms-excel" },
@@ -313,7 +313,7 @@ export default {
 					);
 					const link = document.createElement("a");
 					link.href = url;
-					console.log(this.turno);
+					//console.log(this.turno);
 					link.setAttribute("download", this.cadeira.nome + ".xls");
 					document.body.appendChild(link);
 					link.click();

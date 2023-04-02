@@ -150,7 +150,7 @@ export default {
 						this.credentials.password != null
 					) {
 						this.messageError = error.response.data;
-						console.log(this.messageError.message);
+						//console.log(this.messageError.message);
 					}
 				}
 				this.$toast.error("Não foi possível fazer login");

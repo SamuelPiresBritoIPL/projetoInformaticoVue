@@ -237,9 +237,15 @@
 								<i class="align-baseline bi bi-check-lg"></i> Confirmar Edição
 							</button>
 							<button
+								type="button"
+								class="btn btn-warning me-1"
+								@click="cancelarEdicaoIniciacao()">
+								<i class="align-baseline bi bi-x-lg"></i> Cancelar
+							</button>
+							<button
 								v-if="iniciarConfirmacao == true"
 								type="button"
-								class="btn btn-primary me-1"
+								class="btn btn-primary"
 								@click="
 									createAbertura(
 										this.counterStore.aberturasByCourse.id,
@@ -248,14 +254,8 @@
 										dataAbertura,
 										dataEncerrar
 									)
-								">
+								"><i class="align-baseline bi bi-check-lg"></i>
 								Confirmar
-							</button>
-							<button
-								type="button"
-								class="btn btn-warning"
-								@click="cancelarEdicaoIniciacao()">
-								<i class="align-baseline bi bi-x-lg"></i> Cancelar
 							</button>
 						</form>
 					</div>
@@ -777,7 +777,7 @@ export default {
 					this.counterStore.getAberturasByCourse(
 						this.counterStore.aberturasByCourse.id
 					);
-					console.log(this.counterStore.aberturasByCourse.id);
+					//console.log(this.counterStore.aberturasByCourse.id);
 				})
 				.catch((error) => {
 					this.$toast.error("Não foi possível encerrar esta abertura!");

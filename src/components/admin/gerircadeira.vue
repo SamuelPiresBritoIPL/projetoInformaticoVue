@@ -838,7 +838,7 @@ export default {
 				});
 		},
 		downloadExcelCadeira() {
-			console.log(this.cadeira);
+			//console.log(this.cadeira);
 			this.$axios
 				.get("cadeirasprofessor/export/" + this.cadeira.id, {
 					headers: { Accept: "application/vnd.ms-excel" },
@@ -853,7 +853,7 @@ export default {
 					);
 					const link = document.createElement("a");
 					link.href = url;
-					console.log(this.turno);
+					//console.log(this.turno);
 					link.setAttribute("download", this.cadeira.nome + ".xls");
 					document.body.appendChild(link);
 					link.click();
@@ -875,7 +875,7 @@ export default {
 				.then((response) => {
 					this.$toast.success(response.data);
 					this.estudantesSelected = [];
-					console.log(this.estudantesSelected);
+					//console.log(this.estudantesSelected);
 					this.getStatsTurno(this.turno.id);
 				})
 				.catch((error) => {

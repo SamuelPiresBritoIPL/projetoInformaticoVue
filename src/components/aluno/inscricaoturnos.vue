@@ -703,7 +703,7 @@ export default {
 				})
 				.then((response) => {
 					this.$toast.success("Inscrição feita com sucesso");
-					console.log(response);
+					//console.log(response);
 					if (response.data.rejeitados && response.data != 201) {
 						this.showTurnosRejeitados = true;
 						this.turnosRejeitados = response.data.rejeitados;

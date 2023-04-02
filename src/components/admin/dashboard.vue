@@ -252,7 +252,7 @@ export default {
 							hasInscricao: hasInscricao,
 						};
 					});
-					console.log(this.aberturasAbertas);
+					//console.log(this.aberturasAbertas);
 				})
 				.catch((error) => {
 					console.log(error.response);

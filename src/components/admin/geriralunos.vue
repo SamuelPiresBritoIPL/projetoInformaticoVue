@@ -322,7 +322,7 @@ export default {
 						this.counterStore.semestre
 				)
 				.then((response) => {
-					console.log(response.data);
+					//console.log(response.data);
 					this.pedidos = response.data["pedidos"];
 					this.ucsInscritas = response.data["cadeirasInscritas"];
 					this.ucsAprovadas = response.data["cadeirasAprovadas"];

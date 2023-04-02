@@ -68,7 +68,7 @@ export default {
 			this.$axios
 				.get("cadeirasaluno/infoperiodos")
 				.then((response) => {
-					console.log(response.data);
+					//console.log(response.data);
 					this.infoPedidos = response.data.infoPedidos;
 					this.infoInscricoes = response.data.infoInscricoes;
 					this.isPedidosOpen = response.data.isPedidosOpen;

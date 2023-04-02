@@ -271,7 +271,7 @@ export default {
 			this.collapsed[number] = this.collapsed[number] == true ? false : true;
 		},
 		saveTurnosVagas() {
-			console.log(this.counterStore.tipoTurnoCurso);
+			//console.log(this.counterStore.tipoTurnoCurso);
 			var dataToSend = [];
 			var dataToSend2 = [];
 			this.counterStore.tipoTurnoCurso.forEach((value, index) => {

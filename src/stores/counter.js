@@ -67,7 +67,7 @@ export const useCounterStore = defineStore({
       }
     },
     async getCourseWithUCs(courseId){
-      console.log(courseId)
+      //console.log(courseId)
       try {
         let response = await axios.get("cursoauth/cadeiras/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.courseWithUCs = response.data.cadeiras
@@ -75,7 +75,7 @@ export const useCounterStore = defineStore({
         response.data.tiposTurnos.forEach(turno => {
           this.tipoTurnoCurso.push({tipo: turno,vagas: null})
         })
-        console.log(this.tipoTurnoCurso)
+        //console.log(this.tipoTurnoCurso)
       } catch {
         console.log(error.response);
         throw error
@@ -90,7 +90,7 @@ export const useCounterStore = defineStore({
         let response = await axios.get("curso/pedidos/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.pedidosByCourse = response.data.pedidos;
         this.pedidosByCourseAntigos = response.data.pedidosntigos;
-        console.log(response)
+        //console.log(response)
       } catch {
         console.log(error.response);
         throw error
@@ -101,7 +101,7 @@ export const useCounterStore = defineStore({
         let response = await axios.get("curso/aberturas/" + courseId + "/" + this.selectedAnoletivo + "/" + this.semestre)
         this.aberturasByCourse = response.data.aberturasAtivas
         this.aberturasByCourseDeleted = response.data.aberturasDeleted
-        console.log(this.aberturasByCourseDeleted)
+        //console.log(this.aberturasByCourseDeleted)
         this.yearsCourse = []
         for (let i = 0; i <= this.aberturasByCourse.totalanos; i++) {
           this.yearsCourse.push(i)
@@ -155,7 +155,7 @@ export const useCounterStore = defineStore({
         localStorage.removeItem("alunoState");
       try {
         let response = await axios.post("login", credentials);
-        console.log(response.data)
+        //console.log(response.data)
         //se for admin mas é coordenador tbm
         if (response.data.access_token && response.data.tipo == 1 && response.data.isCoordenador == 1 && tipoLogin == 2) {
           sessionStorage.setItem("tokenCoordenador", response.data.access_token);
@@ -184,7 +184,7 @@ export const useCounterStore = defineStore({
         if (response.data.access_token && response.data.tipo == 3 && tipoLogin == 3) {
           sessionStorage.setItem("tokenAdmin", response.data.access_token);
           localStorage.setItem("adminState", true);
-          console.log(sessionStorage.tokenAdmin)
+          //console.log(sessionStorage.tokenAdmin)
           axios.defaults.headers.common[
             "Authorization"
           ] = `Bearer ${sessionStorage.tokenAdmin}`;
