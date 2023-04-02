@@ -141,15 +141,15 @@
 								</div>
 								<div
 									v-if="hasErrorLoginAddToUC"
-									class="errorMessages">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errorLoginAddToUC.login[0]
 									}}</small>
 								</div>
 								<div
 									v-if="hasErroraddAluno"
-									class="errorMessages">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errors.addAluno
 									}}</small>
 								</div>
@@ -192,15 +192,15 @@
 								</div>
 								<div
 									v-if="hasErrorLoginAddToTurno"
-									class="errorMessages">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errorLoginAddToTurno.login[0]
 									}}</small>
 								</div>
 								<div
 									v-if="hasErroraddAlunoTurno"
-									class="errorMessages">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errors.addAlunoTurno
 									}}</small>
 								</div>
@@ -249,8 +249,8 @@
 								</div>
 								<div
 									v-if="hasErrorAlterarVagas"
-									class="errorMessages">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errors.alterarVagas
 									}}</small>
 								</div>
@@ -383,8 +383,8 @@
 				</select>
 				<div
 					v-if="hasErrorMoverAlunos"
-					class="errorMessages mb-3">
-					<small class="badge text-bg-danger ms-1">{{
+					class="errorMessages mb-3 mt-1">
+					<small class="badge text-bg-danger ms-1 text-wrap">{{
 						errorMoverAlunos.inscricaoIds[0]
 					}}</small>
 				</div>

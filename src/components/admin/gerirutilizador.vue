@@ -23,8 +23,8 @@
 									v-model="password" />
 								<div
 									v-if="errors.password != null"
-									class="mb-3">
-									<small class="badge text-bg-danger ms-1">{{
+									class="mb-3 mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errors.password
 									}}</small>
 								</div>
@@ -43,8 +43,8 @@
 									v-model="newpassword" />
 								<div
 									v-if="errors.newpassword != null"
-									class="errorMessages mb-3">
-									<small class="badge text-bg-danger ms-1">{{
+									class="errorMessages mb-3 mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{
 										errors.newpassword
 									}}</small>
 								</div>

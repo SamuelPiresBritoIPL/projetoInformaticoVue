@@ -15,8 +15,8 @@
 				</div>
 				<div
 					v-if="hasError"
-					class="errorMessages mb-2">
-					<small class="badge text-bg-danger ms-1">{{ errorMsg }}</small>
+					class="errorMessages mb-2 mt-1">
+					<small class="badge text-bg-danger ms-1 text-wrap">{{ errorMsg }}</small>
 				</div>
 				<button
 					class="btn btn-primary mt-2"

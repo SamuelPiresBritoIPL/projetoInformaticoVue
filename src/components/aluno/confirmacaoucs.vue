@@ -179,15 +179,15 @@
 						</div>
 						<div
 							v-if="hasError"
-							class="errorMessages mb-3">
-							<small class="badge text-bg-danger">{{
+							class="errorMessages mb-3 mt-1">
+							<small class="badge text-bg-danger text-wrap">{{
 								errorMessages
 							}}</small>
 						</div>
 						<div
 							v-if="hasErrorDescricao"
-							class="errorMessages mb-3">
-							<small class="badge text-bg-danger">{{
+							class="errorMessages mb-3 mt-1">
+							<small class="badge text-bg-danger text-wrap">{{
 								errorMessages.descricao[0]
 							}}</small>
 						</div>

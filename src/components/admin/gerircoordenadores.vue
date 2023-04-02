@@ -118,8 +118,8 @@
 							</v-select>
 							<div
 								v-if="hasErrorCurso"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									grantRoleError.idCurso
 								}}</small>
 							</div>
@@ -142,8 +142,8 @@
 							</select>
 							<div
 								v-if="hasErrorTipo"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									grantRoleError.tipo
 								}}</small>
 							</div>
@@ -162,8 +162,8 @@
 								v-model="login" />
 							<div
 								v-if="hasErrorLogin"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									grantRoleError.login
 								}}</small>
 							</div>
@@ -202,15 +202,15 @@
 							</v-select>
 							<div
 								v-if="hasErrorCursoNullRemover"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									nullCurso
 								}}</small>
 							</div>
 							<div
 								v-if="hasErrorCursoRemover"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									grantRoleError.login
 								}}</small>
 							</div>
@@ -235,15 +235,15 @@
 							</select>
 							<div
 								v-if="hasErrorLoginNullRemover"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									nullCoordenador
 								}}</small>
 							</div>
 							<div
 								v-if="hasErrorLoginRemover"
-								class="errorMessages">
-								<small class="badge text-bg-danger ms-1 fw-bold">{{
+								class="errorMessages mt-1">
+								<small class="badge text-bg-danger ms-1 fw-bold text-wrap">{{
 									grantRoleError.login
 								}}</small>
 							</div>

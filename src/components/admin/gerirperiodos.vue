@@ -202,8 +202,8 @@
 										v-model="dataAbertura" />
 									<div
 										v-if="hasErrorDataAbertura"
-										class="errorMessages">
-										<small class="badge text-bg-danger ms-1">{{
+										class="errorMessages mt-1">
+										<small class="badge text-bg-danger ms-1 text-wrap">{{
 											errorIniciarPC.dataAbertura[0]
 										}}</small>
 									</div>
@@ -222,8 +222,8 @@
 										v-model="dataEncerrar" />
 									<div
 										v-if="hasErrorDataEncerrar"
-										class="errorMessages">
-										<small class="badge text-bg-danger ms-1">{{
+										class="errorMessages mt-1">
+										<small class="badge text-bg-danger ms-1 text-wrap">{{
 											errorIniciarPC.dataEncerar[0]
 										}}</small>
 									</div>
@@ -444,8 +444,8 @@
 									</select>
 									<div
 										v-if="hasErrorAno"
-										class="errorMessages">
-										<small class="badge text-bg-danger ms-1">{{
+										class="errorMessages mt-1">
+										<small class="badge text-bg-danger ms-1 text-wrap">{{
 											errorIniciarPC.ano[0]
 										}}</small>
 									</div>
@@ -464,8 +464,8 @@
 										v-model="dataAbertura" />
 									<div
 										v-if="hasErrorDataAbertura"
-										class="errorMessages">
-										<small class="badge text-bg-danger ms-1">{{
+										class="errorMessages mt-1">
+										<small class="badge text-bg-danger ms-1 text-wrap">{{
 											errorIniciarPC.dataAbertura[0]
 										}}</small>
 									</div>
@@ -484,8 +484,8 @@
 										v-model="dataEncerrar" />
 									<div
 										v-if="hasErrorDataEncerrar"
-										class="errorMessages">
-										<small class="badge text-bg-danger ms-1">{{
+										class="errorMessages mt-1">
+										<small class="badge text-bg-danger ms-1 text-wrap">{{
 											errorIniciarPC.dataEncerar[0]
 										}}</small>
 									</div>
@@ -524,7 +524,7 @@
 							<br />
 							<span
 								v-if="this.msgErrorTurnos != null"
-								class="badge text-bg-danger"
+								class="badge text-bg-danger text-wrap"
 								>{{ this.msgErrorTurnos }}</span
 							>
 						</form>

@@ -26,8 +26,8 @@
 									v-model="credentials.login" />
 								<div
 									v-if="hasNullLogin"
-									class="errorMessages">
-									<small class="badge text-bg-danger">{{ nullLogin }}</small>
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger text-wrap" >{{ nullLogin }}</small>
 								</div>
 							</div>
 							<div class="mb-3">
@@ -45,13 +45,13 @@
 									v-model="credentials.password" />
                   <div
 									v-if="hasNullPassword"
-									class="errorMessages">
-									<small class="badge text-bg-danger">{{ nullPassword }}</small>
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger text-wrap">{{ nullPassword }}</small>
 								</div>
 								<div
 									v-if="hasError"
-									class="errorMessages">
-									<small class="badge text-bg-danger">{{
+									class="errorMessages mt-1">
+									<small class="badge text-bg-danger text-wrap">{{
 										messageError.message
 									}}</small>
 								</div>
