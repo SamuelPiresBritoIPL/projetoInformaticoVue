@@ -1,4 +1,4 @@
 {
-    "nuxt.isNuxtApp": false,
-    "cmake.configureOnOpen": false
+	"nuxt.isNuxtApp": false,
+	"cmake.configureOnOpen": false
 }

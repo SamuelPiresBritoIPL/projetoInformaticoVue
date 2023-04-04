@@ -2,7 +2,14 @@
 	<div class="container-fluid">
 		<nav class="navbar navbar-expand-xl">
 			<div class="container-fluid">
-				<a class="navbar-brand">Administração</a>
+				<a class="navbar-brand">{{
+					counterStore.utilizadorLogado.nome
+						? counterStore.utilizadorLogado.nome.replace(
+								/([a-z]+) .* ([a-z]+)/i,
+								"$1 $2"
+						  )
+						: " "
+				}}</a>
 				<button
 					class="navbar-toggler"
 					type="button"

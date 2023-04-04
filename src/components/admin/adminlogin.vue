@@ -27,7 +27,9 @@
 								<div
 									v-if="hasNullLogin"
 									class="errorMessages mt-1">
-									<small class="badge text-bg-danger text-wrap">{{ nullLogin }}</small>
+									<small class="badge text-bg-danger text-wrap">{{
+										nullLogin
+									}}</small>
 								</div>
 							</div>
 							<div class="mb-3">
@@ -46,7 +48,9 @@
 								<div
 									v-if="hasNullPassword"
 									class="errorMessages mt-1">
-									<small class="badge text-bg-danger text-wrap">{{ nullPassword }}</small>
+									<small class="badge text-bg-danger text-wrap">{{
+										nullPassword
+									}}</small>
 								</div>
 								<div
 									v-if="hasError"

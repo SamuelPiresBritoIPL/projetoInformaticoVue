@@ -7,15 +7,12 @@ import VueSocketIO from "vue-3-socket.io";
 import App from "./App.vue";
 import router from "./router";
 
-
-
 //Bootstrap support
 import "bootstrap";
 import "bootstrap/scss/bootstrap.scss";
 import "bootstrap-icons/font/bootstrap-icons.css";
 // Old way
 //import "bootstrap/dist/css/bootstrap.css";
-
 
 import "vue-select/dist/vue-select.css";
 // import BootstrapIcon from "@dvuckovic/vue3-bootstrap-icons";
@@ -40,7 +37,6 @@ let toastOptions = {
 
 /* import font awesome icon component */
 // import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
 
 import "gitart-vue-dialog/dist/style.css";
 import { GDialog } from "gitart-vue-dialog";

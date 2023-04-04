@@ -824,7 +824,7 @@ export default {
 					idcurso: selectedCourse,
 				})
 				.then((response) => {
-					console.log(response);
+					//console.log(response);
 					this.$toast.success("Dados dos horários atualizados");
 				})
 				.catch((error) => {
