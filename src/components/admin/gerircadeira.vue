@@ -15,7 +15,7 @@
 					class="mb-4 text-center">
 					<span
 						role="button"
-						class="fs-5 me-4 link-body-emphasis"
+						class="fs-5 me-4 link-body-emphasis text-nowrap"
 						v-bind:class="{
 							'text-decoration-underline fw-bolder': activeTurno[0],
 						}"
@@ -24,7 +24,7 @@
 					>
 					<span
 						role="button"
-						class="fs-5 me-4 link-body-emphasis"
+						class="fs-5 me-4 link-body-emphasis text-nowrap"
 						v-for="(turno, index) in this.cadeira.turnos"
 						:key="turno"
 						@click="getStatsTurno(turno.id)"
@@ -568,6 +568,7 @@ export default {
 	},
 	methods: {
 		getStats() {
+			this.errorMoverAlunos = null;
 			this.$axios
 				.get(
 					"cadeiras/stats/" +
@@ -593,6 +594,7 @@ export default {
 				});
 		},
 		getStatsTurno(turnoid = this.counterStore.turnoToManage) {
+			this.errorMoverAlunos = null;
 			this.$axios
 				.get("turno/stats/" + turnoid)
 				.then((response) => {
@@ -674,6 +676,7 @@ export default {
 					} else {
 						this.getStatsTurno();
 					}
+					this.errorLoginAddToUC = null;
 					this.numeroadicionar = null;
 				})
 				.catch((error) => {
@@ -700,19 +703,22 @@ export default {
 						"Deve escrever um número de um estudante e selecionar um Turno!",
 				};
 				console.log(this.errors);
-				throw "Erro";
+				return;
+				// throw "Erro";
 			}
 			if (numeroadicionarTurno == null) {
 				this.errors = {
 					addAlunoTurno: "Deve escrever um número de um estudante!",
 				};
 				console.log(this.errors);
-				throw "Erro";
+				return;
+				// throw "Erro";
 			}
 			if (turnoescolhido == null || turnoescolhido == "null") {
 				this.errors = { addAlunoTurno: "Deve selecionar um Turno!" };
 				console.log(this.errors);
-				throw "Erro";
+				return;
+				// throw "Erro";
 			}
 			this.$axios
 				.post("cadeiras/addalunoturno/" + turnoescolhido, {
@@ -725,6 +731,7 @@ export default {
 					} else {
 						this.getStatsTurno();
 					}
+					this.errorLoginAddToTurno = null;
 					this.numeroadicionarTurno = null;
 				})
 				.catch((error) => {
@@ -866,7 +873,14 @@ export default {
 			if (this.turnoSelected == null || this.turnoSelected == "null") {
 				this.errorMoverAlunos = [];
 				this.errorMoverAlunos["inscricaoIds"] = ["Não selecionou o turno."];
-				throw "Error";
+				return;
+				// throw "Error";
+			} else if (this.estudantesSelected.length < 1) {
+				this.errorMoverAlunos = [];
+				this.errorMoverAlunos["inscricaoIds"] = [
+					"Não selecionou alunos para mover.",
+				];
+				return;
 			}
 			this.$axios
 				.put("cadeiras/mudarturno/" + this.turnoSelected, {

@@ -94,6 +94,7 @@ export default {
 			nullLogin: null,
 			nullPassword: null,
 			messageError: null,
+			amITryingToLogin: false,
 		};
 	},
 	computed: {
@@ -120,6 +121,10 @@ export default {
 	},
 	methods: {
 		async login() {
+			if (this.amITryingToLogin) {
+				return;
+			}
+			this.amITryingToLogin = true;
 			this.nullLogin = null;
 			this.nullPassword = null;
 			this.messageError = null;
@@ -127,11 +132,18 @@ export default {
 				this.nullLogin = "Preencha o seu login";
 				this.nullPassword = "Preencha a sua password";
 				this.$toast.error("Não foi possível fazer login");
-				throw "Error";
-			} else if (this.credentials.password == null) {
+				this.amITryingToLogin = false;
+				return;
+				// throw "Error";
+			} else if (
+				this.credentials.password == null ||
+				this.credentials.password.length < 1
+			) {
 				this.nullPassword = "Preencha a sua password";
 				this.$toast.error("Não foi possível fazer login");
-				throw "Error";
+				this.amITryingToLogin = false;
+				return;
+				// throw "Error";
 			}
 			var tipoLogin = 3;
 			try {
@@ -160,6 +172,7 @@ export default {
 				}
 				this.$toast.error("Não foi possível fazer login.");
 			}
+			this.amITryingToLogin = false;
 		},
 	},
 	mounted() {},

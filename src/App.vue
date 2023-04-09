@@ -3,9 +3,8 @@
 </template>
 
 <style>
-
 .alwaysOnTop {
-  z-index: 9999;
+	z-index: 9999;
 }
 
 [data-bs-theme="dark"] .vs__selected {
@@ -31,8 +30,6 @@
 [data-bs-theme="dark"] .g-dialog-content {
 	--content-bg: var(--bs-dark-bg-subtle);
 }
-
-
 
 /* .btn-secondary {
     color: #fff;
@@ -64,14 +61,21 @@
 } */
 
 .vuecal__event-title {
-  font-size: 1em;
-  font-weight: bold;
+	font-size: 1em;
+	font-weight: bold;
 }
 .vuecal__cell-content {
-  justify-content: flex-start;
-  height: 100%;
-  align-items: flex-end;
+	justify-content: flex-start;
+	height: 100%;
+	align-items: flex-end;
 }
-.vuecal__event {background-color: rgba(228,238,247, 0.7) !important;border: .5px solid rgb(50,50,255);color: #fff; border-radius: 5px 5px 5px 5px;}
-.vuecal__no-event {display: none;}
+.vuecal__event {
+	background-color: rgba(228, 238, 247, 0.7) !important;
+	border: 0.5px solid rgb(50, 50, 255);
+	color: #fff;
+	border-radius: 5px 5px 5px 5px;
+}
+.vuecal__no-event {
+	display: none;
+}
 </style>
