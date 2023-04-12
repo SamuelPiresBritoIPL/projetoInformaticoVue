@@ -22,11 +22,11 @@ import Toaster from "@meforma/vue-toaster";
 import vSelect from "vue-select";
 
 let toastOptions = {
-	position: "top",
-	timeout: 3000,
-	pauseOnHover: true,
-	queue: true,
-	dismissible: true,
+  position: "top",
+  timeout: 3000,
+  pauseOnHover: true,
+  queue: true,
+  dismissible: true,
 };
 
 /* import the fontawesome core */
@@ -50,7 +50,8 @@ import "vue-cal/dist/vuecal.css";
 const app = createApp(App);
 
 //O que é para usar localmente
-const apiDomain = "http://127.0.0.1:8000";
+//const apiDomain = "http://127.0.0.1:8000";
+const apiDomain = "http://projetoinformaticolaravel.test";
 const wsConnection = "http://localhost:8080";
 
 /*
@@ -66,8 +67,8 @@ const wsConnection = process.env.VUE_APP_WS_CONNECTION
 */
 
 const socketIO = new VueSocketIO({
-	debug: true,
-	connection: wsConnection,
+  debug: true,
+  connection: wsConnection,
 });
 
 app.use(createPinia());
@@ -89,15 +90,15 @@ app.use(socketIO);
 axios.defaults.baseURL = `${apiDomain}/api`;
 app.config.globalProperties.$serverUrl = apiDomain;
 axios.defaults.headers.common["Authorization"] = `Bearer ${
-	sessionStorage.tokenAluno
-		? sessionStorage.tokenAluno
-		: sessionStorage.tokenAdmin
-		? sessionStorage.tokenAdmin
-		: sessionStorage.tokenCoordenador
-		? sessionStorage.tokenCoordenador
-		: sessionStorage.tokenProfessor
-		? sessionStorage.tokenProfessor
-		: ""
+  sessionStorage.tokenAluno
+    ? sessionStorage.tokenAluno
+    : sessionStorage.tokenAdmin
+    ? sessionStorage.tokenAdmin
+    : sessionStorage.tokenCoordenador
+    ? sessionStorage.tokenCoordenador
+    : sessionStorage.tokenProfessor
+    ? sessionStorage.tokenProfessor
+    : ""
 }`;
 app.config.globalProperties.$axios = axios;
 
