@@ -73,7 +73,8 @@
 								type="button"
 								class="btn btn-primary mb-2 w-50"
 								@click="adicionarCadeiras()"
-								:disabled="adicionarCadeirasForm"><i class="align-baseline bi bi-file-earmark-spreadsheet"></i>
+								:disabled="adicionarCadeirasForm">
+								<i class="align-baseline bi bi-file-earmark-spreadsheet"></i>
 								Efetuar Pedido de Inscrição</button
 							><br />
 						</div>
@@ -115,7 +116,8 @@
 						<button
 							type="button"
 							class="btn btn-outline-primary"
-							@click="openAddCadeiraDeOutroCurso()"><i class="align-baseline bi bi-calendar2-check-fill"></i>
+							@click="openAddCadeiraDeOutroCurso()">
+							<i class="align-baseline bi bi-calendar2-check-fill"></i>
 							Adicionar UC de outro curso
 						</button>
 						<div v-if="showBtnAdicionarUCOutroCurso == true">
@@ -159,16 +161,18 @@
 										class="form-check-input me-3"
 										type="checkbox"
 										:value="cadeira.id"
-                    :id="cadeira.id"
+										:id="cadeira.id"
 										v-model="cadeirasToRequest" />
-									<label role="button" class="form-check-label" :for="cadeira.id">
+									<label
+										role="button"
+										class="form-check-label"
+										:for="cadeira.id">
 										{{ "[" + cadeira.codigo + "] " + cadeira.nome }}
 									</label>
 								</p>
 							</div>
 						</div>
-						<div
-							class="form-floating my-3">
+						<div class="form-floating my-3">
 							<textarea
 								class="form-control"
 								placeholder="Leave a comment here"
@@ -192,22 +196,23 @@
 							}}</small>
 						</div>
 						<div class="text-center">
-              <button
+							<button
 								type="button"
 								class="btn btn-danger"
 								@click="
 									adicionarCadeirasForm = false;
 									this.errorMessages = null;
-								"><i class="align-baseline bi bi-x-circle-fill"></i>
+								">
+								<i class="align-baseline bi bi-x-circle-fill"></i>
 								Cancelar
 							</button>
 							<button
 								type="button"
 								class="btn btn-primary ms-1"
-								@click="inscricaoCadeiras(1)"><i class="align-baseline bi bi-caret-right-fill"></i>
+								@click="inscricaoCadeiras(1)">
+								<i class="align-baseline bi bi-caret-right-fill"></i>
 								Submeter
 							</button>
-							
 						</div>
 					</div>
 				</div>
@@ -247,8 +252,7 @@
 									data-bs-parent="#accordionExample">
 									<div class="accordion-body">
 										<div>
-											<table
-												class="table text-start">
+											<table class="table text-start">
 												<thead>
 													<tr>
 														<th scope="col">Curso</th>
@@ -370,6 +374,15 @@ export default {
 		inscricaoCadeiras(state) {
 			//console.log(this.counterStore.anosletivos)
 			this.errorMessages = null;
+
+			if (
+				this.requestDescription == null ||
+				this.requestDescription.length < 1
+			) {
+				this.errorMessages = "A descrição é obrigatória!";
+				return;
+			}
+
 			this.$axios
 				.post("cadeirasaluno/pedidos", {
 					estado: state,
