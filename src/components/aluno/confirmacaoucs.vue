@@ -379,7 +379,7 @@ export default {
 				this.requestDescription == null ||
 				this.requestDescription.length < 1
 			) {
-				this.errorMessages = "A descrição é obrigatória!";
+				this.errorMessages = "A justificação é obrigatória!";
 				return;
 			}
 
