@@ -285,6 +285,7 @@ export default {
 				!this.counterStore.selectedCourse ||
 				!this.counterStore.selectedCourse.code
 			) {
+				this.counterStore.selectedCourse = this.counterStore.courses[0];
 				this.counterStore.selectedCourse.code = this.counterStore.courses[0].id;
 			}
 
@@ -315,6 +316,14 @@ export default {
 				});
 		},
 		updateTableContent() {
+			if (
+				!this.counterStore.selectedCourse ||
+				!this.counterStore.selectedCourse.code
+			) {
+				this.counterStore.selectedCourse = this.counterStore.courses[0];
+				this.counterStore.selectedCourse.code = this.counterStore.courses[0].id;
+			}
+
 			this.counterStore.getCourseWithUCs(this.counterStore.selectedCourse.code);
 		},
 	},
