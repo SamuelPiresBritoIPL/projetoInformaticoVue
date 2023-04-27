@@ -325,6 +325,8 @@ export default {
 			}
 
 			this.counterStore.getCourseWithUCs(this.counterStore.selectedCourse.code);
+
+			this.$toast.success("Tabela atualizada com sucesso.");
 		},
 	},
 	mounted() {
