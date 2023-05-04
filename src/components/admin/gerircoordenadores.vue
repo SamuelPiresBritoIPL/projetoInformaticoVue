@@ -57,8 +57,7 @@
 				<div
 					class="table-responsive"
 					style="max-height: 350px">
-					<table
-						class="table table-hover text-start">
+					<table class="table table-hover text-start">
 						<thead class="sticky-top table-info">
 							<tr>
 								<th scope="col">Curso</th>
@@ -114,7 +113,10 @@
 								code="code"
 								:options="this.counterStore.coursesToVSelect"
 								single-line
-								v-model="selectedCourse">
+								v-model="selectedCourse"
+								@keyup.enter="
+									grantCoordinatorRole(selectedCourse, roleId, login)
+								">
 							</v-select>
 							<div
 								v-if="hasErrorCurso"
@@ -131,6 +133,9 @@
 								>Tipo de Coordenador:</label
 							>
 							<select
+								@keyup.enter="
+									grantCoordinatorRole(selectedCourse, roleId, login)
+								"
 								class="form-select form-select-sm"
 								aria-label=".form-select-sm example"
 								v-model="roleId"
@@ -155,7 +160,10 @@
 								>Login/Email:</label
 							>
 							<input
-								type="name"
+								@keyup.enter="
+									grantCoordinatorRole(selectedCourse, roleId, login)
+								"
+								type="text"
 								class="form-control"
 								id="exampleFormControlInput1"
 								placeholder="Login/Email"
@@ -190,6 +198,12 @@
 								>&nbsp;&nbsp;{{ this.counterStore.courses[0].nome }}</label
 							>
 							<v-select
+								@keyup.enter="
+									revokeCoordinatorRole(
+										selectedCoordinator,
+										selectedCourseRemove
+									)
+								"
 								v-if="hasMoreThanOneCurso"
 								aria-label=".form-select-sm example"
 								code="code"
@@ -222,6 +236,12 @@
 								>Coordenador:</label
 							>
 							<select
+								@keyup.enter="
+									revokeCoordinatorRole(
+										selectedCoordinator,
+										selectedCourseRemove
+									)
+								"
 								class="form-select form-select-sm"
 								aria-label=".form-select-sm example"
 								v-model="selectedCoordinator">
@@ -375,12 +395,31 @@ export default {
 			if (course == null && this.adminLogged) {
 				this.grantRoleError = [];
 				this.grantRoleError["idCurso"] = "Deve selecionar um curso.";
-				throw "O curso não foi selecionado";
+				return;
+				// throw "O curso não foi selecionado";
+			}
+
+			if (course == null && this.hasMoreThanOneCurso) {
+				this.grantRoleError = [];
+				this.grantRoleError["idCurso"] = "Deve selecionar um curso.";
+				return;
+				// throw "O curso não foi selecionado";
+			}
+			if (type == null || type == "null") {
+				this.grantRoleError = [];
+				this.grantRoleError["tipo"] = "Deve selecionar o tipo de coordenador.";
+				return;
+			}
+			if (login == null || login.length < 1) {
+				this.grantRoleError = [];
+				this.grantRoleError["login"] = "Deve definir o Login/Email.";
+				return;
 			}
 			if (course == null) {
 				course = [];
 				course["code"] = this.counterStore.courses[0].id;
 			}
+
 			this.$axios
 				.post("coordenador", {
 					login: login,
@@ -396,6 +435,14 @@ export default {
 						this.getCoordinatorsByCourse(course.code);
 						this.getCoursesCoordinators();
 					}
+
+					if (this.selectedCourseRemove && this.selectedCourseRemove.code > 0) {
+						let tempCourse = this.selectedCourseRemove;
+						this.selectedCourseRemove = null;
+						this.getCoordinatorsByCourse(tempCourse.code);
+						this.selectedCourseRemove = tempCourse;
+					}
+
 					this.login = null;
 					this.grantRoleError = null;
 					this.revokeRoleError = null;
@@ -437,12 +484,26 @@ export default {
 			if (course == null && coordinatorId == null && this.adminLogged) {
 				this.nullCurso = "Deve selecionar um curso";
 				this.nullCoordenador = "Deve selecionar um coordenador";
-				this.$toast.error("Não foi possível retirar o role a este utilizador!");
+				// this.$toast.error("Não foi possível retirar o role a este utilizador!");
 				return;
 			}
+
+			if (course == null && this.hasMoreThanOneCurso && coordinatorId == null) {
+				this.nullCurso = "Deve selecionar um curso";
+				this.nullCoordenador = "Deve selecionar um coordenador";
+				// this.$toast.error("Não foi possível retirar o role a este utilizador!");
+				return;
+			}
+
+			if (course == null && this.hasMoreThanOneCurso) {
+				this.nullCurso = "Deve selecionar um curso";
+				// this.$toast.error("Não foi possível retirar o role a este utilizador!");
+				return;
+			}
+
 			if (coordinatorId == null || coordinatorId == "null") {
 				this.nullCoordenador = "Deve selecionar um coordenador";
-				this.$toast.error("Não foi possível retirar o role a este utilizador!");
+				// this.$toast.error("Não foi possível retirar o role a este utilizador!");
 				return;
 			}
 			if (course == null) {
@@ -454,9 +515,10 @@ export default {
 				.then((response) => {
 					this.$toast.success("Role retirado com sucesso!");
 					this.selectedCoordinator = null;
-					if (this.adminLogged) {
-						this.getCoursesCoordinators();
-					}
+					// if (this.adminLogged) {
+					// 	this.getCoursesCoordinators();
+					// }
+					this.getCoursesCoordinators();
 					this.getCoordinatorsByCourse(course.code);
 					this.grantRoleError = null;
 					this.revokeRoleError = null;

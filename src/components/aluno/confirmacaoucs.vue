@@ -198,6 +198,13 @@
 						<div class="text-center">
 							<button
 								type="button"
+								class="btn btn-primary me-1"
+								@click="inscricaoCadeiras(1)">
+								<i class="align-baseline bi bi-caret-right-fill"></i>
+								Submeter
+							</button>
+							<button
+								type="button"
 								class="btn btn-danger"
 								@click="
 									adicionarCadeirasForm = false;
@@ -205,13 +212,6 @@
 								">
 								<i class="align-baseline bi bi-x-circle-fill"></i>
 								Cancelar
-							</button>
-							<button
-								type="button"
-								class="btn btn-primary ms-1"
-								@click="inscricaoCadeiras(1)">
-								<i class="align-baseline bi bi-caret-right-fill"></i>
-								Submeter
 							</button>
 						</div>
 					</div>

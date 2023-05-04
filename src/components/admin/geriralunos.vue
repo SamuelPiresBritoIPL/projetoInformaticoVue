@@ -16,7 +16,9 @@
 				<div
 					v-if="hasError"
 					class="errorMessages mb-2 mt-1">
-					<small class="badge text-bg-danger ms-1 text-wrap">{{ errorMsg }}</small>
+					<small class="badge text-bg-danger ms-1 text-wrap">{{
+						errorMsg
+					}}</small>
 				</div>
 				<button
 					class="btn btn-primary mt-2"
@@ -312,6 +314,12 @@ export default {
 				this.$toast.error("Ano letivo e semestre não selecionados");
 				return;
 			}
+
+			if (this.login == null || this.login.length < 1) {
+				this.errorMsg = "Preencha o número de estudante para fazer a pesquisa.";
+				return;
+			}
+
 			this.$axios
 				.get(
 					"estudante/dados/" +
@@ -330,9 +338,10 @@ export default {
 					this.alunoRequested = true;
 					this.horario = response.data.horario.horario;
 					this.dataInicialHorario = response.data.horario.data;
+					this.errorMsg = null;
 				})
 				.catch((error) => {
-					console.log(error.response);
+					// console.log(error.response);
 					this.errorMsg = error.response.data;
 					this.$toast.error("Não foi possível procurar este utilizador!");
 				});

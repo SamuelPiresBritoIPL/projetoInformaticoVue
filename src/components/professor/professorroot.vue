@@ -39,7 +39,7 @@
 						<!-- <li><a class="dropdown-item" href="#">Something else here</a></li> -->
 					</ul>
 					<div class="d-flex justify form">
-						<select
+						<!-- <select
 							class="form-select mx-1"
 							aria-label=".form-select"
 							v-model="this.counterStore.selectedAnoletivo"
@@ -60,7 +60,7 @@
 							<option>Selecione um Semestre</option>
 							<option value="1">1</option>
 							<option value="2">2</option>
-						</select>
+						</select> -->
 						<button
 							class="mx-1 btn btn-outline-secondary"
 							type="button"

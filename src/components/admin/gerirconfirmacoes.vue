@@ -195,12 +195,14 @@
 						:key="cadeira.id"
 						class="ms-4">
 						<input
+							role="button"
 							class="form-check-input me-2"
 							type="checkbox"
 							:value="cadeira.id"
 							:id="cadeira.id"
 							v-model="approvedCadeiras" />
 						<label
+							role="button"
 							class="form-check-label"
 							:for="cadeira.id">
 							{{ "[" + cadeira.cadeira.codigo + "] " + cadeira.cadeira.nome }}

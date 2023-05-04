@@ -59,7 +59,8 @@
 					<div class="text-center">
 						<h5>Tem a certeza que pretende avançar com a submissão?</h5>
 					</div>
-					<p class="text-center text-warning text-decoration-underline fw-bold"><i class="align-baseline bi bi-exclamation-diamond-fill"></i>
+					<p class="text-center text-warning text-decoration-underline fw-bold">
+						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
 						Certifique-se que selecionou as opções que pretende!
 						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
 					</p>
@@ -215,7 +216,8 @@
 											buttonArray[index] = !buttonArray[index];
 											noInscricoes = false;
 											noButtonSelectedMsgs = false;
-										"><i class="align-baseline bi bi-calendar-week"></i>
+										">
+										<i class="align-baseline bi bi-calendar-week"></i>
 										Inscrever nos Turnos
 									</button>
 								</div>
@@ -321,39 +323,44 @@
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="dialogState = true"><i class="align-baseline bi bi-calendar-check-fill"></i>
+												@click="dialogState = true">
+												<i class="align-baseline bi bi-calendar-check-fill"></i>
 												Ver horários disponíveis
 											</button>
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="getSobreposicoes()"><i class="align-baseline bi bi-search"></i>
+												@click="getSobreposicoes()">
+												<i class="align-baseline bi bi-search"></i>
 												Verificar sobreposições do meu horário
 											</button>
 										</div>
 										<div class="text-center mt-3">
-											<button
-												v-if="buttonArray[index]"
-												type="button"
-												class="btn btn-primary me-1"
-												@click="
-													buttonArray[index] = !buttonArray[index];
-													noButtonSelectedMsgs = true;
-												"><i class="align-baseline bi bi-arrow-return-left"></i>
-												Voltar
-											</button>
-											<button
-												type="button"
-												class="btn btn-warning me-1"
-												@click="clearRadios()"><i class="align-baseline bi bi-x"></i>
-												Limpar escolhas
-											</button>
 											<!-- <button type="button" class="btn btn-success" @click="submitInscricao()">Submeter</button> -->
 											<button
 												type="button"
 												class="btn btn-success"
-												@click="popUpConfirmation = true"><i class="align-baseline bi bi-caret-right-fill"></i>
+												@click="popUpConfirmation = true">
+												<i class="align-baseline bi bi-caret-right-fill"></i>
 												Submeter
+											</button>
+											<button
+												type="button"
+												class="btn btn-warning ms-1"
+												@click="clearRadios()">
+												<i class="align-baseline bi bi-x"></i>
+												Limpar escolhas
+											</button>
+											<button
+												v-if="buttonArray[index]"
+												type="button"
+												class="btn btn-primary ms-1"
+												@click="
+													buttonArray[index] = !buttonArray[index];
+													noButtonSelectedMsgs = true;
+												">
+												<i class="align-baseline bi bi-arrow-return-left"></i>
+												Voltar
 											</button>
 										</div>
 										<br />
@@ -696,6 +703,12 @@ export default {
 				}
 			});
 			this.popUpConfirmation = false;
+
+			// if (!this.allTurnosIds) {
+			// 	this.$toast.warning("Selecione pelo menos um turno!");
+			// 	return;
+			// }
+
 			this.$axios
 				.post("cadeirasaluno/inscricao", {
 					idUtilizador: this.counterStore.utilizadorLogado.id,

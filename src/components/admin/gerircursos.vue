@@ -70,6 +70,19 @@
 								aria-labelledby="headingTwo"
 								data-bs-parent="#accordionExample">
 								<div class="card-body">
+									<div
+										class="alert alert-info text-center mb-2"
+										role="alert">
+										<i class="align-baseline bi bi-info-square-fill"></i>
+										É necessário pelo menos <b>um valor</b> acima de zero para
+										atualizar dados
+										<i class="align-baseline bi bi-info-square-fill"></i>
+										<br />
+										<small
+											><b>Zero ou vazio</b> é assumido como <b>não</b> querer
+											atualizar o campo.</small
+										>
+									</div>
 									<label
 										for="exampleFormControlInput4"
 										class="form-label"
@@ -88,7 +101,10 @@
 											class="form-control"
 											id="exampleFormControlInput4"
 											placeholder="0"
-											v-model="tipoTurno.vagas" />
+											min="0"
+											max="9999"
+											v-model="tipoTurno.vagas"
+											@keyup.enter="saveTurnosVagas()" />
 									</div>
 									<button
 										class="float-end btn btn-primary text-right"
@@ -290,9 +306,18 @@ export default {
 			}
 
 			this.counterStore.tipoTurnoCurso.forEach((value, index) => {
-				dataToSend.push(value.tipo);
-				dataToSend2.push(value.vagas);
+				if (value.vagas != null && value.vagas > 0) {
+					dataToSend.push(value.tipo);
+					dataToSend2.push(value.vagas);
+				}
 			});
+
+			if (dataToSend.length < 1) {
+				this.$toast.warning(
+					"Não tem valores válidos para atualizar vagas, pelo menos um dos campos têm de estar acima de zero."
+				);
+				return;
+			}
 
 			this.$axios
 				.put(

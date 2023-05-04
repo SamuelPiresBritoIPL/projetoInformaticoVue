@@ -128,6 +128,7 @@
 								>
 								<div class="input-group mb-0">
 									<input
+										@keyup.enter="addStudentToUC(numeroadicionar)"
 										type="name"
 										class="form-control"
 										id="exampleFormControlInput1"
@@ -161,6 +162,9 @@
 								>
 								<div class="input-group mb-0">
 									<input
+										@keyup.enter="
+											addStudentToTurno(numeroadicionarTurno, turnoescolhido)
+										"
 										type="name"
 										class="form-control"
 										id="exampleFormControlInput2"
@@ -240,6 +244,7 @@
 								>
 								<div class="input-group mb-0">
 									<input
+										@keyup.enter="changeTurnoData()"
 										type="number"
 										min="1"
 										class="form-control"
@@ -302,6 +307,7 @@
 										info.turno + " (" + info.numeroturnos + ")  "
 									}}</label>
 									<input
+										@keyup.enter="saveTurnoVagas()"
 										type="number"
 										min="1"
 										class="form-control"
@@ -657,12 +663,12 @@ export default {
 					this.errors.addAluno = null;
 				}
 			}
-			if (this.numeroadicionar == null) {
+			if (this.numeroadicionar == null || this.numeroadicionar.length < 1) {
 				this.errors = {
 					addAluno:
 						"Deve escrever o número do estudante que pretende adicionar",
 				};
-				console.log(this.errors);
+				// console.log(this.errors);
 				return;
 			}
 			this.$axios
@@ -694,29 +700,30 @@ export default {
 					this.errors.addAlunoTurno = null;
 				}
 			}
+			// console.log(numeroadicionarTurno);
 			if (
-				numeroadicionarTurno == null &&
+				(numeroadicionarTurno == null || numeroadicionarTurno.length < 1) &&
 				(turnoescolhido == null || turnoescolhido == "null")
 			) {
 				this.errors = {
 					addAlunoTurno:
 						"Deve escrever um número de um estudante e selecionar um Turno!",
 				};
-				console.log(this.errors);
+				// console.log(this.errors);
 				return;
 				// throw "Erro";
 			}
-			if (numeroadicionarTurno == null) {
+			if (numeroadicionarTurno == null || numeroadicionarTurno.length < 1) {
 				this.errors = {
 					addAlunoTurno: "Deve escrever um número de um estudante!",
 				};
-				console.log(this.errors);
+				// console.log(this.errors);
 				return;
 				// throw "Erro";
 			}
 			if (turnoescolhido == null || turnoescolhido == "null") {
 				this.errors = { addAlunoTurno: "Deve selecionar um Turno!" };
-				console.log(this.errors);
+				// console.log(this.errors);
 				return;
 				// throw "Erro";
 			}
@@ -751,7 +758,7 @@ export default {
 				this.errors = {
 					alterarVagas: "O número de vagas tèm de ser superior a 0!",
 				};
-				console.log(this.errors);
+				// console.log(this.errors);
 				return;
 			}
 			var objToSend = {
@@ -791,9 +798,19 @@ export default {
 			var dataToSend = [];
 			var dataToSend2 = [];
 			this.turnoInfo.forEach((value, index) => {
-				dataToSend.push(value.turno);
-				dataToSend2.push(value.valor);
+				if (value.valor != null && value.valor > 0) {
+					dataToSend.push(value.turno);
+					dataToSend2.push(value.valor);
+				}
 			});
+
+			if (dataToSend.length < 1) {
+				this.$toast.warning(
+					"Não tem valores válidos para atualizar vagas, pelo menos um dos campos têm de estar acima de zero."
+				);
+				return;
+			}
+
 			this.$axios
 				.put(
 					"cadeiras/turnovagas/" +
@@ -806,7 +823,11 @@ export default {
 					}
 				)
 				.then((response) => {
-					this.$toast.success(response.data);
+					// this.$toast.success(response.data);
+					this.$toast.success("Número de vagas alterado com sucesso.");
+					this.turnoInfo.forEach((value, index) => {
+						value.valor = null;
+					});
 				})
 				.catch((error) => {
 					this.$toast.error("Não foi possível concluir a operação");

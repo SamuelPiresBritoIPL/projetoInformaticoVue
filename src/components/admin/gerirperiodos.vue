@@ -237,15 +237,9 @@
 								<i class="align-baseline bi bi-check-lg"></i> Confirmar Edição
 							</button>
 							<button
-								type="button"
-								class="btn btn-warning me-1"
-								@click="cancelarEdicaoIniciacao()">
-								<i class="align-baseline bi bi-x-lg"></i> Cancelar
-							</button>
-							<button
 								v-if="iniciarConfirmacao == true"
 								type="button"
-								class="btn btn-primary"
+								class="btn btn-primary me-1"
 								@click="
 									createAbertura(
 										this.counterStore.aberturasByCourse.id,
@@ -254,8 +248,15 @@
 										dataAbertura,
 										dataEncerrar
 									)
-								"><i class="align-baseline bi bi-check-lg"></i>
+								">
+								<i class="align-baseline bi bi-check-lg"></i>
 								Confirmar
+							</button>
+							<button
+								type="button"
+								class="btn btn-warning"
+								@click="cancelarEdicaoIniciacao()">
+								<i class="align-baseline bi bi-x-lg"></i> Cancelar
 							</button>
 						</form>
 					</div>
@@ -723,6 +724,24 @@ export default {
 		},
 		createAbertura(courseId, year, type, dataAbertura, dataEncerrar) {
 			this.msgErrorTurnos = null;
+			console.log(year);
+			if (
+				dataAbertura == null ||
+				dataEncerrar == null ||
+				dataAbertura.length < 1 ||
+				dataEncerrar.length < 1
+			) {
+				this.msgErrorTurnos =
+					"Preencha ambas as datas para o pedido de incrições.";
+
+				return;
+			}
+
+			if (type == 1 && (year == null || year == "null")) {
+				this.msgErrorTurnos = "Selecione o ano(s) a incluir.";
+				return;
+			}
+
 			this.$axios
 				.post("abertura/" + courseId, {
 					ano: year,
@@ -751,6 +770,24 @@ export default {
 				});
 		},
 		updateAbertura(year, dataAbertura, dataEncerrar) {
+			console.log;
+			if (
+				dataAbertura == null ||
+				dataEncerrar == null ||
+				dataAbertura.length < 1 ||
+				dataEncerrar.length < 1
+			) {
+				this.$toast.warning(
+					"Preencha ambas as datas para o pedido de incrições."
+				);
+				return;
+			}
+
+			// if (type == 1 && (year == null || year == "null")) {
+			// 	this.msgErrorTurnos = "Selecione o ano(s) a incluir.";
+			// 	return;
+			// }
+
 			this.$axios
 				.put("abertura/" + this.aberturaToEdit, {
 					ano: year,
