@@ -147,7 +147,7 @@
                 <label for="exampleFormControlInput1" class="form-label"
                   >Curso</label
                 >
-                <select
+                <!-- <select
                   class="form-select form-select-sm"
                   aria-label=".form-select-sm example"
                   v-model="selectedCourse"
@@ -160,7 +160,16 @@
                   >
                     {{ "[" + course.codigo + "] " + course.nome }}
                   </option>
-                </select>
+                </select> -->
+                <v-select
+                  aria-label=".form-select-sm example"
+                  code="code"
+                  :options="this.counterStore.coursesToVSelectComTodos"
+                  single-line
+                  v-model="counterStore.selectedCourse"
+                  @option:selected="selectCurso()"
+                >
+                </v-select>
               </div>
               <button
                 :disabled="blocked"
@@ -387,7 +396,7 @@
                 <label for="exampleFormControlInput1" class="form-label"
                   >Curso</label
                 >
-                <select
+                <!-- <select
                   class="form-select form-select-sm"
                   aria-label=".form-select-sm example"
                   v-model="selectedCourse"
@@ -395,7 +404,7 @@
                   <option value="" disabled selected>
                     [Código Curso] Nome do curso (Última atualização do horário)
                   </option>
-                  <!-- <option value="0">Todos</option> -->
+                  <option value="0">Todos</option> 
                   <option
                     v-for="course in this.counterStore.courses"
                     :key="course.id"
@@ -410,7 +419,16 @@
                       course.ultimoupdateaula
                     }}
                   </option>
-                </select>
+                </select> -->
+                <v-select
+                  aria-label=".form-select-sm example"
+                  code="code"
+                  :options="this.counterStore.coursesToVSelectComTodos"
+                  single-line
+                  v-model="counterStore.selectedCourse"
+                  @option:selected="selectCurso()"
+                >
+                </v-select>
               </div>
               <button
                 :disabled="blocked"
@@ -633,6 +651,7 @@ export default {
       dataInicioSemestre: null,
       dataFimSemestre: null,
       collapsed: [true, true, true, true, true, true, true],
+      selectedCourse: null,
     };
   },
   methods: {
@@ -785,6 +804,17 @@ export default {
           this.loading[4] = false;
           this.blocked = false;
         });
+    },
+    selectCurso() {
+      if (
+        this.counterStore.selectedCourse != null &&
+        this.counterStore.selectedCourse.code != 0
+      ) {
+        this.counterStore.getCourseWithUCs(
+          this.counterStore.selectedCourse.code
+        );
+        return;
+      }
     },
     updateHorariosTurnos(
       anoletivoativo,
