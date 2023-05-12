@@ -181,7 +181,19 @@
 									:class="[{ 'text-bg-warning': course.totalpedidos !== 0 }]"
 									style="max-width: 15rem">
 									<router-link
+										v-if="adminLogged"
 										:to="{ name: 'gerirconfirmacoes' }"
+										class="text-decoration-none text-dark"
+										><div class="card-header">Pedidos de UC's Pendentes</div>
+										<div class="card-body">
+											<p class="card-text fw-bolder">
+												{{ course.totalpedidos }}
+											</p>
+										</div></router-link
+									>
+									<router-link
+										v-if="!adminLogged"
+										:to="{ name: 'gerirconfirmacoesC' }"
 										class="text-decoration-none text-dark"
 										><div class="card-header">Pedidos de UC's Pendentes</div>
 										<div class="card-body">
