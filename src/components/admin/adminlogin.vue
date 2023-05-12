@@ -157,6 +157,9 @@ export default {
 					localStorage.removeItem("professorState");
 					//throw "Não tem permissões!";
 					this.amITryingToLogin = false;
+					this.$toast.error(
+						"Este utilizador não tem permissões para este tipo de login!"
+					);
 					return;
 				}
 				this.$router.push({ name: "dashboard" });

@@ -158,7 +158,11 @@ export default {
 						sessionStorage.removeItem("tokenProfessor");
 						localStorage.removeItem("professorState");
 						//throw "Não tem permissões!";
+						this.$toast.error(
+							"Este utilizador não tem permissões para este tipo de login!"
+						);
 						this.amITryingToLogin = false;
+
 						return;
 					}
 				}
