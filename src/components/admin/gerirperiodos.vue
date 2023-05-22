@@ -197,6 +197,7 @@
                     type="datetime-local"
                     class="form-control"
                     v-model="dataAbertura"
+                    aria-label="Data de abertura"
                   />
                   <div v-if="hasErrorDataAbertura" class="errorMessages mt-1">
                     <small class="badge text-bg-danger ms-1 text-wrap">{{
@@ -214,6 +215,7 @@
                     type="datetime-local"
                     class="form-control"
                     v-model="dataEncerrar"
+                    aria-label="Data de encerrar"
                   />
                   <div v-if="hasErrorDataEncerrar" class="errorMessages mt-1">
                     <small class="badge text-bg-danger ms-1 text-wrap">{{
@@ -482,6 +484,7 @@
                     type="datetime-local"
                     class="form-control"
                     v-model="dataAbertura"
+                    aria-label="Data de abertura"
                   />
                   <div v-if="hasErrorDataAbertura" class="errorMessages mt-1">
                     <small class="badge text-bg-danger ms-1 text-wrap">{{
@@ -499,6 +502,7 @@
                     type="datetime-local"
                     class="form-control"
                     v-model="dataEncerrar"
+                    aria-label="Data de encerrar"
                   />
                   <div v-if="hasErrorDataEncerrar" class="errorMessages mt-1">
                     <small class="badge text-bg-danger ms-1 text-wrap">{{
