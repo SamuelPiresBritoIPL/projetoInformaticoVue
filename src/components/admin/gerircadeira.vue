@@ -575,6 +575,7 @@ export default {
 	methods: {
 		getStats() {
 			this.errorMoverAlunos = null;
+			this.estudantesSelected = [];
 			this.$axios
 				.get(
 					"cadeiras/stats/" +
@@ -601,6 +602,7 @@ export default {
 		},
 		getStatsTurno(turnoid = this.counterStore.turnoToManage) {
 			this.errorMoverAlunos = null;
+			this.estudantesSelected = [];
 			this.$axios
 				.get("turno/stats/" + turnoid)
 				.then((response) => {
