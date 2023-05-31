@@ -1,13 +1,9 @@
 <template>
-	<GDialog
-		content-class="border border-light-subtle"
-		v-model="dialogState">
+	<GDialog content-class="border border-light-subtle" v-model="dialogState">
 		<div class="wrapper">
 			<div class="content">
 				<div class="text-end">
-					<button
-						class="btn text-center"
-						@click="dialogState = false">
+					<button class="btn text-center" @click="dialogState = false">
 						<i class="align-baseline bi bi-x-lg"></i>
 						Fechar
 					</button>
@@ -29,28 +25,24 @@
 					:time-step="30"
 					:disable-views="['years', 'year', 'month', 'day']"
 					:hide-weekdays="[7]"
-					:events="horario">
+					:events="horario"
+				>
 					<template v-slot:event="{ event }">
-						<div
-							class="vuecal__event-title"
-							v-html="event.title" />
-						<div
-							class="vuecal__event-content"
-							v-html="event.content" />
+						<div class="vuecal__event-title" v-html="event.title" />
+						<div class="vuecal__event-content" v-html="event.content" />
 					</template>
 				</vue-cal>
 			</div>
 		</div>
 	</GDialog>
-	<GDialog
-		v-model="popUpConfirmation"
-		max-width="500">
+	<GDialog v-model="popUpConfirmation" max-width="500">
 		<div class="wrapper my-2">
 			<div class="content">
 				<div class="text-end">
 					<button
 						class="btn btn-outline-link"
-						@click="popUpConfirmation = false">
+						@click="popUpConfirmation = false"
+					>
 						<i class="align-baseline bi bi-x-lg"></i>
 						Fechar
 					</button>
@@ -68,7 +60,8 @@
 						<button
 							type="button"
 							class="btn btn-success"
-							@click="submitInscricao()">
+							@click="submitInscricao()"
+						>
 							<i class="align-baseline bi bi-check-circle-fill"></i>
 							Confirmar
 						</button>
@@ -76,7 +69,8 @@
 						<button
 							type="button"
 							class="btn btn-danger"
-							@click="popUpConfirmation = false">
+							@click="popUpConfirmation = false"
+						>
 							<i class="align-baseline bi bi-x-circle-fill"></i>
 							Cancelar
 						</button>
@@ -105,7 +99,8 @@
 								Object.keys(this.aberturas).length == 0
 							"
 							class="alert alert-danger ms-5 mt-5"
-							role="alert">
+							role="alert"
+						>
 							<p class="text-center">
 								Não existe nenhum período de inscrições definido.
 							</p>
@@ -120,18 +115,21 @@
                 </div> -->
 						<div
 							v-for="(inscricaoucs, index) in cadeirasWithTurnosPorCurso"
-							:key="inscricaoucs.id">
+							:key="inscricaoucs.id"
+						>
 							<div v-if="this.buttonArray.length > 0">
 								<div
 									v-for="aberturaCurso in aberturas"
 									:key="aberturaCurso"
-									class="text-center">
+									class="text-center"
+								>
 									<div
 										v-if="
 											(aberturaCurso[0].idCurso == index &&
 												noButtonSelectedMsgs) ||
 											(aberturaCurso[0].idCurso == index && buttonArray[index])
-										">
+										"
+									>
 										<h4 class="mb-2">
 											{{
 												"[" +
@@ -142,13 +140,15 @@
 										</h4>
 										<span
 											v-for="aberturaAno in aberturaCurso"
-											:key="aberturaAno.idCurso">
+											:key="aberturaAno.idCurso"
+										>
 											<div
 												v-if="
 													aberturaAno.isAberto == false && hasButtonSelected
 												"
 												class="alert alert-info ms-5 mt-2"
-												role="alert">
+												role="alert"
+											>
 												O período de Inscrição nos Turnos para as UC´s
 												<b>{{
 													aberturaAno.ano == 0
@@ -176,7 +176,8 @@
 											<div
 												v-if="aberturaAno.isAberto == true && hasButtonSelected"
 												class="alert alert-success mt-2"
-												role="alert">
+												role="alert"
+											>
 												O período de Inscrição nos Turnos
 												<b>estará aberto</b> para
 												<b>{{
@@ -216,7 +217,8 @@
 											buttonArray[index] = !buttonArray[index];
 											noInscricoes = false;
 											noButtonSelectedMsgs = false;
-										">
+										"
+									>
 										<i class="align-baseline bi bi-calendar-week"></i>
 										Inscrever nos Turnos
 									</button>
@@ -232,17 +234,17 @@
 											buttonArray[index] = !buttonArray[index];
 											noInscricoes = false;
 											noButtonSelectedMsgs = false;
-										">
+										"
+									>
 										Inscrever nos Turnos
 									</button>
 								</div>
 							</div>
-							<div
-								v-if="buttonArray[index]"
-								class="mt-3 text-start mb-5">
+							<div v-if="buttonArray[index]" class="mt-3 text-start mb-5">
 								<div
 									v-for="(inscricaoucs, index2) in cadeirasWithTurnosPorCurso"
-									:key="inscricaoucs.id">
+									:key="inscricaoucs.id"
+								>
 									<div v-if="index == index2">
 										<label class="col-5 col-form-label"
 											><strong>Unidade Curricular </strong>(ano/nome)</label
@@ -254,7 +256,8 @@
 										<br />
 										<div
 											v-for="(cadeira, cadeiraIndex) in inscricaoucs"
-											:key="cadeira.cadeira.id">
+											:key="cadeira.cadeira.id"
+										>
 											<div v-if="cadeira.cadeira.turnos.length != 0">
 												<label
 													class="col-5 col-form-label align-middle float-start"
@@ -265,17 +268,17 @@
 														cadeira.cadeira.nome
 													}}</label
 												>
-												<label
-													class="col-7 col-form-label"
-													for="nothingAtAll">
+												<label class="col-7 col-form-label" for="nothingAtAll">
 													<span
 														v-for="(turno, index) in cadeira.cadeira.turnos"
 														:key="turno"
-														class="me-4">
+														class="me-4"
+													>
 														<span
 															class="ms-2"
 															v-for="turnotipo in turno"
-															:key="turnotipo.id">
+															:key="turnotipo.id"
+														>
 															<input
 																role="button"
 																class="form-check-input me-1"
@@ -291,7 +294,8 @@
 																		turnotipo.vagastotal &&
 																	arrayVmodelInicial[cadeiraIndex][index] !=
 																		turnotipo.id
-																" />
+																"
+															/>
 															<label
 																role="button"
 																class="form-check-label"
@@ -300,7 +304,8 @@
 																	'text-danger':
 																		turnotipo.vagasocupadas >=
 																		turnotipo.vagastotal,
-																}">
+																}"
+															>
 																<i
 																	class="bi bi-sunrise-fill text-success align-baseline"
 																	v-if="
@@ -323,7 +328,8 @@
 																				)
 																		].end.replace(/.*\s(\d+):\d+:\d+/, '$1') <=
 																			14
-																	"></i>
+																	"
+																></i>
 																<i
 																	class="bi bi-sunset-fill text-primary align-baseline"
 																	v-if="
@@ -365,7 +371,8 @@
 																				)
 																		].end.replace(/.*\s(\d+):\d+:\d+/, '$1') <=
 																			18
-																	"></i>
+																	"
+																></i>
 																<i
 																	class="bi bi-moon-fill text-warning align-baseline"
 																	v-if="
@@ -388,7 +395,8 @@
 																				)
 																		].end.replace(/.*\s(\d+):\d+:\d+/, '$1') >
 																			18
-																	"></i>
+																	"
+																></i>
 																<i
 																	class="bi bi-question-circle text-danger align-baseline"
 																	v-if="
@@ -399,7 +407,8 @@
 																					turnotipo.tipo +
 																					turnotipo.numero
 																			) == -1
-																	"></i>
+																	"
+																></i>
 																{{
 																	turnotipo.numero == 0
 																		? turnotipo.tipo
@@ -420,7 +429,8 @@
 											<button
 												type="button"
 												class="btn btn-link"
-												@click="getCadeirasWithTurnosWebSocket()">
+												@click="getCadeirasWithTurnosWebSocket()"
+											>
 												Atualizar Vagas
 											</button>
 										</div>
@@ -428,14 +438,16 @@
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="dialogState = true">
+												@click="dialogState = true"
+											>
 												<i class="align-baseline bi bi-calendar-check-fill"></i>
 												Ver horários disponíveis
 											</button>
 											<button
 												type="button"
 												class="btn btn-secondary me-1"
-												@click="getSobreposicoes()">
+												@click="getSobreposicoes()"
+											>
 												<i class="align-baseline bi bi-search"></i>
 												Verificar sobreposições do meu horário
 											</button>
@@ -445,14 +457,16 @@
 											<button
 												type="button"
 												class="btn btn-success"
-												@click="popUpConfirmation = true">
+												@click="popUpConfirmation = true"
+											>
 												<i class="align-baseline bi bi-caret-right-fill"></i>
 												Submeter
 											</button>
 											<button
 												type="button"
 												class="btn btn-warning ms-1"
-												@click="clearRadios()">
+												@click="clearRadios()"
+											>
 												<i class="align-baseline bi bi-x"></i>
 												Limpar escolhas
 											</button>
@@ -463,7 +477,8 @@
 												@click="
 													buttonArray[index] = !buttonArray[index];
 													noButtonSelectedMsgs = true;
-												">
+												"
+											>
 												<i class="align-baseline bi bi-arrow-return-left"></i>
 												Voltar
 											</button>
@@ -478,20 +493,20 @@
 									noButtonSelectedMsgs &&
 									this.isncricoesAtuais[index] !== undefined
 								"
-								class="text-center mb-4">
+								class="text-center mb-4"
+							>
 								<h5>Turnos atualmente inscritos:</h5>
 								<p
 									v-for="inscricao in this.isncricoesAtuais[index]"
-									:key="inscricao">
+									:key="inscricao"
+								>
 									{{
 										inscricao["nome"] +
 										(inscricao["ano"]
 											? " (" + inscricao["ano"] + "º ano): "
 											: "")
 									}}
-									<span
-										v-for="ins in inscricao['turnos']"
-										:key="ins">
+									<span v-for="ins in inscricao['turnos']" :key="ins">
 										{{
 											ins.tipo + (ins.numero == 0 ? "" : ins.numero) + "    "
 										}}</span
@@ -508,13 +523,15 @@
 								showTurnosRejeitados == true &&
 								!(this.buttonArray.length > 0 && hasButtonSelected)
 							"
-							class="text-danger">
+							class="text-danger"
+						>
 							<hr />
 							<div>
 								Turnos Rejeitados por falta de Vagas:
 								<div
 									v-for="turnoRejeitado in turnosRejeitados"
-									:key="turnoRejeitado">
+									:key="turnoRejeitado"
+								>
 									<small>
 										Turno - {{ turnoRejeitado.tipo }} (UC:
 										{{ turnoRejeitado.cadeira }} / Curso:
@@ -529,7 +546,8 @@
 								showTurnosCoicidem == true &&
 								!(this.buttonArray.length > 0 && hasButtonSelected)
 							"
-							class="text-danger">
+							class="text-danger"
+						>
 							<hr />
 							<div>
 								Turnos que coincidem:
@@ -545,7 +563,8 @@
 									<tbody>
 										<tr
 											v-for="turnoCoicide in turnosCoicidem"
-											:key="turnoCoicide">
+											:key="turnoCoicide"
+										>
 											<td scope="col-md-1">{{ turnoCoicide[0] }}</td>
 											<td scope="col-md-2">{{ turnoCoicide[1] }}</td>
 											<td>{{ turnoCoicide[2] }}</td>
@@ -556,13 +575,9 @@
 							</div>
 							<hr />
 						</div>
-						<div
-							id="app"
-							v-if="dataInicialHorariopessoal != null">
+						<div id="app" v-if="dataInicialHorariopessoal != null">
 							<hr />
-							<h4
-								ref="horariopessoalref"
-								class="text-center">
+							<h4 ref="horariopessoalref" class="text-center">
 								Horário pessoal
 							</h4>
 							<p class="text-center">
@@ -578,14 +593,11 @@
 								:time-step="30"
 								:disable-views="['years', 'year', 'month', 'day']"
 								:hide-weekdays="[7]"
-								:events="horariopessoal">
+								:events="horariopessoal"
+							>
 								<template v-slot:event="{ event }">
-									<div
-										class="vuecal__event-title"
-										v-html="event.title" />
-									<div
-										class="vuecal__event-content"
-										v-html="event.content" />
+									<div class="vuecal__event-title" v-html="event.title" />
+									<div class="vuecal__event-content" v-html="event.content" />
 								</template>
 							</vue-cal>
 							<hr />
@@ -674,8 +686,9 @@ export default {
 			//para ir buscar turnos ja inscritos
 			//this.getCadeirasWithTurnos()
 		},
-		getCadeirasWithTurnos() {
-			this.$axios
+		async getCadeirasWithTurnos() {
+			var copyDecadeirasWithTurnosPorCurso;
+			await this.$axios
 				.get("cadeirasaluno/utilizador")
 				.then((response) => {
 					if (response.data.horario.horario.length > 0) {
@@ -690,6 +703,9 @@ export default {
 						this.horariopessoal = [];
 						this.dataInicialHorariopessoal = null;
 					}
+					copyDecadeirasWithTurnosPorCurso = JSON.parse(
+						JSON.stringify(response.data.cursos)
+					);
 					this.cadeirasWithTurnosPorCurso = response.data.cursos;
 					this.inscricoes = response.data.inscricoes;
 					this.isncricoesAtuais = response.data.inscricoesTurnosAtuais;
@@ -727,6 +743,43 @@ export default {
 					this.noInscricoes = true;
 				})
 				.catch((error) => {});
+
+			//this.horario[0].class = "bg-danger";
+			//console.log(this.horario);
+			this.horario.forEach((horario) => {
+				//console.log("entrei no foreach");
+				//console.log(copyDecadeirasWithTurnosPorCurso);
+				//console.log(Object.values(copyDecadeirasWithTurnosPorCurso)[0]);
+				Object.values(copyDecadeirasWithTurnosPorCurso)[0].forEach(
+					(cadeira) => {
+						//console.log("entrei no foreach2");
+						//console.log(cadeira.cadeira.turnos);
+						Object.values(cadeira.cadeira.turnos).forEach((turno) => {
+							//console.log(turno);
+							//console.log("entrei no foreach3");
+							turno.forEach((turnotipo) => {
+								//console.log("entrei no foreach4");
+								//console.log(turnotipo);
+								// console.log(horario.title);
+								// console.log(cadeira.cadeira.nome);
+								// console.log(turnotipo.vagasocupadas);
+								// console.log(turnotipo.vagastotal);
+								// console.log(horario.title == cadeira.cadeira.nome);
+								// console.log("-----------------------------------");
+								if (
+									horario.title == cadeira.cadeira.nome &&
+									turnotipo.vagasocupadas >= turnotipo.vagastotal &&
+									turnotipo.tipo + turnotipo.numero == horario.content
+								) {
+									//console.log("entrei no if");
+									horario.class = "bg-danger text-white border-danger";
+								}
+							});
+						});
+					}
+				);
+			});
+			//console.log(this.horario);
 		},
 		getCadeirasWithTurnosWebSocket() {
 			this.$axios
