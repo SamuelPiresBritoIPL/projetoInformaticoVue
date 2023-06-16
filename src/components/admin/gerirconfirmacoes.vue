@@ -11,15 +11,9 @@
 			@option:selected="selectCourse(selectedCourse)">
 		</v-select>
 		<br />
-		<div
-			class="accordion"
-			id="accordionExample">
-			<div
-				class="accordion-item"
-				v-if="this.counterStore.pedidosByCourseAntigos.length >= 1">
-				<h2
-					class="accordion-header"
-					id="headingTwo">
+		<div class="accordion" id="accordionExample">
+			<div class="accordion-item" v-if="this.counterStore.pedidosByCourseAntigos.length >= 1">
+				<h2 class="accordion-header" id="headingTwo">
 					<button
 						class="accordion-button"
 						:class="{ collapsed: this.collapsed[0] }"
@@ -49,26 +43,13 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr
-										class="tableRow"
-										v-for="pedido in this.counterStore.pedidosByCourseAntigos"
-										:key="pedido">
+									<tr class="tableRow" v-for="pedido in this.counterStore.pedidosByCourseAntigos" :key="pedido">
+										<td>{{ pedido.utilizador.login }}<br />{{ pedido.utilizador.nome }}</td>
 										<td>
-											{{ pedido.utilizador.login }}<br />{{
-												pedido.utilizador.nome
-											}}
-										</td>
-										<td>
-											<p
-												v-for="cadeira in pedido.cadeiras"
-												:key="cadeira">
+											<p v-for="cadeira in pedido.cadeiras" :key="cadeira">
 												{{
 													cadeira.cadeira.nome +
-													(cadeira.aceite == 1
-														? " (aceite)"
-														: cadeira.aceite == 0
-														? " (rejeitada)"
-														: "")
+													(cadeira.aceite == 1 ? " (aceite)" : cadeira.aceite == 0 ? " (rejeitada)" : "")
 												}}
 											</p>
 										</td>
@@ -94,8 +75,7 @@
 		<div class="row">
 			<div class="col-md-5">
 				<div class="d-flex flex-column align-items-stretch flex-shrink-0 mt-1">
-					<span
-						class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
+					<span class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom">
 						<span class="fs-5 fw-semibold">Lista de pedidos</span>
 					</span>
 					<div class="list-group list-group-flush border-bottom scrollarea">
@@ -107,28 +87,16 @@
 							:class="{ active: selectedPedido.id == pedido.id }"
 							@click="openPedido(pedido)"
 							href="#">
-							<div
-								class="d-flex w-100 align-items-center justify-content-between">
+							<div class="d-flex w-100 align-items-center justify-content-between">
 								<strong class="mb-1">{{ pedido.utilizador.login }}</strong>
-								<small
-									class="active"
-									:class="{ 'text-muted': selectedPedido.id != pedido.id }"
-									>{{
-										pedido.data.replace(".000000Z", "").replace("T", " ")
-									}}</small
-								>
+								<small class="active" :class="{ 'text-muted': selectedPedido.id != pedido.id }">{{
+									pedido.data.replace(".000000Z", "").replace("T", " ")
+								}}</small>
 							</div>
 							<div class="col-10 mb-1 small">{{ pedido.utilizador.nome }}</div>
 							<div v-if="courseInfo">
-								<div
-									v-if="courseInfo.code != pedido.utilizador.idCurso"
-									class="col-10 mb-1 small">
-									{{
-										"[" +
-										pedido.utilizador.codigoCurso +
-										"] " +
-										pedido.utilizador.curso
-									}}
+								<div v-if="courseInfo.code != pedido.utilizador.idCurso" class="col-10 mb-1 small">
+									{{ "[" + pedido.utilizador.codigoCurso + "] " + pedido.utilizador.curso }}
 								</div>
 							</div>
 						</a>
@@ -139,8 +107,7 @@
 				</div>
 			</div>
 			<div class="col-md-7">
-				<span
-					class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom mt-1">
+				<span class="d-flex align-items-center flex-shrink-0 p-3 text-decoration-none border-bottom mt-1">
 					<span class="fs-5 fw-semibold">Detalhes do pedido</span>
 				</span>
 				<div v-if="pedidoForm == true">
@@ -151,78 +118,39 @@
 							class="col-sm-2 col-form-label"
 							>Curso:</label
 						>
-						<label
-							v-if="courseInfo.code != selectedPedido.utilizador.idCurso"
-							class="col-sm-10 col-form-label"
-							>{{
-								"[" +
-								selectedPedido.utilizador.codigoCurso +
-								"] " +
-								selectedPedido.utilizador.curso
-							}}</label
-						>
+						<label v-if="courseInfo.code != selectedPedido.utilizador.idCurso" class="col-sm-10 col-form-label">{{
+							"[" + selectedPedido.utilizador.codigoCurso + "] " + selectedPedido.utilizador.curso
+						}}</label>
 					</div>
-					<label
-						for="inputEmail3"
-						class="col-sm-2 col-form-label"
-						>Login:</label
-					>
-					<label class="col-sm-10 col-form-label">{{
-						selectedPedido.utilizador.login
-					}}</label>
-					<label
-						for="inputEmail3"
-						class="col-sm-2 col-form-label"
-						>Nome:</label
-					>
-					<label class="col-sm-10 col-form-label">{{
-						selectedPedido.utilizador.nome
-					}}</label>
-					<label
-						for="inputEmail3"
-						class="col-sm-2 col-form-label"
-						>Data:</label
-					>
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Login:</label>
+					<label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.login }}</label>
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Nome:</label>
+					<label class="col-sm-10 col-form-label">{{ selectedPedido.utilizador.nome }}</label>
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Data:</label>
 					<label class="col-sm-10 col-form-label">{{
 						selectedPedido.data.replace(".000000Z", "").replace("T", " ")
 					}}</label>
-					<label
-						for="inputEmail3"
-						class="col-sm-4 col-form-label mt-2 mb-2"
-						>UC's requeridas:</label
-					>
-					<div
-						v-for="cadeira in selectedPedido.cadeiras"
-						:key="cadeira.id"
-						class="ms-4">
+					<label for="inputEmail3" class="col-sm-4 col-form-label mt-2 mb-2">UC's requeridas:</label>
+					<div v-for="cadeira in selectedPedido.cadeiras" :key="cadeira.id" class="ms-4">
 						<input
 							role="button"
+							aria-pressed="undefined"
 							class="form-check-input me-2"
 							type="checkbox"
 							:value="cadeira.id"
 							:id="cadeira.id"
 							v-model="approvedCadeiras" />
-						<label
-							role="button"
-							class="form-check-label"
-							:for="cadeira.id">
+						<label class="form-check-label pe-cursor" :for="cadeira.id">
 							{{ "[" + cadeira.cadeira.codigo + "] " + cadeira.cadeira.nome }}
 						</label>
 					</div>
 					<label class="col-sm-2 col-form-label mt-3">Justificação:</label>
 					<p class="ms-4">{{ selectedPedido.descricao }}</p>
 					<div class="text-center">
-						<button
-							type="button"
-							class="btn btn-primary me-1"
-							@click="handleRequest(selectedPedido, 0)">
-							<i class="align-baseline bi bi-check-circle"></i> Aprovar
-							Selecionadas
+						<button type="button" class="btn btn-primary me-1" @click="handleRequest(selectedPedido, 0)">
+							<i class="align-baseline bi bi-check-circle"></i> Aprovar Selecionadas
 						</button>
-						<button
-							type="button"
-							class="btn btn-danger"
-							@click="handleRequest(selectedPedido, 1)">
+						<button type="button" class="btn btn-danger" @click="handleRequest(selectedPedido, 1)">
 							<i class="align-baseline bi bi-x-circle"></i> Rejeitar Pedido
 						</button>
 					</div>
@@ -271,10 +199,7 @@ export default {
 				this.selectedPedido = [];
 			}
 			this.courseInfo = course;
-			if (
-				this.counterStore.selectedAnoletivo == null ||
-				this.counterStore.semestre == null
-			) {
+			if (this.counterStore.selectedAnoletivo == null || this.counterStore.semestre == null) {
 				this.$toast.error("Ano letivo e semestre não selecionados");
 				return;
 			}
@@ -290,9 +215,7 @@ export default {
 				this.allRequestCaderias.push(pedido.cadeiras[index].id);
 			}
 			if (this.approvedCadeiras.length != 0) {
-				this.rejectedCadeiras = this.allRequestCaderias.filter(
-					(x) => !this.approvedCadeiras.includes(x)
-				);
+				this.rejectedCadeiras = this.allRequestCaderias.filter((x) => !this.approvedCadeiras.includes(x));
 			} else {
 				this.rejectedCadeiras = this.allRequestCaderias;
 			}
@@ -324,10 +247,7 @@ export default {
 				});
 		},
 		hasMoreThanOneCurso() {
-			if (
-				this.counterStore.courses.length == 1 &&
-				this.counterStore.pedidosByCourse.length == 0
-			) {
+			if (this.counterStore.courses.length == 1 && this.counterStore.pedidosByCourse.length == 0) {
 				this.counterStore.getCourses(3);
 				return true;
 			}

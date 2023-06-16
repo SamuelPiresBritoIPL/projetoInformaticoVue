@@ -22,8 +22,7 @@
 [data-bs-theme="dark"] .vs__open-indicator {
 	fill: var(--vs-selected-bg);
 	transform: scale(var(--vs-controls-size));
-	transition: transform var(--vs-transition-duration)
-		var(--vs-transition-timing-function);
+	transition: transform var(--vs-transition-duration) var(--vs-transition-timing-function);
 	transition-timing-function: var(--vs-transition-timing-function);
 }
 
@@ -61,6 +60,14 @@
 
 .vuecal__no-event {
 	display: none;
+}
+
+.pe-cursor {
+	cursor: pointer;
+}
+
+[data-bs-theme="light"] .vuecal__time-cell-label {
+	color: #000;
 }
 
 /* .btn-secondary {

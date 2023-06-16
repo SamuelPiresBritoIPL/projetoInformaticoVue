@@ -14,9 +14,15 @@
 			</div>
 			<br />
 			<!-- file input with button to convert using papaparse -->
-			<input class="form-control my-1" type="file" ref="file" accept=".csv" @change="handleFileUpload()" />
+			<input
+				class="form-control my-1"
+				type="file"
+				ref="file"
+				aria-label="Upload CSV File"
+				accept=".csv"
+				@change="handleFileUpload()" />
 			<button class="btn btn-primary" @click="convertCSVToJSON()" :disabled="blocked">
-				<i class="bi bi-filetype-csv"></i>Convert to JSON
+				<i class="bi bi-filetype-csv"></i> Convert to JSON
 			</button>
 			<br />
 			<br />
@@ -50,6 +56,7 @@
 								<label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
 								<input
 									type="number"
+									aria-label="Ano Letivo, segundo passo"
 									class="form-control"
 									list="anosletivos"
 									id="exampleFormControlInput1"
@@ -65,7 +72,7 @@
 								</datalist>
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Semestre</label>
+								<label for="exampleFormControlInput3" class="form-label">Semestre</label>
 								<select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestrecurso">
 									<option value="null">Selecione o semestre</option>
 									<option value="1">1</option>
@@ -109,17 +116,18 @@
 								respetivas inscrições em UC's.
 							</p>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+								<label for="exampleFormControlInput4" class="form-label">Ano letivo</label>
 								<input
+									aria-label="Ano Letivo, terceiro passo"
 									type="number"
 									class="form-control"
 									list="anosletivos"
-									id="exampleFormControlInput1"
+									id="exampleFormControlInput4"
 									placeholder="Anoletivo (ex: 202223)"
 									v-model="anoletivoinscricoes" />
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Curso</label>
+								<label for="exampleFormControlInput5" class="form-label">Curso</label>
 								<!-- <select
                   class="form-select form-select-sm"
                   aria-label=".form-select-sm example"
@@ -214,7 +222,7 @@
 								teórica).
 							</p>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+								<label for="exampleFormControlInput2" class="form-label">Ano letivo</label>
 								<select
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example"
@@ -232,7 +240,7 @@
 								</select>
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Semestre</label>
+								<label for="exampleFormControlInput2" class="form-label">Semestre</label>
 								<select
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example"
@@ -283,7 +291,7 @@
 								pretende atualizar os horários
 							</p>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+								<label for="exampleFormControlInput6" class="form-label">Ano letivo</label>
 								<select
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example"
@@ -303,7 +311,11 @@
 							<div class="mb-3">
 								<label for="inputEmail3" class="form-label">Data de início de semestre:</label>
 								<div>
-									<input type="date" class="form-control" v-model="dataInicioSemestre" />
+									<input
+										type="date"
+										aria-label="Data de inicio de semestre"
+										class="form-control"
+										v-model="dataInicioSemestre" />
 									<!-- <div v-if="hasErrorDataAbertura" class="errorMessages">
                   <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
                 </div> -->
@@ -312,14 +324,18 @@
 							<div class="mb-3">
 								<label for="inputEmail3" class="form-label">Data de fim de semestre:</label>
 								<div>
-									<input type="date" class="form-control" v-model="dataFimSemestre" />
+									<input
+										type="date"
+										aria-label="Data de fim de semestre"
+										class="form-control"
+										v-model="dataFimSemestre" />
 									<!-- <div v-if="hasErrorDataAbertura" class="errorMessages">
                   <small style="color: #a94442; margin-left: 5px;">{{ errorIniciarPC.dataAbertura[0] }}</small>
                 </div> -->
 								</div>
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Curso</label>
+								<label for="exampleFormControlInput7" class="form-label">Curso</label>
 								<!-- <select
                   class="form-select form-select-sm"
                   aria-label=".form-select-sm example"
@@ -391,7 +407,7 @@
 						<div class="accordion-body">
 							<p class="card-text">Selecione o <b>ano letivo</b> e o <b>semestre</b> de forma a os gerir.</p>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Ano letivo</label>
+								<label for="exampleFormControlInput8" class="form-label">Ano letivo</label>
 								<select
 									class="form-select form-select-sm"
 									aria-label=".form-select-sm example"
@@ -409,7 +425,7 @@
 								</select>
 							</div>
 							<div class="mb-3">
-								<label for="exampleFormControlInput1" class="form-label">Semestre</label>
+								<label for="exampleFormControlInput9" class="form-label">Semestre</label>
 								<select class="form-select form-select-sm" aria-label=".form-select-sm example" v-model="semestreativo">
 									<option value="null">Selecione o semestre</option>
 									<option value="1">1</option>

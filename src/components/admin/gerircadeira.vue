@@ -1,18 +1,10 @@
 <template>
 	<div class="container-fluid">
-		<h3
-			v-if="this.cadeira != null"
-			class="mt-3 mb-4">
-			Gestão da UC: {{ this.cadeira.nome }}
-		</h3>
+		<h3 v-if="this.cadeira != null" class="mt-3 mb-4">Gestão da UC: {{ this.cadeira.nome }}</h3>
 		<h5 v-if="this.cadeira != null">{{ this.cadeira.curso.nome }}</h5>
-		<div
-			v-if="hasValue"
-			class="card">
+		<div v-if="hasValue" class="card">
 			<div class="card-body">
-				<div
-					v-if="this.cadeira != null"
-					class="mb-4 text-center">
+				<div v-if="this.cadeira != null" class="mb-4 text-center">
 					<span
 						role="button"
 						class="fs-5 me-4 link-body-emphasis text-nowrap"
@@ -31,16 +23,12 @@
 						v-bind:class="{
 							'text-decoration-underline fw-bolder': activeTurno[index + 1],
 						}"
-						>{{
-							turno.numero != 0 ? turno.tipo + turno.numero : turno.tipo
-						}}</span
+						>{{ turno.numero != 0 ? turno.tipo + turno.numero : turno.tipo }}</span
 					>
 				</div>
 				<div class="row text-center">
 					<div class="col">
-						<div
-							class="card mb-3"
-							style="max-width: 18rem">
+						<div class="card mb-3" style="max-width: 18rem">
 							<div class="card-header card-title">
 								<h6>Total de Inscritos</h6>
 							</div>
@@ -50,9 +38,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<div
-							class="card mb-3"
-							style="max-width: 18rem">
+						<div class="card mb-3" style="max-width: 18rem">
 							<div class="card-header"><h6>Não Repetentes</h6></div>
 							<div class="card-body">
 								{{ this.totalnaorepetentes }}
@@ -60,9 +46,7 @@
 						</div>
 					</div>
 					<div class="col">
-						<div
-							class="card mb-3"
-							style="max-width: 18rem">
+						<div class="card mb-3" style="max-width: 18rem">
 							<div class="card-header"><h6>Repetentes</h6></div>
 							<div class="card-body">
 								{{ this.totalrepetentes }}
@@ -70,38 +54,23 @@
 						</div>
 					</div>
 					<div class="col">
-						<div
-							v-if="this.totalnaoinscritos != null"
-							class="card mb-3"
-							style="max-width: 18rem">
+						<div v-if="this.totalnaoinscritos != null" class="card mb-3" style="max-width: 18rem">
 							<div class="card-header"><h6>Não Inscritos</h6></div>
 							<div class="card-body">
 								{{ this.totalnaoinscritos }}
 							</div>
 						</div>
-						<div
-							v-else
-							class="card mb-3"
-							style="max-width: 18rem">
+						<div v-else class="card mb-3" style="max-width: 18rem">
 							<div class="card-header"><h6>Número de vagas</h6></div>
 							<div class="card-body">
-								{{
-									this.totalinscritos +
-									"/" +
-									(this.nrvagasturno == null ? "-" : this.nrvagasturno)
-								}}
+								{{ this.totalinscritos + "/" + (this.nrvagasturno == null ? "-" : this.nrvagasturno) }}
 							</div>
 						</div>
 					</div>
 				</div>
-				<div
-					class="accordion"
-					id="accordionExample"
-					v-if="this.cadeira != null">
+				<div class="accordion" id="accordionExample" v-if="this.cadeira != null">
 					<div class="accordion-item">
-						<h2
-							class="accordion-header"
-							id="headingOne">
+						<h2 class="accordion-header" id="headingOne">
 							<button
 								class="accordion-button"
 								:class="{ collapsed: this.collapsed[0] }"
@@ -121,11 +90,7 @@
 							aria-labelledby="headingOne"
 							data-bs-parent="#accordionExample">
 							<div class="accordion-body">
-								<label
-									for="exampleFormControlInput1"
-									class="form-label"
-									>Adicionar estudante à UC</label
-								>
+								<label for="exampleFormControlInput1" class="form-label">Adicionar estudante à UC</label>
 								<div class="input-group mb-0">
 									<input
 										@keyup.enter="addStudentToUC(numeroadicionar)"
@@ -134,37 +99,19 @@
 										id="exampleFormControlInput1"
 										placeholder="Número de estudante"
 										v-model="numeroadicionar" />
-									<button
-										class="btn btn-primary"
-										@click="addStudentToUC(numeroadicionar)">
-										Adicionar à UC
-									</button>
+									<button class="btn btn-primary" @click="addStudentToUC(numeroadicionar)">Adicionar à UC</button>
 								</div>
-								<div
-									v-if="hasErrorLoginAddToUC"
-									class="errorMessages mt-1">
-									<small class="badge text-bg-danger ms-1 text-wrap">{{
-										errorLoginAddToUC.login[0]
-									}}</small>
+								<div v-if="hasErrorLoginAddToUC" class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{ errorLoginAddToUC.login[0] }}</small>
 								</div>
-								<div
-									v-if="hasErroraddAluno"
-									class="errorMessages mt-1">
-									<small class="badge text-bg-danger ms-1 text-wrap">{{
-										errors.addAluno
-									}}</small>
+								<div v-if="hasErroraddAluno" class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{ errors.addAluno }}</small>
 								</div>
 								<br />
-								<label
-									for="exampleFormControlInput1"
-									class="form-label"
-									>Adicionar estudante a um turno</label
-								>
+								<label for="exampleFormControlInput1" class="form-label">Adicionar estudante a um turno</label>
 								<div class="input-group mb-0">
 									<input
-										@keyup.enter="
-											addStudentToTurno(numeroadicionarTurno, turnoescolhido)
-										"
+										@keyup.enter="addStudentToTurno(numeroadicionarTurno, turnoescolhido)"
 										type="name"
 										class="form-control"
 										id="exampleFormControlInput2"
@@ -175,47 +122,26 @@
 										aria-label=".form-select-sm example"
 										v-model="turnoescolhido">
 										<option value="null">Selecione um turno.</option>
-										<option
-											v-for="turno in this.cadeira.turnos"
-											:key="turno.id"
-											v-bind:value="turno.id">
-											{{
-												turno.numero != 0
-													? turno.tipo + turno.numero
-													: turno.tipo
-											}}
+										<option v-for="turno in this.cadeira.turnos" :key="turno.id" v-bind:value="turno.id">
+											{{ turno.numero != 0 ? turno.tipo + turno.numero : turno.tipo }}
 										</option>
 									</select>
-									<button
-										class="btn btn-primary"
-										@click="
-											addStudentToTurno(numeroadicionarTurno, turnoescolhido)
-										">
+									<button class="btn btn-primary" @click="addStudentToTurno(numeroadicionarTurno, turnoescolhido)">
 										Adicionar ao turno
 									</button>
 								</div>
-								<div
-									v-if="hasErrorLoginAddToTurno"
-									class="errorMessages mt-1">
-									<small class="badge text-bg-danger ms-1 text-wrap">{{
-										errorLoginAddToTurno.login[0]
-									}}</small>
+								<div v-if="hasErrorLoginAddToTurno" class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{ errorLoginAddToTurno.login[0] }}</small>
 								</div>
-								<div
-									v-if="hasErroraddAlunoTurno"
-									class="errorMessages mt-1">
-									<small class="badge text-bg-danger ms-1 text-wrap">{{
-										errors.addAlunoTurno
-									}}</small>
+								<div v-if="hasErroraddAlunoTurno" class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{ errors.addAlunoTurno }}</small>
 								</div>
 								<br />
 							</div>
 						</div>
 					</div>
 					<div class="accordion-item">
-						<h2
-							class="accordion-header"
-							id="headingTwo">
+						<h2 class="accordion-header" id="headingTwo">
 							<button
 								class="accordion-button"
 								:class="{ collapsed: this.collapsed[1] }"
@@ -234,14 +160,8 @@
 							:class="{ collapse: this.collapsed[1] }"
 							aria-labelledby="headingTwo"
 							data-bs-parent="#accordionExample">
-							<div
-								class="accordion-body"
-								v-if="this.turno != null">
-								<label
-									for="exampleFormControlInput3"
-									class="form-label"
-									>Número de vagas</label
-								>
+							<div class="accordion-body" v-if="this.turno != null">
+								<label for="exampleFormControlInput3" class="form-label">Número de vagas</label>
 								<div class="input-group mb-0">
 									<input
 										@keyup.enter="changeTurnoData()"
@@ -252,25 +172,12 @@
 										placeholder="número de vagas"
 										v-model="turno.vagastotal" />
 								</div>
-								<div
-									v-if="hasErrorAlterarVagas"
-									class="errorMessages mt-1">
-									<small class="badge text-bg-danger ms-1 text-wrap">{{
-										errors.alterarVagas
-									}}</small>
+								<div v-if="hasErrorAlterarVagas" class="errorMessages mt-1">
+									<small class="badge text-bg-danger ms-1 text-wrap">{{ errors.alterarVagas }}</small>
 								</div>
 								<br />
-								<input
-									type="checkbox"
-									id="checkboxvisivel"
-									v-model="turno.visivel"
-									true-value="1"
-									false-value="0" />
-								<label
-									class="ms-1"
-									for="checkboxvisivel"
-									>Turno visivel</label
-								>
+								<input type="checkbox" id="checkboxvisivel" v-model="turno.visivel" true-value="1" false-value="0" />
+								<label class="ms-1" for="checkboxvisivel">Turno visivel</label>
 								<br />
 								<input
 									type="checkbox"
@@ -278,63 +185,36 @@
 									v-model="turno.repetentes"
 									true-value="1"
 									false-value="0" />
-								<label
-									class="ms-1"
-									for="checkboxrepetentes"
-									>Turno aceita repetentes</label
-								>
+								<label class="ms-1" for="checkboxrepetentes">Turno aceita repetentes</label>
 								<p></p>
-								<button
-									class="btn btn-primary text-right mt-1"
-									@click="changeTurnoData()">
+								<button class="btn btn-primary text-right mt-1" @click="changeTurnoData()">
 									Atualizar dados do Turno
 								</button>
 							</div>
-							<div
-								class="card-body"
-								v-if="this.turno == null">
-								<label
-									for="exampleFormControlInput4"
-									class="form-label"
-									>Definir vagas para
-									<b>todos os turnos de cada tipo em simultâneo</b></label
-								>
-								<div
-									v-for="info in turnoInfo"
-									:key="info"
-									class="input-group mb-3">
-									<label class="col-sm-1 col-form-label">{{
-										info.turno + " (" + info.numeroturnos + ")  "
-									}}</label>
+							<div class="card-body" v-if="this.turno == null">
+								<label class="form-label">Definir vagas para <b>todos os turnos de cada tipo em simultâneo</b></label>
+								<div v-for="info in turnoInfo" :key="info" class="input-group mb-3">
+									<label class="col-sm-1 col-form-label">{{ info.turno + " (" + info.numeroturnos + ")  " }}</label>
 									<input
 										@keyup.enter="saveTurnoVagas()"
 										type="number"
 										min="1"
 										class="form-control"
-										id="exampleFormControlInput4"
 										placeholder="0"
 										v-model="info.valor" />
 									<span class="col-form-label"
-										>&nbsp;&nbsp;{{
-											"Média de estudantes por turno: " + info.mediavagas
-										}}</span
+										>&nbsp;&nbsp;{{ "Média de estudantes por turno: " + info.mediavagas }}</span
 									>
 								</div>
-								<button
-									class="float-end btn btn-primary text-right"
-									@click="saveTurnoVagas()">
+								<button class="float-end btn btn-primary text-right" @click="saveTurnoVagas()">
 									Definir vagas para <b>todos</b> os turnos
 								</button>
 								<br /><br />
 							</div>
 						</div>
 					</div>
-					<div
-						class="accordion-item"
-						v-if="this.turno == null">
-						<h2
-							class="accordion-header"
-							id="headingThree">
+					<div class="accordion-item" v-if="this.turno == null">
+						<h2 class="accordion-header" id="headingThree">
 							<button
 								class="accordion-button"
 								:class="{ collapsed: this.collapsed[2] }"
@@ -358,20 +238,14 @@
 									class="btn btn-success text-right"
 									:class="{ 'btn-danger': isVisivel == true }"
 									@click="changeVisibility()">
-									{{
-										isVisivel
-											? "Tornar Unidade Curricular Invisivel"
-											: "Tornar Unidade Curricular Visivel"
-									}}</button
+									{{ isVisivel ? "Tornar Unidade Curricular Invisivel" : "Tornar Unidade Curricular Visivel" }}</button
 								><br /><br />
 							</div>
 						</div>
 					</div>
 				</div>
 				<br />
-				<h6
-					v-if="this.turno != null"
-					class="card-title">
+				<h6 v-if="this.turno != null" class="card-title">
 					Mover estudantes selecionados do turno atual para o selecionado
 				</h6>
 				<select
@@ -380,39 +254,23 @@
 					aria-label=".form-select-sm example"
 					v-model="turnoSelected">
 					<option value="null">Selecione um turno.</option>
-					<option
-						v-for="turno in filteredArray"
-						:key="turno.id"
-						v-bind:value="turno.id">
+					<option v-for="turno in filteredArray" :key="turno.id" v-bind:value="turno.id">
 						{{ turno.tipo + (turno.numero == 0 ? "" : turno.numero) }}
 					</option>
 				</select>
-				<div
-					v-if="hasErrorMoverAlunos"
-					class="errorMessages mb-3 mt-1">
-					<small class="badge text-bg-danger ms-1 text-wrap">{{
-						errorMoverAlunos.inscricaoIds[0]
-					}}</small>
+				<div v-if="hasErrorMoverAlunos" class="errorMessages mb-3 mt-1">
+					<small class="badge text-bg-danger ms-1 text-wrap">{{ errorMoverAlunos.inscricaoIds[0] }}</small>
 				</div>
 				<div class="d-grid gap-2 col-12 col-xl-4 mt-1">
-					<button
-						v-if="this.turno != null"
-						class="btn btn-primary"
-						@click="moverEstudantes()">
+					<button v-if="this.turno != null" class="btn btn-primary" @click="moverEstudantes()">
 						Mover Estudantes Selecionados
 					</button>
 				</div>
 				<br />
-				<button
-					v-if="this.turno != null"
-					class="float-end btn btn-success text-right"
-					@click="downloadExcel()">
+				<button v-if="this.turno != null" class="float-end btn btn-success text-right" @click="downloadExcel()">
 					Download lista estudantes (.xls)
 				</button>
-				<button
-					v-else
-					class="float-end btn btn-success text-right"
-					@click="downloadExcelCadeira()">
+				<button v-else class="float-end btn btn-success text-right" @click="downloadExcelCadeira()">
 					Download lista estudantes (.xls)
 				</button>
 				<br />
@@ -424,45 +282,25 @@
 							<th scope="col">Email</th>
 							<th scope="col">Repetente</th>
 							<th scope="col">
-								{{
-									this.counterStore.turnoToManage == null
-										? "Inscrito Turno"
-										: "Remover"
-								}}
+								{{ this.counterStore.turnoToManage == null ? "Inscrito Turno" : "Remover" }}
 							</th>
-							<th
-								scope="col"
-								v-if="this.counterStore.turnoToManage != null">
-								Selecionado
-							</th>
+							<th scope="col" v-if="this.counterStore.turnoToManage != null">Selecionado</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr
-							v-for="(aluno, index) in dadosInscritos"
-							:key="aluno">
+						<tr v-for="(aluno, index) in dadosInscritos" :key="aluno">
 							<td>{{ aluno.login }}</td>
 							<td>{{ aluno.nome }}</td>
 							<td></td>
 							<td>{{ aluno.nrinscricoes == 1 ? "Não" : "Sim" }}</td>
-							<td
-								v-if="this.turno != null"
-								class="align-middle text-center">
-								<button
-									class="btn btn-xs btn-danger"
-									@click="deleteInscricao(aluno.id, index)">
+							<td v-if="this.turno != null" class="align-middle text-center">
+								<button class="btn btn-xs btn-danger" @click="deleteInscricao(aluno.id, index)">
 									<i class="align-baseline bi bi-dash-circle"></i>
 								</button>
 							</td>
 							<td v-else>{{ aluno.idTurno != null ? "Sim" : "Não" }}</td>
-							<td
-								class="align-middle text-center"
-								v-if="this.counterStore.turnoToManage != null">
-								<input
-									class="form-check-input"
-									type="checkbox"
-									:value="aluno.id"
-									v-model="estudantesSelected" />
+							<td class="align-middle text-center" v-if="this.counterStore.turnoToManage != null">
+								<input class="form-check-input" type="checkbox" :value="aluno.id" v-model="estudantesSelected" />
 							</td>
 						</tr>
 					</tbody>
@@ -514,10 +352,7 @@ export default {
 			if (this.activeTurno.length > 0) {
 				return true;
 			}
-			if (
-				this.counterStore.selectedAnoletivo != null &&
-				this.counterStore.semestre != null
-			) {
+			if (this.counterStore.selectedAnoletivo != null && this.counterStore.semestre != null) {
 				this.getCadeiraInfo();
 				return true;
 			}
@@ -577,12 +412,7 @@ export default {
 			this.errorMoverAlunos = null;
 			this.estudantesSelected = [];
 			this.$axios
-				.get(
-					"cadeiras/stats/" +
-						this.$route.params.cadeiraId +
-						"/" +
-						this.counterStore.selectedAnoletivo
-				)
+				.get("cadeiras/stats/" + this.$route.params.cadeiraId + "/" + this.counterStore.selectedAnoletivo)
 				.then((response) => {
 					this.totalinscritos = response.data.totalinscritos;
 					this.totalrepetentes = response.data.totalrepetentes;
@@ -629,12 +459,7 @@ export default {
 		},
 		getCadeiraInfo() {
 			this.$axios
-				.get(
-					"cadeiras/" +
-						this.$route.params.cadeiraId +
-						"/" +
-						this.counterStore.selectedAnoletivo
-				)
+				.get("cadeiras/" + this.$route.params.cadeiraId + "/" + this.counterStore.selectedAnoletivo)
 				.then((response) => {
 					this.cadeira = response.data.cadeiras;
 					this.turnoInfo = response.data.info;
@@ -667,8 +492,7 @@ export default {
 			}
 			if (this.numeroadicionar == null || this.numeroadicionar.length < 1) {
 				this.errors = {
-					addAluno:
-						"Deve escrever o número do estudante que pretende adicionar",
+					addAluno: "Deve escrever o número do estudante que pretende adicionar",
 				};
 				// console.log(this.errors);
 				return;
@@ -688,9 +512,7 @@ export default {
 					this.numeroadicionar = null;
 				})
 				.catch((error) => {
-					this.$toast.error(
-						"Não foi possível adicionar o estudante indicado à UC"
-					);
+					this.$toast.error("Não foi possível adicionar o estudante indicado à UC");
 					if (error.response.data.login) {
 						this.errorLoginAddToUC = error.response.data;
 					}
@@ -708,8 +530,7 @@ export default {
 				(turnoescolhido == null || turnoescolhido == "null")
 			) {
 				this.errors = {
-					addAlunoTurno:
-						"Deve escrever um número de um estudante e selecionar um Turno!",
+					addAlunoTurno: "Deve escrever um número de um estudante e selecionar um Turno!",
 				};
 				// console.log(this.errors);
 				return;
@@ -814,16 +635,10 @@ export default {
 			}
 
 			this.$axios
-				.put(
-					"cadeiras/turnovagas/" +
-						this.cadeira.id +
-						"/" +
-						this.counterStore.selectedAnoletivo,
-					{
-						tipoturno: dataToSend,
-						vagas: dataToSend2,
-					}
-				)
+				.put("cadeiras/turnovagas/" + this.cadeira.id + "/" + this.counterStore.selectedAnoletivo, {
+					tipoturno: dataToSend,
+					vagas: dataToSend2,
+				})
 				.then((response) => {
 					// this.$toast.success(response.data);
 					this.$toast.success("Número de vagas alterado com sucesso.");
@@ -900,9 +715,7 @@ export default {
 				// throw "Error";
 			} else if (this.estudantesSelected.length < 1) {
 				this.errorMoverAlunos = [];
-				this.errorMoverAlunos["inscricaoIds"] = [
-					"Não selecionou alunos para mover.",
-				];
+				this.errorMoverAlunos["inscricaoIds"] = ["Não selecionou alunos para mover."];
 				return;
 			}
 			this.$axios
@@ -929,14 +742,7 @@ export default {
 				var visivel = 1;
 			}
 			this.$axios
-				.post(
-					"cadeiras/turnosinvisivel/" +
-						this.cadeira.id +
-						"/" +
-						this.counterStore.selectedAnoletivo +
-						"/" +
-						visivel
-				)
+				.post("cadeiras/turnosinvisivel/" + this.cadeira.id + "/" + this.counterStore.selectedAnoletivo + "/" + visivel)
 				.then((response) => {
 					this.$toast.success(response.data);
 					this.getCadeiraInfo();
