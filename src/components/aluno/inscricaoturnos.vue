@@ -35,7 +35,7 @@
 			</div>
 		</div>
 	</GDialog>
-	<GDialog v-model="popUpConfirmation" max-width="500">
+	<GDialog v-model="popUpConfirmation">
 		<div class="wrapper my-2">
 			<div class="content">
 				<div class="text-end">
@@ -56,6 +56,28 @@
 						Certifique-se que selecionou as opções que pretende!
 						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
 					</p>
+
+					<p class="text-center fw-light">
+						*Este horário poderá conter algum erro ou sofrer alterações*
+					</p>
+					<p class="text-center">Horário para submeter</p>
+					<vue-cal
+						locale="pt-br"
+						:selected-date="dataInicialHorariopessoal"
+						hide-view-selector
+						:time-cell-height="30"
+						:time-from="8 * 60"
+						:time-to="24 * 60"
+						:time-step="30"
+						:disable-views="['years', 'year', 'month', 'day']"
+						:hide-weekdays="[7]"
+						:events="horariopessoal"
+					>
+						<template v-slot:event="{ event }">
+							<div class="vuecal__event-title" v-html="event.title" />
+							<div class="vuecal__event-content" v-html="event.content" />
+						</template>
+					</vue-cal>
 					<div class="text-center mb-2">
 						<button
 							type="button"
@@ -457,7 +479,10 @@
 											<button
 												type="button"
 												class="btn btn-success"
-												@click="popUpConfirmation = true"
+												@click="
+													popUpConfirmation = true;
+													getSobreposicoes();
+												"
 											>
 												<i class="align-baseline bi bi-caret-right-fill"></i>
 												Submeter
@@ -961,6 +986,9 @@ export default {
 					if (response.data.coicidem.length > 0) {
 						this.showTurnosCoicidem = true;
 						this.turnosCoicidem = response.data.coicidem;
+						this.$toast.error("Existem sobreposições no seu horário!");
+					} else {
+						this.$toast.info("Não existem sobreposições!");
 					}
 					this.allTurnosIds = [];
 				})
