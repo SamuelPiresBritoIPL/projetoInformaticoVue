@@ -434,7 +434,6 @@ export default {
 				)
 				.then((response) => {
 					this.cadeirasNaoAprovadas = response.data;
-					console.log(this.cadeirasNaoAprovadas);
 					for (
 						let index = 0;
 						index < this.cadeirasNaoAprovadas.length;
