@@ -47,7 +47,7 @@
 											<a
 												:key="t"
 												role="button"
-												class="link-primary link-underline-opacity-0 link-underline-opacity-100-hover"
+												class="text-nowrap link-body-emphasis link-underline-opacity-0 link-underline-opacity-100-hover"
 												@click.stop="selectTurnoToManage(index, t)"
 												>{{ t.numero != 0 ? t.tipo + t.numero : t.tipo }}</a
 											>

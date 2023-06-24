@@ -279,7 +279,7 @@
 						<tr>
 							<th scope="col">Número</th>
 							<th scope="col">Nome do Estudante</th>
-							<th scope="col">Email</th>
+							<th scope="col"></th>
 							<th scope="col">Repetente</th>
 							<th scope="col">
 								{{ this.counterStore.turnoToManage == null ? "Inscrito Turno" : "Remover" }}

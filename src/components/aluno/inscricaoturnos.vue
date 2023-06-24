@@ -60,24 +60,6 @@
 					<p class="text-center fw-light">
 						*Este horário poderá conter algum erro ou sofrer alterações*
 					</p>
-					<p class="text-center">Horário para submeter</p>
-					<vue-cal
-						locale="pt-br"
-						:selected-date="dataInicialHorariopessoal"
-						hide-view-selector
-						:time-cell-height="30"
-						:time-from="8 * 60"
-						:time-to="24 * 60"
-						:time-step="30"
-						:disable-views="['years', 'year', 'month', 'day']"
-						:hide-weekdays="[7]"
-						:events="horariopessoal"
-					>
-						<template v-slot:event="{ event }">
-							<div class="vuecal__event-title" v-html="event.title" />
-							<div class="vuecal__event-content" v-html="event.content" />
-						</template>
-					</vue-cal>
 					<div class="text-center mb-2">
 						<button
 							type="button"
@@ -97,6 +79,25 @@
 							Cancelar
 						</button>
 					</div>
+					<p class="text-center">Horário para submeter</p>
+					<vue-cal
+						locale="pt-br"
+						:selected-date="dataInicialHorariopessoal"
+						hide-view-selector
+						:time-cell-height="20"
+						:time-from="8 * 60"
+						:time-to="24 * 60"
+						:time-step="30"
+						:disable-views="['years', 'year', 'month', 'day']"
+						:hide-weekdays="[7]"
+						:events="horariopessoal"
+					>
+						<template v-slot:event="{ event }">
+							<div class="vuecal__event-title" v-html="event.title" />
+							<div class="vuecal__event-content" v-html="event.content" />
+						</template>
+					</vue-cal>
+					
 				</div>
 			</div>
 		</div>

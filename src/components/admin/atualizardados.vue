@@ -14,18 +14,20 @@
 			</div>
 			<br />
 			<!-- file input with button to convert using papaparse -->
-			<input
-				class="form-control my-1"
-				type="file"
-				ref="file"
-				aria-label="Upload CSV File"
-				accept=".csv"
-				@change="handleFileUpload()" />
-			<button class="btn btn-primary" @click="convertCSVToJSON()" :disabled="blocked">
-				<i class="bi bi-filetype-csv"></i> Convert to JSON
-			</button>
-			<br />
-			<br />
+			<div style="display: none;">
+				<input
+					class="form-control my-1"
+					type="file"
+					ref="file"
+					aria-label="Upload CSV File"
+					accept=".csv"
+					@change="handleFileUpload()" />
+				<button class="btn btn-primary" @click="convertCSVToJSON()" :disabled="blocked">
+					<i class="bi bi-filetype-csv"></i> Convert to JSON
+				</button>
+				<br />
+				<br />
+			</div>
 			<div class="accordion" id="accordionExample">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="headingTwo">
