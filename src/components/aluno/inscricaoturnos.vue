@@ -51,15 +51,17 @@
 					<div class="text-center">
 						<h5>Tem a certeza que pretende avançar com a submissão?</h5>
 					</div>
-					<p class="text-center text-warning text-decoration-underline fw-bold">
+					<div class="alert alert-warning text-center" role="alert">
+					<span class="text-center text-decoration-underline fw-bold">
 						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
 						Certifique-se que selecionou as opções que pretende!
 						<i class="align-baseline bi bi-exclamation-diamond-fill"></i>
-					</p>
+					</span>
+				</div>
 
-					<p class="text-center fw-light">
+					<!-- <p class="text-center fw-light">
 						*Este horário poderá conter algum erro ou sofrer alterações*
-					</p>
+					</p> -->
 					<div class="text-center mb-2">
 						<button
 							type="button"
@@ -303,8 +305,8 @@
 															:key="turnotipo.id"
 														>
 															<input
-																role="button"
-																class="form-check-input me-1"
+																
+																class="form-check-input me-1 pe-cursor"
 																type="radio"
 																:value="turnotipo.id"
 																:id="turnotipo.id"
@@ -320,13 +322,13 @@
 																"
 															/>
 															<label
-																role="button"
-																class="form-check-label"
+																
+																class="form-check-label pe-cursor"
 																:for="turnotipo.id"
 																:class="{
-																	'text-danger':
+																	'text-danger-contrasted':
 																		turnotipo.vagasocupadas >=
-																		turnotipo.vagastotal,
+																		turnotipo.vagastotal
 																}"
 															>
 																<i
@@ -709,6 +711,7 @@ export default {
 			for (let i = 0; i < this.arrayVmodel.length; i++) {
 				this.arrayVmodel[i] = [];
 			}
+			// this.$toast.success("Seleções limpas com sucesso");
 			//para ir buscar turnos ja inscritos
 			//this.getCadeirasWithTurnos()
 		},

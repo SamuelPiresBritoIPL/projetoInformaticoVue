@@ -70,6 +70,18 @@
 	color: #000;
 }
 
+
+/*Fixes danger text for dark theme*/
+[data-bs-theme="dark"] .text-danger-contrasted {
+	color: #ff4359;
+	
+}
+
+/*Fixes danger text for light theme*/
+[data-bs-theme="light"] .text-danger-contrasted {
+	color: #dc3545;
+}
+
 /* .btn-secondary {
     color: #fff;
     background-color: #8b9196 !important;

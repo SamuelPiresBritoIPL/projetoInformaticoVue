@@ -56,11 +56,12 @@
 									: "faltam " + infoPedidos.diasAteTerminar + " dias."
 							}})
 						</div>
+						<h5>{{ nomeCurso }}</h5>
 						<ul
 							v-for="cadeiraToConfirm in cadeirasToConfirm"
 							:key="cadeiraToConfirm.cadeira"
 						>
-							<h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5>
+							<!-- <h5>{{ cadeiraToConfirm[0].nomeCurso }}</h5> -->
 							<li
 								class="mb-3"
 								v-for="cadeira in cadeiraToConfirm"
@@ -97,7 +98,7 @@
 							<div v-for="cadeira in cadeirasNaoAprovadas" :key="cadeira.id">
 								<p>
 									<input
-										class="form-check-input mx-2"
+										class="form-check-input mx-2 pe-cursor"
 										type="checkbox"
 										:id="cadeira.id"
 										:value="cadeira.id"
@@ -105,8 +106,7 @@
 										:disabled="cadeira.estado == 1"
 									/>
 									<label
-										role="button"
-										class="form-check-label"
+										class="form-check-label pe-cursor"
 										:for="cadeira.id"
 									>
 										{{ cadeira.nome }}
@@ -117,7 +117,7 @@
 						<hr />
 						<button
 							type="button"
-							class="btn btn-outline-primary"
+							class="btn btn-secondary"
 							@click="openAddCadeiraDeOutroCurso()"
 						>
 							<i class="align-baseline bi bi-calendar2-check-fill"></i>
@@ -161,15 +161,14 @@
 							<div v-for="cadeira in cadeirasOutrosCursos" :key="cadeira">
 								<p>
 									<input
-										class="form-check-input me-3"
+										class="form-check-input me-3 pe-cursor"
 										type="checkbox"
 										:value="cadeira.id"
 										:id="cadeira.id"
 										v-model="cadeirasToRequest"
 									/>
 									<label
-										role="button"
-										class="form-check-label"
+										class="form-check-label pe-cursor"
 										:for="cadeira.id"
 									>
 										{{ "[" + cadeira.codigo + "] " + cadeira.nome }}
@@ -338,6 +337,7 @@ export default {
 			showBtnAdicionarUCOutroCurso: false,
 			errorMessages: null,
 			collapsed: [true],
+			nomeCurso: "",
 		};
 	},
 	computed: {
@@ -357,7 +357,7 @@ export default {
 				}
 			}
 			return false;
-		},
+		}
 	},
 	methods: {
 		getCadeirasToConfirm() {
@@ -369,9 +369,18 @@ export default {
 					this.pedidos = response.data.pedidos;
 					this.infoPedidos = response.data.infoPedidos;
 					this.periodo = response.data.periodo;
-					//console.log(this.pedidos)
+
+
+					//get nome curso from cadeirasToConfirm
+					Object.keys(this.cadeirasToConfirm).forEach((key) => {
+						this.cadeirasToConfirm[key].forEach((cadeira) => {
+							this.nomeCurso = cadeira.cadeira.curso;
+						});
+					});									
+
 				})
 				.catch((error) => {
+					// console.log(error);
 					console.log(error.response);
 				});
 		},
