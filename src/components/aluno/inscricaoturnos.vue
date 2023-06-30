@@ -247,6 +247,11 @@
 										<i class="align-baseline bi bi-calendar-week"></i>
 										Inscrever nos Turnos
 									</button>
+
+									<button class="btn btn-secondary ms-1" v-if="noInscricoes == false" @click="getCadeirasWithTurnos();">
+										<i class="align-baseline bi bi-arrow-clockwise"></i>
+										Atualizar cadeiras
+									</button>
 								</div>
 							</div>
 							<div v-else>
