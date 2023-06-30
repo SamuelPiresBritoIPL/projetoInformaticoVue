@@ -58,6 +58,14 @@
 	color: #333333;
 }
 
+[data-bs-theme="dark"] .vuecal__cell--selected {
+	background-color: rgba(139, 255, 158, 0.2);
+}
+
+[data-bs-theme="light"] .vuecal__cell--selected {
+	background-color: rgba(21, 255, 60, 0.2);
+}
+
 .vuecal__no-event {
 	display: none;
 }
