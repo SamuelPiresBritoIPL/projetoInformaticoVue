@@ -638,7 +638,7 @@ export default {
 				papaparse.parse(this.fileStepTwo, {
 					header: true,
 					complete: (results) => {
-						console.log(results);
+						//console.log(results);
 						this.$axios
 							.post("webservice/stepTwoCSV", results.data)
 							.then((response) => {
@@ -671,7 +671,7 @@ export default {
 				papaparse.parse(this.fileStepFour, {
 					header: true,
 					complete: (results) => {
-						console.log(results);
+						//console.log(results);
 						this.$axios
 							.post("webservice/stepFourCSV", results.data)
 							.then((response) => {
