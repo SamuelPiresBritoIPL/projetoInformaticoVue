@@ -39,6 +39,7 @@
 							class="alert alert-info ms-4 me-4 mt-2"
 							role="alert"
 						>
+						
 							O período de Pedidos de Alteração de UC's <b>terá inicio</b> a
 							<b
 								>{{
@@ -135,7 +136,7 @@
 								:key="inscricao"
 								class="text-center"
 							>
-								<div v-if="inscricao.isAberto == true">
+								<div v-if="/*inscricao.isAberto*/ true == true">
 									<b>{{
 										counterStore.utilizadorLogado.codigoCurso !=
 										inscricao.codigo
@@ -166,7 +167,7 @@
 								</div>
 							</div>
 						</div>
-						<div v-if="infoInscricoes.length > 0">
+						<div v-if="infoInscricoes.length > 0 && !isInscricoesOpen">
 							<div
 								v-for="inscricao in infoInscricoes"
 								:key="inscricao"

@@ -305,7 +305,7 @@
 														class="me-4"
 													>
 														<span
-															class="ms-2"
+															class="ms-2 text-nowrap"
 															v-for="turnotipo in turno"
 															:key="turnotipo.id"
 														>
